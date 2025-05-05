@@ -1,0 +1,82 @@
+<nav class="p-4 w-full fixed z-20 border-gray-200 bg-gray-100">
+    <div
+        class="z-20 max-w-screen-xl flex flex-wrap items-center justify-between mx-auto"
+    >
+        <a
+            href="{{site.baseurl}}/"
+            class="flex items-center space-x-3 rtl:space-x-reverse text-[{{site.colors.primary}}] text-2xl font-bold mb-3"
+        >
+            Data Mango
+        </a>
+        <button
+            type="button"
+            class="z-20 inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none"
+            aria-controls="menu-hamburger"
+            aria-expanded="false"
+            id="main-hamburger-menu"
+        >
+            <span class="sr-only">Open main menu</span>
+            <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
+            >
+                <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M1 1h15M1 7h15M1 13h15"
+                />
+            </svg>
+        </button>
+        <div hidden class="z-20 w-full" id="menu-hamburger">
+            <ul class="z-20 flex flex-col font-medium mt-4 rounded-lg">
+                <li>
+                    <a
+                        href="{{site.baseurl}}/"
+                        class="z-20 block py-2 px-3 text-gray-900 rounded-sm hover:bg-[{{ site.colors.primary }}]"
+                    >
+                        Home
+                    </a>
+                </li>
+
+                {% assign headers = site.header_pages %} {% for page in
+                site.pages %} {% if headers contains page.path %} {% assign
+                hover_color = page.menu_color %} {% assign hover_text_color =
+                page.menu_text_color %}
+                <li>
+                    {% if page.permalink %}
+                    <a
+                        href="{{site.baseurl}}{{ page.permalink }}"
+                        class="z-20 block py-2 px-3 text-gray-900 rounded-sm hover:bg-[{{ site.colors[hover_color] }}] hover:text-{{ hover_text_color }}"
+                    >
+                        {{ page.title }}
+                    </a>
+                    {% else %}
+                    <a
+                        href="{{site.baseurl}}/{{ page.path | remove: '.md' }}"
+                        class="z-20 block py-2 px-3 text-gray-900 rounded-sm hover:bg-[{{ site.colors[hover_color] }}] hover:text-{{ hover_text_color }}"
+                    >
+                        {{ page.title }}
+                    </a>
+                    {% endif %}
+                </li>
+                {% endif %} {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="pt-20"></div>
+
+<script>
+    const hamburgerMenu = document.getElementById("main-hamburger-menu");
+    const navMenu = document.getElementById("menu-hamburger");
+
+    hamburgerMenu.addEventListener("click", () => {
+        navMenu.hidden = !navMenu.hidden;
+    });
+</script>
