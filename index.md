@@ -8,59 +8,58 @@ menu: nav/mainHeader.html
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartage - Social Media for Car Lovers</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
-        
+
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f8fafc;
         }
-        
+
         .hero-gradient {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
-        
+
         .car-card:hover .car-image {
             transform: scale(1.03);
             transition: transform 0.3s ease;
         }
-        
+
         .car-image {
             transition: transform 0.3s ease;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
-        
+
         .scrollbar-hide {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        
+
         .typewriter {
             overflow: hidden;
             border-right: .15em solid #f59e0b;
             white-space: nowrap;
             animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
-        
+
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
         }
-        
+
         @keyframes blink-caret {
             from, to { border-color: transparent }
             50% { border-color: #f59e0b; }
         }
-        
+
         .floating {
             animation: floating 3s ease-in-out infinite;
         }
-        
+
         @keyframes floating {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
@@ -68,33 +67,6 @@ menu: nav/mainHeader.html
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <i class="fas fa-car-side text-3xl text-amber-500 mr-2"></i>
-                        <span class="text-xl font-bold text-gray-900">CARTAGE</span>
-                    </div>
-                </div>
-                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-                    <a href="#" class="text-gray-900 hover:text-amber-500 px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="#" class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium">Explore</a>
-                    <a href="#" class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium">Garage</a>
-                    <a href="#" class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium">Events</a>
-                    <a href="#" class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium">Community</a>
-                </div>
-                <div class="flex items-center">
-                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
-                        Sign In
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
     <!-- Hero Section -->
     <section class="hero-gradient text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
@@ -120,8 +92,8 @@ menu: nav/mainHeader.html
                         <div class="absolute -top-10 -left-10 w-32 h-32 bg-amber-400 rounded-full opacity-20 animate-pulse"></div>
                         <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-400 rounded-full opacity-20 animate-pulse"></div>
                         <div class="relative floating">
-                            <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                                 alt="Sports Car" 
+                            <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                 alt="Sports Car"
                                  class="rounded-xl shadow-2xl border-8 border-gray-800 transform rotate-2">
                         </div>
                     </div>
@@ -139,13 +111,13 @@ menu: nav/mainHeader.html
                     Check out what the car community is buzzing about this week
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Trending Car 1 -->
                 <div class="car-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
                     <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                             alt="Porsche 911" 
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                             alt="Porsche 911"
                              class="car-image w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <span class="bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded">TRENDING</span>
@@ -168,12 +140,12 @@ menu: nav/mainHeader.html
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Trending Car 2 -->
                 <div class="car-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
                     <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                             alt="BMW M4" 
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                             alt="BMW M4"
                              class="car-image w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <span class="bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">NEW RELEASE</span>
@@ -196,12 +168,12 @@ menu: nav/mainHeader.html
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Trending Car 3 -->
                 <div class="car-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
                     <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                             alt="Classic Mustang" 
+                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                             alt="Classic Mustang"
                              class="car-image w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <span class="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">CLASSIC</span>
@@ -225,7 +197,7 @@ menu: nav/mainHeader.html
                     </div>
                 </div>
             </div>
-            
+
             <div class="text-center mt-12">
                 <button class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
                     View All Trending Posts
@@ -244,7 +216,7 @@ menu: nav/mainHeader.html
                     The ultimate platform built specifically for car lovers
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
                 <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
@@ -256,7 +228,7 @@ menu: nav/mainHeader.html
                         Share high-quality photos of your car with filters and editing tools designed specifically for automotive photography.
                     </p>
                 </div>
-                
+
                 <!-- Feature 2 -->
                 <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
@@ -267,7 +239,7 @@ menu: nav/mainHeader.html
                         Connect with owners of the same make/model or join groups based on your interests like tuning, classics, or racing.
                     </p>
                 </div>
-                
+
                 <!-- Feature 3 -->
                 <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-500 text-white mb-4">
@@ -279,7 +251,7 @@ menu: nav/mainHeader.html
                     </p>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
                 <!-- Feature 4 -->
                 <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
@@ -291,7 +263,7 @@ menu: nav/mainHeader.html
                         Create a digital garage to showcase all your vehicles, modifications, and maintenance history.
                     </p>
                 </div>
-                
+
                 <!-- Feature 5 -->
                 <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white mb-4">
@@ -302,7 +274,7 @@ menu: nav/mainHeader.html
                         Buy, sell, or trade cars and parts with other enthusiasts in our verified marketplace.
                     </p>
                 </div>
-                
+
                 <!-- Feature 6 -->
                 <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
@@ -326,7 +298,7 @@ menu: nav/mainHeader.html
                     Hear from car enthusiasts who use Cartage daily
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Testimonial 1 -->
                 <div class="bg-gray-50 p-8 rounded-xl">
@@ -348,7 +320,7 @@ menu: nav/mainHeader.html
                         <i class="fas fa-star text-amber-400"></i>
                     </div>
                 </div>
-                
+
                 <!-- Testimonial 2 -->
                 <div class="bg-gray-50 p-8 rounded-xl">
                     <div class="flex items-center mb-6">
@@ -379,8 +351,8 @@ menu: nav/mainHeader.html
             <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl shadow-xl overflow-hidden">
                 <div class="md:flex">
                     <div class="md:flex-shrink-0 md:w-1/2">
-                        <img class="h-full w-full object-cover" 
-                             src="https://images.unsplash.com/photo-1580273916550-e4dc2a0a6d02?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                        <img class="h-full w-full object-cover"
+                             src="https://images.unsplash.com/photo-1580273916550-e4dc2a0a6d02?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                              alt="Car Meet">
                     </div>
                     <div class="p-12 md:w-1/2 flex flex-col justify-center">
@@ -426,7 +398,7 @@ menu: nav/mainHeader.html
                         </a>
                     </div>
                 </div>
-                
+
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Explore</h3>
                     <ul class="space-y-2">
@@ -436,7 +408,7 @@ menu: nav/mainHeader.html
                         <li><a href="#" class="text-gray-400 hover:text-white">Upcoming Events</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Company</h3>
                     <ul class="space-y-2">
@@ -446,7 +418,7 @@ menu: nav/mainHeader.html
                         <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Legal</h3>
                     <ul class="space-y-2">
@@ -457,7 +429,7 @@ menu: nav/mainHeader.html
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm">
                     © 2023 Cartage. All rights reserved.
@@ -476,7 +448,7 @@ menu: nav/mainHeader.html
         <button id="mobile-menu-button" class="bg-amber-500 text-white p-4 rounded-full shadow-lg hover:bg-amber-600 transition duration-300">
             <i class="fas fa-bars text-xl"></i>
         </button>
-        
+
         <div id="mobile-menu" class="hidden absolute bottom-16 right-0 w-64 bg-white rounded-lg shadow-xl p-4">
             <a href="#" class="block px-4 py-2 text-gray-900 hover:bg-gray-100 rounded-md">Home</a>
             <a href="#" class="block px-4 py-2 text-gray-900 hover:bg-gray-100 rounded-md">Explore</a>
@@ -495,32 +467,31 @@ menu: nav/mainHeader.html
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
-        
+
         // Close menu when clicking outside
         document.addEventListener('click', function(event) {
             const menuButton = document.getElementById('mobile-menu-button');
             const menu = document.getElementById('mobile-menu');
-            
+
             if (!menuButton.contains(event.target) && !menu.contains(event.target)) {
                 menu.classList.add('hidden');
             }
         });
-        
+
         // Typewriter effect for hero section
         const words = ["Passion", "Ride", "Dream", "Collection", "Garage"];
         let currentWordIndex = 0;
-        
+
         function updateTypewriter() {
             const typewriterElement = document.querySelector('.typewriter');
             typewriterElement.style.animation = 'none';
             void typewriterElement.offsetWidth; // Trigger reflow
             typewriterElement.style.animation = null;
-            
+
             currentWordIndex = (currentWordIndex + 1) % words.length;
             typewriterElement.textContent = words[currentWordIndex];
         }
-        
+
         setInterval(updateTypewriter, 3500);
     </script>
-</body>
 </html>
