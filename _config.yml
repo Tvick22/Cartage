@@ -1,9 +1,9 @@
-title: Data Mango
+title: Cartage
 description: "CSP Tri 3 Project"
 owner_name: Trevor Vick
 github_username: Tvick22
-github_repo: "DataMango"
-baseurl: "/DataMango"
+github_repo: "Cartage"
+baseurl: "/Cartage"
 header_pages:
   - browse-documentation.md
   - contact.md
