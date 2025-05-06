@@ -3,8 +3,6 @@ layout: base
 title: Contact Us
 search_exclude: true
 menu: nav/mainHeader.html
-menu_color: red
-menu_text_color: white
 ---
 
 <div class="bg-[{{site.colors.background}}] flex justify-center items-center min-h-screen px-4 py-16">

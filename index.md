@@ -4,7 +4,6 @@ search_exclude: true
 menu: nav/mainHeader.html
 ---
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

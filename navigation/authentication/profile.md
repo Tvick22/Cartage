@@ -1,7 +1,6 @@
 ---
 layout: needsAuth
 title: Profile Settings
-permalink: /profile
 menu: nav/home.html
 search_exclude: true
 show_reading_time: false
