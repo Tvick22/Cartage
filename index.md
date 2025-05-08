@@ -551,6 +551,8 @@ menu: nav/mainHeader.html
                         <div class="relative floating">
                             <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                                  alt="Sports Car"
+                            <img src="https://www.supercars.net/blog/wp-content/uploads/2020/10/47367682881_3c7992559b_o-e1602285470821.jpg" 
+                                 alt="Sports Car" 
                                  class="rounded-xl shadow-2xl border-8 border-gray-800 transform rotate-2">
                         </div>
                     </div>
@@ -573,8 +575,8 @@ menu: nav/mainHeader.html
                 <!-- Trending Car 1 -->
                 <div class="car-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
                     <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                             alt="Porsche 911"
+                        <img src="{{site.baseurl}}/images/veyronbg2.JPG" 
+                             alt="Bugatti Veyron"
                              class="car-image w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                             <span class="bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded">TRENDING</span>
@@ -952,3 +954,13 @@ menu: nav/mainHeader.html
         setInterval(updateTypewriter, 3500);
     </script>
 </html>
+
+<div class="car-container">
+  <div class="car">
+    <img src="images/mirage-gt.png" alt="Gemballa Mirage GT" />
+    <div class="wheel front-wheel"></div>
+    <div class="wheel rear-wheel"></div>
+    <div class="smoke left-smoke"></div>
+    <div class="smoke right-smoke"></div>
+  </div>
+</div>
