@@ -119,3 +119,66 @@
   </script>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cat Chasing Dog</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #cce7ff;
+      font-family: sans-serif;
+    }
+
+    .ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background-color: #8ecf63;
+    }
+
+    .dog, .cat {
+      position: absolute;
+      bottom: 100px;
+      font-size: 48px;
+      transform: scaleX(-1); /* Flip to face right */
+    }
+
+    .dog {
+      animation: runDog 6s linear infinite;
+    }
+
+    .cat {
+      animation: runCat 6s linear infinite;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes runDog {
+      0%   { left: -100px; }
+      100% { left: 110%; }
+    }
+
+    @keyframes runCat {
+      0%   { left: -150px; }
+      100% { left: 110%; }
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐱 Cat chasing 🐶 Dog!</h1>
+  <div class="dog">🐶</div>
+  <div class="cat">🐱</div>
+  <div class="ground"></div>
+</body>
+</html>
