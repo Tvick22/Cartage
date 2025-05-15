@@ -182,3 +182,123 @@
   <div class="ground"></div>
 </body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cool Car Animation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to top, #87ceeb 60%, #ffffff 40%);
+    }
+
+    .road {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: #333;
+      box-shadow: 0 -5px 0 #444;
+    }
+
+    .car {
+      position: absolute;
+      bottom: 110px;
+      left: -300px;
+      width: 200px;
+      height: 100px;
+      background: red;
+      border-radius: 20px 20px 10px 10px;
+      animation: drive 6s linear infinite;
+    }
+
+    .car::before {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      width: 40px;
+      height: 40px;
+      background: #000;
+      border-radius: 50%;
+      box-shadow: 120px 0 #000;
+    }
+
+    .window {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      width: 140px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+    }
+
+    .smoke {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(100, 100, 100, 0.6);
+      opacity: 0;
+      transform: scale(1);
+      animation: puff 2s ease-out infinite;
+    }
+
+    @keyframes drive {
+      0% {
+        left: -300px;
+      }
+      100% {
+        left: 110%;
+      }
+    }
+
+    @keyframes puff {
+      0% {
+        transform: scale(0.5);
+        opacity: 0.7;
+        bottom: 90px;
+        left: 40px;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+        bottom: 140px;
+        left: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="road"></div>
+  <div class="car" id="car">
+    <div class="window"></div>
+  </div>
+
+  <script>
+    // Smoke generator
+    const car = document.getElementById('car');
+
+    function createSmoke() {
+      const smoke = document.createElement('div');
+      smoke.classList.add('smoke');
+      car.appendChild(smoke);
+
+      setTimeout(() => {
+        car.removeChild(smoke);
+      }, 2000);
+    }
+
+    setInterval(createSmoke, 500);
+  </script>
+</body>
+</html>
