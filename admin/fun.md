@@ -302,3 +302,143 @@
   </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cool Flower Animation</title>
+<style>
+  body {
+    background: #282c34;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
+  .flower {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  .petal {
+    position: absolute;
+    width: 60px;
+    height: 120px;
+    background: linear-gradient(45deg, #ff5e62, #ff9966);
+    border-radius: 60px 60px 0 0;
+    transform-origin: bottom center;
+    animation: petal-move 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+  }
+
+  /* Position and delay each petal */
+  .petal:nth-child(1) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(0deg);
+    animation-delay: 0s;
+  }
+  .petal:nth-child(2) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(45deg);
+    animation-delay: 0.5s;
+  }
+  .petal:nth-child(3) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(90deg);
+    animation-delay: 1s;
+  }
+  .petal:nth-child(4) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(135deg);
+    animation-delay: 1.5s;
+  }
+  .petal:nth-child(5) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(180deg);
+    animation-delay: 2s;
+  }
+  .petal:nth-child(6) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(225deg);
+    animation-delay: 2.5s;
+  }
+  .petal:nth-child(7) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(270deg);
+    animation-delay: 3s;
+  }
+  .petal:nth-child(8) {
+    top: 40px;
+    left: 70px;
+    transform: rotate(315deg);
+    animation-delay: 3.5s;
+  }
+
+  /* Animate petals opening and closing */
+  @keyframes petal-move {
+    0%, 100% {
+      transform: rotate(var(--angle)) scaleY(1);
+      opacity: 1;
+    }
+    50% {
+      transform: rotate(var(--angle)) scaleY(0.7);
+      opacity: 0.8;
+    }
+  }
+
+  /* Center circle of the flower */
+  .center {
+    position: absolute;
+    top: 70px;
+    left: 70px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at center, #ffcc33, #ff9933);
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ffcc33aa;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 10px #ffcc33aa;
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 25px #ffcc33ff;
+      transform: scale(1.05);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="flower">
+  <div class="petal" style="--angle: 0deg;"></div>
+  <div class="petal" style="--angle: 45deg;"></div>
+  <div class="petal" style="--angle: 90deg;"></div>
+  <div class="petal" style="--angle: 135deg;"></div>
+  <div class="petal" style="--angle: 180deg;"></div>
+  <div class="petal" style="--angle: 225deg;"></div>
+  <div class="petal" style="--angle: 270deg;"></div>
+  <div class="petal" style="--angle: 315deg;"></div>
+  <div class="center"></div>
+</div>
+
+</body>
+</html>
+
+
+
