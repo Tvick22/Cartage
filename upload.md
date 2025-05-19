@@ -4,7 +4,6 @@ title: Upload page
 search_exclude: true
 menu: nav/mainHeader.html
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -158,18 +157,33 @@ menu: nav/mainHeader.html
     }
 
     function applyFiltersToCanvas(canvas) {
-      const brightness = brightnessInput.value;
-      const contrast = contrastInput.value;
-      const saturate = saturateInput.value;
+      const brightness = brightnessInput.value / 100;
+      const contrast = contrastInput.value / 100;
+      const saturate = saturateInput.value / 100;
+
       const ctx = canvas.getContext('2d');
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
 
-      // Simple linear filter application (for demo purposes)
       for (let i = 0; i < data.length; i += 4) {
-        data[i] = data[i] * (brightness / 100) * (contrast / 100); // R
-        data[i+1] = data[i+1] * (brightness / 100) * (contrast / 100); // G
-        data[i+2] = data[i+2] * (brightness / 100) * (contrast / 100); // B
+        let r = data[i];
+        let g = data[i + 1];
+        let b = data[i + 2];
+
+        // Apply brightness and contrast
+        r = ((r - 128) * contrast + 128) * brightness;
+        g = ((g - 128) * contrast + 128) * brightness;
+        b = ((b - 128) * contrast + 128) * brightness;
+
+        // Apply saturation
+        const avg = (r + g + b) / 3;
+        r = avg + (r - avg) * saturate;
+        g = avg + (g - avg) * saturate;
+        b = avg + (b - avg) * saturate;
+
+        data[i] = Math.min(255, Math.max(0, r));
+        data[i + 1] = Math.min(255, Math.max(0, g));
+        data[i + 2] = Math.min(255, Math.max(0, b));
       }
 
       ctx.putImageData(imageData, 0, 0);
