@@ -23,7 +23,7 @@ menu: nav/mainHeader.html
 
     .dropzone {
       border: 2px dashed #e5e7eb;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
     }
 
     .dropzone.active {
