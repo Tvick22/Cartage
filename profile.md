@@ -12,6 +12,8 @@ menu: nav/mainHeader.html
     <title>User Profile | Cartage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <style>
         .profile-pic-container {
             position: relative;
@@ -126,18 +128,74 @@ menu: nav/mainHeader.html
     </div>
 </div>
 
+<!-- Cropper Modal -->
+<div id="cropper-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center hidden">
+    <div class="bg-white p-4 rounded-lg shadow-lg max-w-md w-full">
+        <div class="mb-4">
+            <img id="cropper-image" class="max-w-full max-h-[400px]">
+        </div>
+        <div class="flex justify-end space-x-2">
+            <button id="cancel-crop" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded">Cancel</button>
+            <button id="confirm-crop" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded">Crop & Save</button>
+        </div>
+    </div>
+</div>
+
 <!-- Scripts -->
 <script>
-    // Handle profile picture upload
-    document.getElementById('profile-pic-upload').addEventListener('change', function () {
+    let cropper;
+    const profilePic = document.getElementById('profile-pic');
+    const uploadInput = document.getElementById('profile-pic-upload');
+    const cropperModal = document.getElementById('cropper-modal');
+    const cropperImage = document.getElementById('cropper-image');
+    const cancelCropBtn = document.getElementById('cancel-crop');
+    const confirmCropBtn = document.getElementById('confirm-crop');
+
+    // Show cropper on image upload
+    uploadInput.addEventListener('change', function () {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                document.getElementById('profile-pic').src = e.target.result;
-            }
+                cropperImage.src = e.target.result;
+                cropperModal.classList.remove('hidden');
+
+                if (cropper) cropper.destroy();
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    dragMode: 'move',
+                    guides: false,
+                    background: false,
+                    autoCropArea: 1,
+                    movable: true,
+                    zoomable: true,
+                    rotatable: false,
+                    scalable: false,
+                });
+            };
             reader.readAsDataURL(file);
         }
+    });
+
+    // Cancel crop
+    cancelCropBtn.addEventListener('click', () => {
+        cropperModal.classList.add('hidden');
+        uploadInput.value = '';
+        if (cropper) cropper.destroy();
+    });
+
+    // Confirm crop
+    confirmCropBtn.addEventListener('click', () => {
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            imageSmoothingQuality: 'high'
+        });
+        profilePic.src = canvas.toDataURL('image/png');
+        cropperModal.classList.add('hidden');
+        uploadInput.value = '';
+        if (cropper) cropper.destroy();
     });
 
     // Add activity function
@@ -157,5 +215,3 @@ menu: nav/mainHeader.html
         button.parentElement.remove();
     }
 </script>
-
-
