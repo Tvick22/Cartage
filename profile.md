@@ -64,26 +64,6 @@ menu: nav/mainHeader.html
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="max-w-4xl mx-auto bg-white shadow-sm">
-        <!-- Header -->
-        <header class="bg-gray-900 text-white p-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-camera-retro text-2xl text-amber-500"></i>
-                    <h1 class="text-xl font-bold">Cartage</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button class="p-2 rounded-full hover:bg-gray-700">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="p-2 rounded-full hover:bg-gray-700">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                    <button class="p-2 rounded-full hover:bg-gray-700">
-                        <i class="fas fa-user"></i>
-                    </button>
-                </div>
-            </div>
-        </header>
 
 <!-- Profile Section -->
 <div class="p-6 bg-white rounded-lg shadow-lg max-w-5xl mx-auto mt-8">
@@ -106,7 +86,7 @@ menu: nav/mainHeader.html
             <div class="flex flex-col space-y-1 mb-4">
                 <h2 class="text-3xl font-bold text-gray-900">Alex Johnson</h2>
                 <p class="text-gray-500">@alexjohnson_photography</p>
-                <span class="text-sm text-gray-600 font-medium">Photographer</span>
+                <span class="text-sm text-gray-600 font-medium">>>BIO<<</span>
             </div>
 
             <div class="flex space-x-4 mb-6">
