@@ -90,16 +90,15 @@ menu: nav/mainHeader.html
     <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-10">
         
         <!-- Profile Picture and Role -->
-        <div class="relative">
-            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80"
+        <div class="relative flex flex-col items-center">
+            <img id="profile-pic" 
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Sample_User_Icon.png/600px-Sample_User_Icon.png"
                  alt="Profile picture"
                  class="w-32 h-32 rounded-full border-4 border-amber-500 object-cover">
-            <div class="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4">
-                <label for="profile-pic-upload" class="cursor-pointer bg-amber-500 p-2 rounded-full shadow-lg">
-                    <i class="fas fa-camera text-white text-sm"></i>
-                </label>
-                <input type="file" id="profile-pic-upload" class="hidden">
-            </div>
+            <label for="profile-pic-upload" class="cursor-pointer bg-amber-500 mt-2 px-3 py-1 rounded-md text-white text-sm shadow-md">
+                Upload Photo
+            </label>
+            <input type="file" id="profile-pic-upload" class="hidden" accept="image/*">
         </div>
 
         <!-- Profile Details -->
@@ -122,21 +121,60 @@ menu: nav/mainHeader.html
             <!-- Activity Section -->
             <div>
                 <h3 class="text-lg font-semibold text-gray-800 mb-2">Alex spends most of his time on...</h3>
-                <ul class="space-y-2">
-                    <li class="flex items-center bg-gray-50 p-2 rounded-md">
-                        <i class="fas fa-camera-retro text-amber-500 mr-3"></i>
-                        Taking pictures
+                <ul id="activity-list" class="space-y-2">
+                    <li class="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+                        <div><i class="fas fa-camera-retro text-amber-500 mr-3"></i>Taking pictures</div>
+                        <button onclick="removeActivity(this)" class="text-red-500 hover:underline text-sm">Delete</button>
                     </li>
-                    <li class="flex items-center bg-gray-50 p-2 rounded-md">
-                        <i class="fas fa-car text-blue-500 mr-3"></i>
-                        Going to car meets
+                    <li class="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+                        <div><i class="fas fa-car text-blue-500 mr-3"></i>Going to car meets</div>
+                        <button onclick="removeActivity(this)" class="text-red-500 hover:underline text-sm">Delete</button>
                     </li>
-                    <li class="flex items-center bg-gray-50 p-2 rounded-md">
-                        <i class="fas fa-flag-checkered text-red-500 mr-3"></i>
-                        Attending car shows
+                    <li class="flex items-center justify-between bg-gray-50 p-2 rounded-md">
+                        <div><i class="fas fa-flag-checkered text-red-500 mr-3"></i>Attending car shows</div>
+                        <button onclick="removeActivity(this)" class="text-red-500 hover:underline text-sm">Delete</button>
                     </li>
                 </ul>
+
+                <!-- Add Activity Button -->
+                <button onclick="addActivity()"
+                        class="mt-4 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md font-medium">
+                    + Add Activity
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Scripts -->
+<script>
+    // Handle profile picture upload
+    document.getElementById('profile-pic-upload').addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('profile-pic').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Add activity function
+    function addActivity() {
+        const activityText = prompt("Enter a new activity:");
+        if (activityText) {
+            const li = document.createElement("li");
+            li.className = "flex items-center justify-between bg-gray-50 p-2 rounded-md";
+            li.innerHTML = `<div><i class="fas fa-star text-yellow-500 mr-3"></i>${activityText}</div>
+                            <button onclick="removeActivity(this)" class="text-red-500 hover:underline text-sm">Delete</button>`;
+            document.getElementById("activity-list").appendChild(li);
+        }
+    }
+
+    // Remove activity
+    function removeActivity(button) {
+        button.parentElement.remove();
+    }
+</script>
+
