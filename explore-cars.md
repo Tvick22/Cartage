@@ -360,37 +360,7 @@ permalink: /explore-cars/
         </button>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 bg-opacity-80 backdrop-blur-md py-6 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center space-x-2 mb-4 md:mb-0">
-                    <i class="fas fa-car text-amber-400 text-2xl"></i>
-                    <span class="text-xl font-bold">Cartage</span>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-amber-400 transition">About</a>
-                    <a href="#" class="hover:text-amber-400 transition">Privacy</a>
-                    <a href="#" class="hover:text-amber-400 transition">Terms</a>
-                    <a href="#" class="hover:text-amber-400 transition">Contact</a>
-                </div>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-amber-500 transition">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-amber-500 transition">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-amber-500 transition">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="mt-6 text-center text-gray-400 text-sm">
-                © 2023 Cartage. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    
 
     <script>
         // Sample car data (only 3 demo posts)
