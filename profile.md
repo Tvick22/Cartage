@@ -85,9 +85,10 @@ menu: nav/mainHeader.html
         <!-- Profile Details -->
         <div class="flex-1">
             <div class="flex flex-col space-y-4 mb-8">
-                <h2 class="text-5xl font-bold text-gray-900">Alex Johnson</h2>
+                <h2 id="profile-name" class="text-5xl font-bold text-gray-900">Alex Johnson</h2>
                 <p class="text-2xl text-gray-500">@alexjohnson_photography</p>
-                <span class="text-lg text-gray-600 font-medium">>>BIO<<</span>
+                <span id="profile-bio" class="text-lg text-gray-600 font-medium">>>BIO<<</span>
+
                 <div class="mt-4 inline-flex items-center px-6 py-3 rounded-xl bg-amber-100 text-xl font-semibold text-amber-800 shadow-md border border-amber-300">
                     <i class="fas fa-camera-retro mr-2"></i>
                     Posts: <span id="post-count" class="ml-1">0</span>
@@ -101,6 +102,10 @@ menu: nav/mainHeader.html
                 <button id="follow-button" class="relative bg-gray-200 hover:bg-green-500 text-black px-6 py-3 rounded-md text-xl font-medium flex items-center space-x-2">
                     <i class="fas fa-user-plus"></i>
                     <span>Follow</span>
+                </button>
+                <button id="edit-profile-btn" class="relative group bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-xl font-medium overflow-hidden transition-all duration-300 shadow-lg">
+                    <span class="absolute left-0 w-full h-0.5 top-0 bg-white transition-all duration-500 group-hover:w-0"></span>
+                    <i class="fas fa-user-edit mr-2"></i>Edit Profile
                 </button>
             </div>
         </div>
@@ -119,6 +124,39 @@ menu: nav/mainHeader.html
         </div>
     </div>
 </div>
+
+<!-- Edit Profile Modal -->
+<div id="edit-profile-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white rounded-lg shadow-2xl p-6 w-full max-w-lg animate-scale-in">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Edit Profile</h2>
+        <div class="space-y-4">
+            <div>
+                <label for="name-input" class="block text-gray-700 font-semibold mb-1">Name</label>
+                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" value="Alex Johnson">
+            </div>
+            <div>
+                <label for="bio-input" class="block text-gray-700 font-semibold mb-1">Bio</label>
+                <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">>>BIO<<</textarea>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-end space-x-3">
+            <button id="cancel-edit" class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-700">Cancel</button>
+            <button id="save-edit" class="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Animations -->
+<style>
+    @keyframes scale-in {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .animate-scale-in {
+        animation: scale-in 0.3s ease-out;
+    }
+</style>
 
 <!-- Scripts -->
 <script>
@@ -139,7 +177,6 @@ menu: nav/mainHeader.html
             reader.onload = function (e) {
                 cropperImage.src = e.target.result;
                 cropperModal.classList.remove('hidden');
-
                 if (cropper) cropper.destroy();
                 cropper = new Cropper(cropperImage, {
                     aspectRatio: 1,
@@ -185,5 +222,32 @@ menu: nav/mainHeader.html
             this.classList.remove('bg-green-500', 'text-white');
             this.classList.add('bg-gray-200', 'text-black');
         }
+    });
+
+    // Edit Profile
+    const editBtn = document.getElementById('edit-profile-btn');
+    const modal = document.getElementById('edit-profile-modal');
+    const cancelEdit = document.getElementById('cancel-edit');
+    const saveEdit = document.getElementById('save-edit');
+    const nameInput = document.getElementById('name-input');
+    const bioInput = document.getElementById('bio-input');
+    const profileName = document.getElementById('profile-name');
+    const profileBio = document.getElementById('profile-bio');
+
+    editBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    });
+
+    cancelEdit.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    });
+
+    saveEdit.addEventListener('click', () => {
+        profileName.textContent = nameInput.value;
+        profileBio.textContent = bioInput.value;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
     });
 </script>
