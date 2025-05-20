@@ -192,16 +192,18 @@ permalink: /explore-cars/
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-gray-300 mb-2">Car Images (Max 5)</label>
-                                <div class="border-2 border-dashed border-gray-600 rounded-lg p-4 text-center min-h-40">
-                                    <div id="imagePreviews" class="grid grid-cols-3 gap-2 mb-3 hidden">
+                                <div class="border-2 border-dashed border-gray-600 rounded-lg p-4">
+                                    <div id="imagePreviews" class="grid grid-cols-3 gap-2 mb-3">
                                         <!-- Image previews will be added here -->
                                     </div>
-                                    <input type="file" id="carImages" accept="image/*" multiple class="hidden">
-                                    <label for="carImages" class="cursor-pointer">
-                                        <i class="fas fa-cloud-upload-alt text-3xl text-amber-400 mb-2"></i>
-                                        <p class="text-gray-400">Click to upload or drag and drop</p>
-                                        <p class="text-sm text-gray-500">PNG, JPG, JPEG (max. 5MB each)</p>
-                                    </label>
+                                    <div id="uploadControls" class="text-center">
+                                        <input type="file" id="carImages" accept="image/*" class="hidden">
+                                        <label for="carImages" class="cursor-pointer inline-block">
+                                            <i class="fas fa-cloud-upload-alt text-3xl text-amber-400 mb-2"></i>
+                                            <p class="text-gray-400">Click to upload first image</p>
+                                            <p class="text-sm text-gray-500">PNG, JPG, JPEG (max. 5MB)</p>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -272,6 +274,47 @@ permalink: /explore-cars/
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- Image Edit Modal -->
+        <div id="imageEditModal" class="modal modal-hidden fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-50">
+            <div class="bg-gray-800 rounded-xl p-6 w-full max-w-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Edit Image</h3>
+                    <button id="closeImageEdit" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="mb-4">
+                    <img id="editingImage" class="w-full h-96 object-contain rounded-lg" src="" alt="Editing image">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="edit-tool" data-tool="brightness">
+                        <i class="fas fa-sun mr-2"></i> Brightness
+                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="brightness">
+                    </div>
+                    <div class="edit-tool" data-tool="contrast">
+                        <i class="fas fa-adjust mr-2"></i> Contrast
+                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="contrast">
+                    </div>
+                    <div class="edit-tool" data-tool="saturation">
+                        <i class="fas fa-palette mr-2"></i> Saturation
+                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="saturation">
+                    </div>
+                    <div class="edit-tool" data-tool="temperature">
+                        <i class="fas fa-temperature-high mr-2"></i> Temperature
+                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="temperature">
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button id="cancelImageEdit" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
+                        Cancel
+                    </button>
+                    <button id="saveImageEdit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                        Save Changes
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -409,6 +452,9 @@ permalink: /explore-cars/
         const carouselPrev = document.getElementById('carouselPrev');
         const carouselNext = document.getElementById('carouselNext');
         const editToolsSection = document.getElementById('editToolsSection');
+        const imageEditModal = document.getElementById('imageEditModal');
+        const closeImageEdit = document.getElementById('closeImageEdit');
+        const editingImage = document.getElementById('editingImage');
 
         // State
         let cars = [...sampleCars];
@@ -569,6 +615,9 @@ permalink: /explore-cars/
                     showCarDetail(car);
                 }
             });
+            
+            // Close image edit modal
+            closeImageEdit.addEventListener('click', () => toggleModal(imageEditModal));
         }
 
         // Toggle modal visibility
@@ -616,120 +665,113 @@ permalink: /explore-cars/
         function handleImageUpload(e) {
             const files = e.target.files;
             if (files.length > 0) {
-                imagePreviews.innerHTML = '';
-                currentEditingImages = [];
+                const file = files[0];
                 
-                // Limit to 5 images
-                const fileCount = Math.min(files.length, 5);
-                
-                for (let i = 0; i < fileCount; i++) {
-                    const file = files[i];
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(event) {
-                        const imgContainer = document.createElement('div');
-                        imgContainer.className = 'relative';
-                        
-                        const img = document.createElement('img');
-                        img.src = event.target.result;
-                        img.className = 'w-full h-24 object-cover rounded';
-                        img.dataset.index = i;
-                        
-                        imgContainer.appendChild(img);
-                        imagePreviews.appendChild(imgContainer);
-                        
-                        // Store the original image data for editing
-                        currentEditingImages[i] = {
-                            original: event.target.result,
-                            current: event.target.result,
-                            filters: {
-                                brightness: 0,
-                                contrast: 0,
-                                saturation: 0,
-                                temperature: 0
-                            }
-                        };
-                    };
-                    
-                    reader.readAsDataURL(file);
+                // Check if we've reached the maximum number of images
+                if (currentEditingImages.length >= 5) {
+                    alert('Maximum 5 images allowed');
+                    return;
                 }
+
+                const reader = new FileReader();
                 
-                imagePreviews.classList.remove('hidden');
-                editToolsSection.classList.remove('hidden');
+                reader.onload = function(event) {
+                    // Add the new image to the array
+                    const newImageIndex = currentEditingImages.length;
+                    currentEditingImages.push({
+                        original: event.target.result,
+                        current: event.target.result,
+                        filters: {
+                            brightness: 0,
+                            contrast: 0,
+                            saturation: 0,
+                            temperature: 0
+                        }
+                    });
+
+                    // Create preview element
+                    const imgContainer = document.createElement('div');
+                    imgContainer.className = 'relative group';
+                    imgContainer.innerHTML = `
+                        <img src="${event.target.result}" 
+                             class="w-full h-24 object-cover rounded" 
+                             data-index="${newImageIndex}">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                            <button class="text-white hover:text-amber-400" onclick="editImage(${newImageIndex})">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="text-white hover:text-red-400" onclick="removeImage(${newImageIndex})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    imagePreviews.appendChild(imgContainer);
+                    updateUploadControls();
+                };
+                
+                reader.readAsDataURL(file);
             }
+
+            // Reset the input so the same file can be selected again
+            e.target.value = '';
         }
 
-        // Apply image filter
-        function applyImageFilter(property, value) {
-            // Update the filter value for all images
-            currentEditingImages.forEach(img => {
-                img.filters[property] = parseInt(value);
-            });
+        // Add new function to update upload controls
+        function updateUploadControls() {
+            const uploadControls = document.getElementById('uploadControls');
             
-            // Apply filters to all preview images
-            const previewImages = imagePreviews.querySelectorAll('img');
-            previewImages.forEach(img => {
-                const index = parseInt(img.dataset.index);
-                const imageData = currentEditingImages[index];
-                
-                // Apply CSS filters
-                const filters = imageData.filters;
-                img.style.filter = `
-                    brightness(${100 + filters.brightness}%)
-                    contrast(${100 + filters.contrast}%)
-                    saturate(${100 + filters.saturation}%)
-                    sepia(${Math.abs(filters.temperature)}%)
-                    ${filters.temperature > 0 ? 'hue-rotate(-30deg)' : filters.temperature < 0 ? 'hue-rotate(30deg)' : ''}
+            if (currentEditingImages.length < 5) {
+                uploadControls.innerHTML = `
+                    <input type="file" id="carImages" accept="image/*" class="hidden">
+                    <label for="carImages" class="cursor-pointer inline-block">
+                        <i class="fas fa-plus-circle text-3xl text-amber-400 mb-2"></i>
+                        <p class="text-gray-400">Add ${currentEditingImages.length === 0 ? 'first' : 'another'} image</p>
+                        <p class="text-sm text-gray-500">${5 - currentEditingImages.length} spots remaining</p>
+                    </label>
                 `;
-            });
-        }
-
-        // Handle form submission
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const model = document.getElementById('carModel').value;
-            const description = document.getElementById('carDescription').value;
-            
-            // Get selected tags
-            const selectedTagElements = document.querySelectorAll('#uploadForm .tag-option.selected');
-            const tags = Array.from(selectedTagElements).map(el => `#${el.dataset.tag}`);
-            
-            if (!model || !description || currentEditingImages.length === 0) {
-                alert('Please fill in all fields and upload at least one image');
-                return;
+                
+                // Reattach event listener to new input
+                document.getElementById('carImages').addEventListener('change', handleImageUpload);
+            } else {
+                uploadControls.innerHTML = '<p class="text-gray-400">Maximum images reached</p>';
             }
-            
-            // Get the image URLs (in a real app, you would upload these to a server)
-            const imageUrls = currentEditingImages.map(img => img.current);
-            
-            const newCar = {
-                id: nextId++,
-                images: imageUrls,
-                model: model,
-                username: "@your_username",
-                description: description,
-                tags: tags,
-                likes: 0,
-                isLiked: false,
-                isBookmarked: false
-            };
-            
-            cars.unshift(newCar);
-            renderPosts();
-            
-            // Reset form
-            resetUploadForm();
-            toggleModal(uploadModal);
         }
 
-        // Reset upload form
+        // Update removeImage function
+        function removeImage(index) {
+            currentEditingImages.splice(index, 1);
+            
+            // Rebuild previews to update indices
+            imagePreviews.innerHTML = '';
+            currentEditingImages.forEach((img, idx) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'relative group';
+                imgContainer.innerHTML = `
+                    <img src="${img.current}" 
+                         class="w-full h-24 object-cover rounded" 
+                         data-index="${idx}">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                        <button class="text-white hover:text-amber-400" onclick="editImage(${idx})">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button class="text-white hover:text-red-400" onclick="removeImage(${idx})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                imagePreviews.appendChild(imgContainer);
+            });
+            
+            updateUploadControls();
+        }
+
+        // Update resetUploadForm function
         function resetUploadForm() {
             uploadForm.reset();
             imagePreviews.innerHTML = '';
-            imagePreviews.classList.add('hidden');
-            editToolsSection.classList.add('hidden');
             currentEditingImages = [];
+            updateUploadControls();
             
             // Reset selected tags
             document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
