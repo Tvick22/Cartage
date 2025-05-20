@@ -83,9 +83,11 @@ menu: nav/mainHeader.html
                         <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-lg font-semibold transition duration-300 shadow-lg">
                             Join the Community
                         </button>
-                        <button class="bg-transparent hover:bg-gray-800 text-white border border-gray-400 px-6 py-3 rounded-md text-lg font-semibold transition duration-300">
-                            Explore Cars
-                        </button>
+                      <a href="{{site.baseurl}}/explore-cars" class="inline-block">
+    <button class="bg-transparent hover:bg-gray-800 text-white border border-gray-400 px-6 py-3 rounded-md text-lg font-semibold transition duration-300">
+        Explore Cars
+    </button>
+</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
