@@ -109,32 +109,7 @@ permalink: /explore-cars/
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">
-    <!-- Navigation -->
-    <nav class="bg-gray-800 bg-opacity-80 backdrop-blur-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-car text-amber-400 text-2xl"></i>
-                <span class="text-xl font-bold">Cartage</span>
-            </div>
-            <div class="hidden md:flex space-x-6">
-                <a href="#" class="hover:text-amber-400 transition">Home</a>
-                <a href="#" class="text-amber-400 font-medium">Explore</a>
-                <a href="#" class="hover:text-amber-400 transition">Garage</a>
-                <a href="#" class="hover:text-amber-400 transition">Community</a>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button class="p-2 rounded-full hover:bg-gray-700 transition">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="p-2 rounded-full hover:bg-gray-700 transition">
-                    <i class="fas fa-bell"></i>
-                </button>
-                <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center">
-                    <span class="font-medium">JD</span>
-                </div>
-            </div>
-        </div>
-    </nav>
+   
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
