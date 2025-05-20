@@ -692,19 +692,7 @@ permalink: /explore-cars/
                     // Create preview element
                     const imgContainer = document.createElement('div');
                     imgContainer.className = 'relative group';
-                    imgContainer.innerHTML = `
-                        <img src="${event.target.result}" 
-                             class="w-full h-24 object-cover rounded" 
-                             data-index="${newImageIndex}">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
-                            <button class="text-white hover:text-amber-400" onclick="editImage(${newImageIndex})">
-                                <i class="fas fa-search-plus"></i>
-                            </button>
-                            <button class="text-white hover:text-red-400" onclick="removeImage(${newImageIndex})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
+                    imgContainer.innerHTML = updateImagePreview(currentEditingImages[newImageIndex], newImageIndex);
                     
                     imagePreviews.appendChild(imgContainer);
                     updateUploadControls();
@@ -747,19 +735,7 @@ permalink: /explore-cars/
             currentEditingImages.forEach((img, idx) => {
                 const imgContainer = document.createElement('div');
                 imgContainer.className = 'relative group';
-                imgContainer.innerHTML = `
-                    <img src="${img.current}" 
-                         class="w-full h-24 object-cover rounded" 
-                         data-index="${idx}">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
-                        <button class="text-white hover:text-amber-400" onclick="editImage(${idx})">
-                            <i class="fas fa-search-plus"></i>
-                        </button>
-                        <button class="text-white hover:text-red-400" onclick="removeImage(${idx})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
+                imgContainer.innerHTML = updateImagePreview(currentEditingImages[idx], idx);
                 imagePreviews.appendChild(imgContainer);
             });
             
@@ -863,6 +839,775 @@ permalink: /explore-cars/
             detailCarousel.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
         }
 
+        // Update the editImage function
+        function editImage(index) {
+            const imageData = currentEditingImages[index];
+            const editModal = document.getElementById('imageEditModal');
+            
+            // Set up the edit modal without closing upload modal
+            editModal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl p-6 w-full max-w-4xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Edit Image</h3>
+                        <button type="button" onclick="event.preventDefault(); closeImageEditModal()" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="mb-6">
+                        <img id="editingImage" src="${imageData.current}" 
+                             class="w-full h-[60vh] object-contain rounded-lg" 
+                             alt="Editing image">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-sun mr-2"></i>
+                                <span>Brightness</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}" 
+                                   class="w-full" data-filter="brightness">
+                        </div>
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-adjust mr-2"></i>
+                                <span>Contrast</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}" 
+                                   class="w-full" data-filter="contrast">
+                        </div>
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-palette mr-2"></i>
+                                <span>Saturation</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}" 
+                                   class="w-full" data-filter="saturation">
+                        </div>
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-temperature-high mr-2"></i>
+                                <span>Temperature</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}" 
+                                   class="w-full" data-filter="temperature">
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})" 
+                                class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
+                            Reset
+                        </button>
+                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})" 
+                                class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Show the edit modal without hiding upload modal
+            editModal.classList.remove('modal-hidden');
+            editModal.classList.add('modal-visible');
+
+            // Add event listeners to range inputs
+            editModal.querySelectorAll('input[type="range"]').forEach(input => {
+                input.addEventListener('input', (event) => {
+                    event.preventDefault();
+                    applyImageFilters(index);
+                });
+            });
+        }
+
+        // Function to apply filters to the image
+        function applyImageFilters(index) {
+            const editingImage = document.getElementById('editingImage');
+            const filters = {};
+            
+            document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
+                const filter = input.dataset.filter;
+                const value = input.value;
+                filters[filter] = value;
+            });
+
+            // Apply CSS filters
+            const filterString = `
+                brightness(${100 + parseInt(filters.brightness)}%) 
+                contrast(${100 + parseInt(filters.contrast)}%) 
+                saturate(${100 + parseInt(filters.saturation)}%)
+                hue-rotate(${filters.temperature}deg)
+            `;
+            
+            editingImage.style.filter = filterString;
+            currentEditingImages[index].filters = filters;
+        }
+
+        // Function to save the edited image
+        function saveImageEdit(index) {
+            const editingImage = document.getElementById('editingImage');
+            
+            // Create a canvas to save the filtered image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = editingImage.naturalWidth;
+            canvas.height = editingImage.naturalHeight;
+            
+            // Draw the filtered image to canvas
+            ctx.filter = editingImage.style.filter;
+            ctx.drawImage(editingImage, 0, 0);
+            
+            // Save the filtered image
+            currentEditingImages[index].current = canvas.toDataURL('image/jpeg');
+            
+            // Update the preview
+            const previewImage = document.querySelector(`#imagePreviews img[data-index="${index}"]`);
+            if (previewImage) {
+                previewImage.src = currentEditingImages[index].current;
+            }
+            
+            closeImageEditModal();
+        }
+
+        // Function to reset image filters
+        function resetImageFilters(index) {
+            const editingImage = document.getElementById('editingImage');
+            editingImage.style.filter = 'none';
+            
+            // Reset all range inputs
+            document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
+                input.value = 0;
+            });
+            
+            currentEditingImages[index].filters = {
+                brightness: 0,
+                contrast: 0,
+                saturation: 0,
+                temperature: 0
+            };
+        }
+
+        // Function to close the image edit modal
+        function closeImageEditModal() {
+            const editModal = document.getElementById('imageEditModal');
+            editModal.classList.remove('modal-visible');
+            editModal.classList.add('modal-hidden');
+        }
+
+        // Update the handleFormSubmit function to properly handle multiple images
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const model = document.getElementById('carModel').value;
+            const description = document.getElementById('carDescription').value;
+            
+            // Validate form
+            if (!model || !description || currentEditingImages.length === 0) {
+                alert('Please fill in all fields and upload at least one image');
+                return;
+            }
+            
+            // Get all selected tags and brands
+            const selectedTagElements = document.querySelectorAll('#uploadForm .tag-option.selected');
+            const tags = Array.from(selectedTagElements).map(el => `#${el.dataset.tag}`);
+            
+            // Create new car object with all edited images
+            const newCar = {
+                id: nextId++,
+                images: currentEditingImages.map(img => img.current), // Use all edited images
+                model: model,
+                username: "@user", // Replace with actual user
+                description: description,
+                tags: tags,
+                likes: 0,
+                isLiked: false,
+                isBookmarked: false
+            };
+            
+            // Add to cars array and render
+            cars.unshift(newCar);
+            renderPosts();
+            
+            // Reset form and close modal
+            resetUploadForm();
+            toggleModal(uploadModal);
+        }
+
+        // Add custom tag functionality
+        function addCustomTagsSection() {
+            const tagSection = document.querySelector('#uploadForm .space-y-4');
+            const customTagsHTML = `
+                <div class="mt-4">
+                    <label class="block text-gray-300 mb-2">Custom Tags</label>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="customTag" 
+                               class="flex-1 bg-gray-700 rounded px-3 py-2" 
+                               placeholder="Enter custom tag">
+                        <button type="button" onclick="addCustomTag()" 
+                                class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                            Add
+                        </button>
+                    </div>
+                    <div id="customTagsContainer" class="flex flex-wrap gap-2 mt-2">
+                        <!-- Custom tags will appear here -->
+                    </div>
+                </div>
+            `;
+            
+            tagSection.insertAdjacentHTML('beforeend', customTagsHTML);
+        }
+
+        // Function to add custom tag
+        function addCustomTag() {
+            const customTagInput = document.getElementById('customTag');
+            const tag = customTagInput.value.trim().toLowerCase().replace(/\s+/g, '-');
+            
+            if (tag) {
+                const customTagsContainer = document.getElementById('customTagsContainer');
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag-option px-3 py-1 bg-gray-700 rounded-full flex items-center space-x-2';
+                tagElement.dataset.tag = tag;
+                tagElement.innerHTML = `
+                    <span>#${tag}</span>
+                    <button type="button" class="text-gray-400 hover:text-red-400" 
+                            onclick="removeCustomTag(this.parentElement)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                customTagsContainer.appendChild(tagElement);
+                customTagInput.value = '';
+                
+                // Add to available tags in filter modal
+                addTagToFilters(tag);
+            }
+        }
+
+        // Function to remove custom tag
+        function removeCustomTag(tagElement) {
+            tagElement.remove();
+        }
+
+        // Function to add new tag to filters
+        function addTagToFilters(tag) {
+            const filterTagsContainer = document.querySelector('#filterModal .flex.flex-wrap.gap-2');
+            const existingTag = filterTagsContainer.querySelector(`[data-tag="${tag}"]`);
+            
+            if (!existingTag) {
+                const tagButton = document.createElement('button');
+                tagButton.className = 'tag-option px-3 py-1 bg-gray-700 rounded-full';
+                tagButton.dataset.tag = tag;
+                tagButton.textContent = tag;
+                tagButton.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+                filterTagsContainer.appendChild(tagButton);
+            }
+        }
+
+        // Add search functionality to filter modal
+        function addTagSearch() {
+            const filterModal = document.querySelector('#filterModal .space-y-4');
+            const searchHTML = `
+                <div class="mb-4">
+                    <input type="text" id="tagSearch" 
+                           class="w-full bg-gray-700 rounded px-3 py-2" 
+                           placeholder="Search tags...">
+                </div>
+            `;
+            
+            filterModal.insertAdjacentHTML('afterbegin', searchHTML);
+            
+            // Add search functionality
+            document.getElementById('tagSearch').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const tagButtons = document.querySelectorAll('#filterModal .tag-option');
+                
+                tagButtons.forEach(button => {
+                    const tag = button.dataset.tag.toLowerCase();
+                    button.style.display = tag.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        }
+
+        // Update setupEventListeners to include new functionality
+        function setupEventListeners() {
+            // Filter modal
+            filterBtn.addEventListener('click', () => toggleModal(filterModal));
+            closeFilterModal.addEventListener('click', () => toggleModal(filterModal));
+            resetFilters.addEventListener('click', resetAllFilters);
+            applyFilters.addEventListener('click', applyAllFilters);
+            
+            // Tag selection in filter modal
+            document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            // Upload modal
+            addPostBtn.addEventListener('click', () => toggleModal(uploadModal));
+            closeUploadModal.addEventListener('click', () => {
+                resetUploadForm();
+                toggleModal(uploadModal);
+            });
+            cancelUpload.addEventListener('click', () => {
+                resetUploadForm();
+                toggleModal(uploadModal);
+            });
+            
+            // Image upload preview
+            carImages.addEventListener('change', handleImageUpload);
+            
+            // Tag selection in upload modal
+            document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            // Form submission
+            uploadForm.addEventListener('submit', handleFormSubmit);
+            
+            // Car detail modal
+            closeCarDetailModal.addEventListener('click', () => toggleModal(carDetailModal));
+            
+            // Carousel navigation
+            carouselPrev.addEventListener('click', () => navigateCarousel(-1));
+            carouselNext.addEventListener('click', () => navigateCarousel(1));
+            
+            // Edit tools
+            document.querySelectorAll('.edit-tool').forEach(tool => {
+                tool.addEventListener('click', function() {
+                    document.querySelectorAll('.edit-tool').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Edit sliders
+            document.querySelectorAll('.edit-slider').forEach(slider => {
+                slider.addEventListener('input', function() {
+                    const property = this.dataset.property;
+                    const value = this.value;
+                    applyImageFilter(property, value);
+                });
+            });
+            
+            // Delegate events for dynamically created elements
+            postsContainer.addEventListener('click', (e) => {
+                const card = e.target.closest('.card');
+                if (!card) return;
+                
+                const carId = parseInt(card.dataset.id);
+                const car = cars.find(c => c.id === carId);
+                
+                if (e.target.closest('.like-btn')) {
+                    toggleLike(car);
+                } else if (e.target.closest('.bookmark-btn')) {
+                    toggleBookmark(car);
+                } else {
+                    // Clicked on the card itself - show detail view
+                    showCarDetail(car);
+                }
+            });
+            
+            // Close image edit modal
+            closeImageEdit.addEventListener('click', () => toggleModal(imageEditModal));
+            
+            // Add custom tags section
+            addCustomTagsSection();
+            
+            // Add tag search
+            addTagSearch();
+        }
+
+        // Toggle modal visibility
+        function toggleModal(modal) {
+            modal.classList.toggle('modal-hidden');
+            modal.classList.toggle('modal-visible');
+            
+            // Reset carousel when closing detail modal
+            if (modal === carDetailModal && modal.classList.contains('modal-hidden')) {
+                currentCarouselIndex = 0;
+            }
+        }
+
+        // Reset all filters
+        function resetAllFilters() {
+            document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            selectedTags = [];
+            selectedBrands = [];
+            renderPosts();
+            toggleModal(filterModal);
+        }
+
+        // Apply all filters
+        function applyAllFilters() {
+            selectedTags = [];
+            selectedBrands = [];
+            
+            // Get selected tags and brands
+            document.querySelectorAll('#filterModal .tag-option.selected').forEach(btn => {
+                const tag = btn.dataset.tag;
+                if (['sports', 'luxury', 'suv', 'classic', 'electric', 'jdm', 'muscle', 'tuner'].includes(tag)) {
+                    selectedTags.push(tag);
+                } else {
+                    selectedBrands.push(tag);
+                }
+            });
+            
+            renderPosts();
+            toggleModal(filterModal);
+        }
+
+        // Handle image upload preview
+        function handleImageUpload(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // Check if we've reached the maximum number of images
+                if (currentEditingImages.length >= 5) {
+                    alert('Maximum 5 images allowed');
+                    return;
+                }
+
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    // Add the new image to the array
+                    const newImageIndex = currentEditingImages.length;
+                    currentEditingImages.push({
+                        original: event.target.result,
+                        current: event.target.result,
+                        filters: {
+                            brightness: 0,
+                            contrast: 0,
+                            saturation: 0,
+                            temperature: 0
+                        }
+                    });
+
+                    // Create preview element
+                    const imgContainer = document.createElement('div');
+                    imgContainer.className = 'relative group';
+                    imgContainer.innerHTML = updateImagePreview(currentEditingImages[newImageIndex], newImageIndex);
+                    
+                    imagePreviews.appendChild(imgContainer);
+                    updateUploadControls();
+                };
+                
+                reader.readAsDataURL(file);
+            }
+
+            // Reset the input so the same file can be selected again
+            e.target.value = '';
+        }
+
+        // Add new function to update upload controls
+        function updateUploadControls() {
+            const uploadControls = document.getElementById('uploadControls');
+            
+            if (currentEditingImages.length < 5) {
+                uploadControls.innerHTML = `
+                    <input type="file" id="carImages" accept="image/*" class="hidden">
+                    <label for="carImages" class="cursor-pointer inline-block">
+                        <i class="fas fa-plus-circle text-3xl text-amber-400 mb-2"></i>
+                        <p class="text-gray-400">Add ${currentEditingImages.length === 0 ? 'first' : 'another'} image</p>
+                        <p class="text-sm text-gray-500">${5 - currentEditingImages.length} spots remaining</p>
+                    </label>
+                `;
+                
+                // Reattach event listener to new input
+                document.getElementById('carImages').addEventListener('change', handleImageUpload);
+            } else {
+                uploadControls.innerHTML = '<p class="text-gray-400">Maximum images reached</p>';
+            }
+        }
+
+        // Update removeImage function
+        function removeImage(index) {
+            currentEditingImages.splice(index, 1);
+            
+            // Rebuild previews to update indices
+            imagePreviews.innerHTML = '';
+            currentEditingImages.forEach((img, idx) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'relative group';
+                imgContainer.innerHTML = updateImagePreview(currentEditingImages[idx], idx);
+                imagePreviews.appendChild(imgContainer);
+            });
+            
+            updateUploadControls();
+        }
+
+        // Update resetUploadForm function
+        function resetUploadForm() {
+            uploadForm.reset();
+            imagePreviews.innerHTML = '';
+            currentEditingImages = [];
+            updateUploadControls();
+            
+            // Reset selected tags
+            document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+        }
+
+        // Toggle like status
+        function toggleLike(car) {
+            car.isLiked = !car.isLiked;
+            car.likes += car.isLiked ? 1 : -1;
+            renderPosts();
+            
+            // Update detail modal if open
+            if (!carDetailModal.classList.contains('modal-hidden')) {
+                const likeBtn = carDetailModal.querySelector('.like-btn i');
+                const likeCount = carDetailModal.querySelector('.like-count');
+                
+                likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
+                likeCount.textContent = car.likes;
+            }
+        }
+
+        // Toggle bookmark status
+        function toggleBookmark(car) {
+            car.isBookmarked = !car.isBookmarked;
+            renderPosts();
+            
+            // Update detail modal if open
+            if (!carDetailModal.classList.contains('modal-hidden')) {
+                const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
+                bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
+            }
+        }
+
+        // Show car detail view
+        function showCarDetail(car) {
+            detailCarModel.textContent = car.model;
+            detailUsername.textContent = car.username;
+            detailDescription.textContent = car.description;
+            
+            // Clear previous tags
+            const tagsContainer = carDetailModal.querySelector('.flex.flex-wrap.gap-2.mb-4');
+            tagsContainer.innerHTML = '';
+            
+            // Add tags
+            car.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'px-2 py-1 bg-gray-700 rounded-full text-xs';
+                tagElement.textContent = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+            
+            // Set up carousel
+            detailCarousel.innerHTML = '';
+            currentCarouselImages = car.images;
+            currentCarouselIndex = 0;
+            
+            car.images.forEach((img, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'min-w-full';
+                slide.innerHTML = `<img src="${img}" alt="${car.model}" class="w-full h-96 object-contain">`;
+                detailCarousel.appendChild(slide);
+            });
+            
+            // Update like and bookmark buttons
+            const likeBtn = carDetailModal.querySelector('.like-btn i');
+            const likeCount = carDetailModal.querySelector('.like-count');
+            const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
+            
+            likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
+            likeCount.textContent = car.likes;
+            bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
+            
+            // Show modal
+            toggleModal(carDetailModal);
+        }
+
+        // Navigate carousel
+        function navigateCarousel(direction) {
+            currentCarouselIndex += direction;
+            
+            if (currentCarouselIndex < 0) {
+                currentCarouselIndex = currentCarouselImages.length - 1;
+            } else if (currentCarouselIndex >= currentCarouselImages.length) {
+                currentCarouselIndex = 0;
+            }
+            
+            detailCarousel.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+        }
+
+        // Update the editImage function
+        function editImage(index) {
+            const imageData = currentEditingImages[index];
+            const editModal = document.getElementById('imageEditModal');
+            
+            // Set up the edit modal without closing upload modal
+            editModal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl p-6 w-full max-w-4xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Edit Image</h3>
+                        <button type="button" onclick="event.preventDefault(); closeImageEditModal()" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="mb-6">
+                        <img id="editingImage" src="${imageData.current}" 
+                             class="w-full h-[60vh] object-contain rounded-lg" 
+                             alt="Editing image">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-sun mr-2"></i>
+                                <span>Brightness</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}" 
+                                   class="w-full" data-filter="brightness">
+                        </div>
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-adjust mr-2"></i>
+                                <span>Contrast</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}" 
+                                   class="w-full" data-filter="contrast">
+                        </div>
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-palette mr-2"></i>
+                                <span>Saturation</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}" 
+                                   class="w-full" data-filter="saturation">
+                        </div>
+                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-temperature-high mr-2"></i>
+                                <span>Temperature</span>
+                            </div>
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}" 
+                                   class="w-full" data-filter="temperature">
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})" 
+                                class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
+                            Reset
+                        </button>
+                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})" 
+                                class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Show the edit modal without hiding upload modal
+            editModal.classList.remove('modal-hidden');
+            editModal.classList.add('modal-visible');
+
+            // Add event listeners to range inputs
+            editModal.querySelectorAll('input[type="range"]').forEach(input => {
+                input.addEventListener('input', (event) => {
+                    event.preventDefault();
+                    applyImageFilters(index);
+                });
+            });
+        }
+
+        // Function to apply filters to the image
+        function applyImageFilters(index) {
+            const editingImage = document.getElementById('editingImage');
+            const filters = {};
+            
+            document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
+                const filter = input.dataset.filter;
+                const value = input.value;
+                filters[filter] = value;
+            });
+
+            // Apply CSS filters
+            const filterString = `
+                brightness(${100 + parseInt(filters.brightness)}%) 
+                contrast(${100 + parseInt(filters.contrast)}%) 
+                saturate(${100 + parseInt(filters.saturation)}%)
+                hue-rotate(${filters.temperature}deg)
+            `;
+            
+            editingImage.style.filter = filterString;
+            currentEditingImages[index].filters = filters;
+        }
+
+        // Function to save the edited image
+        function saveImageEdit(index) {
+            const editingImage = document.getElementById('editingImage');
+            
+            // Create a canvas to save the filtered image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = editingImage.naturalWidth;
+            canvas.height = editingImage.naturalHeight;
+            
+            // Draw the filtered image to canvas
+            ctx.filter = editingImage.style.filter;
+            ctx.drawImage(editingImage, 0, 0);
+            
+            // Save the filtered image
+            currentEditingImages[index].current = canvas.toDataURL('image/jpeg');
+            
+            // Update the preview
+            const previewImage = document.querySelector(`#imagePreviews img[data-index="${index}"]`);
+            if (previewImage) {
+                previewImage.src = currentEditingImages[index].current;
+            }
+            
+            closeImageEditModal();
+        }
+
+        // Function to reset image filters
+        function resetImageFilters(index) {
+            const editingImage = document.getElementById('editingImage');
+            editingImage.style.filter = 'none';
+            
+            // Reset all range inputs
+            document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
+                input.value = 0;
+            });
+            
+            currentEditingImages[index].filters = {
+                brightness: 0,
+                contrast: 0,
+                saturation: 0,
+                temperature: 0
+            };
+        }
+
+        // Function to close the image edit modal
+        function closeImageEditModal() {
+            const editModal = document.getElementById('imageEditModal');
+            editModal.classList.remove('modal-visible');
+            editModal.classList.add('modal-hidden');
+        }
+
+        // Update the handleImageUpload preview HTML
+        function updateImagePreview(imageData, index) {
+            return `
+                <div class="relative group">
+                    <img src="${imageData.current}" 
+                         class="w-full h-24 object-cover rounded" 
+                         data-index="${index}">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                        <button type="button" class="text-white hover:text-amber-400" onclick="event.preventDefault(); event.stopPropagation(); editImage(${index})">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button type="button" class="text-white hover:text-red-400" onclick="event.preventDefault(); event.stopPropagation(); removeImage(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
         // Initialize the app
         init();
     </script>
