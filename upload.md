@@ -84,12 +84,7 @@ menu: nav/mainHeader.html
           </button>
         </div>
       </div>
-
-      <form id="uploadForm" method="POSTs" enctype="multipart/form-data" action="/upload" class="hidden">
-        <input type="file" name="file" id="hiddenFileInput">
-      </form>
-    </div>
-    <form id="uploadForm" method="POSTs" enctype="multipart/form-data" action="/upload" class="hidden">
+    <form id="uploadForm" method="POST" enctype="multipart/form-data" action="/upload" class="hidden">
         <input type="file" name="file" id="hiddenFileInput">
       </form>
     </div>
