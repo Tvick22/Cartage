@@ -10,7 +10,7 @@ menu: nav/mainHeader.html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | Shots</title>
+    <title>Sign In | ShotSpot</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -71,7 +71,8 @@ menu: nav/mainHeader.html
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen bg-gray-50">
+    <div class="flex items-center justify-center min-h-screen relative p-4">
     <div class="absolute inset-0 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-white to-gray-100 opacity-90"></div>
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center opacity-10"></div>
@@ -235,5 +236,6 @@ menu: nav/mainHeader.html
             }
         });
     </script>
+    </div>
 </body>
 </html>
