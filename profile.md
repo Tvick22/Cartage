@@ -85,9 +85,9 @@ menu: nav/mainHeader.html
         <!-- Profile Details -->
         <div class="flex-1">
             <div class="flex flex-col space-y-4 mb-8">
-                <h2 id="profile-name" class="text-5xl font-bold text-gray-900">Alex Johnson</h2>
-                <p class="text-2xl text-gray-500">@alexjohnson_photography</p>
-                <span id="profile-bio" class="text-lg text-gray-600 font-medium">>>BIO<<</span>
+                <h2 id="profile-name" class="text-5xl font-bold text-gray-900">User's Name</h2>
+                <p class="text-2xl text-gray-500">@userhandle</p>
+                <span id="profile-bio" class="text-lg text-gray-600 font-medium">BIO</span>
 
                 <div class="mt-4 inline-flex items-center px-6 py-3 rounded-xl bg-amber-100 text-xl font-semibold text-amber-800 shadow-md border border-amber-300">
                     <i class="fas fa-camera-retro mr-2"></i>
@@ -136,7 +136,7 @@ menu: nav/mainHeader.html
             </div>
             <div>
                 <label for="bio-input" class="block text-gray-700 font-semibold mb-1">Bio</label>
-                <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">>>BIO<<</textarea>
+                <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">Bio</textarea>
             </div>
         </div>
         <div class="mt-6 flex justify-end space-x-3">
