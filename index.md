@@ -238,7 +238,7 @@ menu: nav/mainHeader.html
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="nav-link font-medium">Home</a>
-                    <a href="#" class="nav-link font-medium">Explore</a>
+                    <a href="explore-cars" class="nav-link font-medium">Explore</a>
                     <a href="#" class="nav-link font-medium">Profile</a>
                     <a href="#" class="nav-link font-medium">Documentation</a>
                     <a href="#" class="nav-link font-medium">Contact</a>
