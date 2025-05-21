@@ -641,10 +641,10 @@ menu: nav/mainHeader.html
     document.addEventListener('DOMContentLoaded', function() {
         const isAuthenticated = localStorage.getItem('authenticated') === 'true';
         if (isAuthenticated) {
-            document.getElementById('classes-container').style.display = "block"; // Show the classes container
+            document.getElementById('classes-container').style.display = "block"; // Show the features container
             document.getElementById('prompt-login').style.display = "none"; // Hide the login prompt
         } else {
-            document.getElementById('classes-container').style.display = "none"; // Hide the classes container
+            document.getElementById('classes-container').style.display = "none"; // Hide the features container
             document.getElementById('prompt-login').style.display = "block"; // Show the login prompt
         }
     });
