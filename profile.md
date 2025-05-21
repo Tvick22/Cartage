@@ -252,38 +252,4 @@ menu: nav/mainHeader.html
     });
 </script>
 
-<div class="some-container" style="margin-bottom: 20px;">
-  <!-- Follow button -->
-  <button id="follow-button" style="
-    padding: 8px 16px; 
-    border-radius: 8px; 
-    background-color: #e5e7eb; 
-    color: black; 
-    border: none; 
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  ">
-    <i class="fas fa-user-plus"></i><span>Follow</span>
-  </button>
-  <!-- Follower count will be injected here by JS -->
-</div>
-
-<!-- Hobbies section title -->
-<h2>Hobbies</h2>
-
-<!-- Hobbies boxes container -->
-<div class="hobbies-container" style="display: flex; gap: 16px; margin-top: 12px;">
-  <div style="flex: 1; background-color: #f3f4f6; padding: 16px; border-radius: 12px; text-align: center; font-weight: 600;">
-    Reading
-  </div>
-  <div style="flex: 1; background-color: #f3f4f6; padding: 16px; border-radius: 12px; text-align: center; font-weight: 600;">
-    Gaming
-  </div>
-  <div style="flex: 1; background-color: #f3f4f6; padding: 16px; border-radius: 12px; text-align: center; font-weight: 600;">
-    Cooking
-  </div>
-</div>
 
