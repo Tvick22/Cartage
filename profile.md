@@ -76,9 +76,14 @@ menu: nav/mainHeader.html
                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Sample_User_Icon.png/600px-Sample_User_Icon.png"
                  alt="Profile picture"
                  class="w-40 h-40 rounded-full border-4 border-amber-500 object-cover">
-            <label for="profile-pic-upload" class="cursor-pointer bg-amber-500 mt-4 px-4 py-2 rounded-md text-white text-base shadow-md">
-                Upload Photo
-            </label>
+        <label for="profile-pic-upload"
+       class="relative group bg-amber-500 mt-4 px-5 py-2.5 rounded-md text-white text-base font-medium overflow-hidden shadow-md transition-transform duration-300 transform hover:scale-105 hover:bg-amber-600">
+    <span class="absolute top-0 left-0 h-0.5 w-full bg-white transition-all duration-500 group-hover:w-0"></span>
+    <span class="relative z-10">Upload Photo</span>
+</label>
+
+
+
             <input type="file" id="profile-pic-upload" class="hidden" accept="image/*">
         </div>
 
@@ -89,16 +94,15 @@ menu: nav/mainHeader.html
                 <p class="text-2xl text-gray-500">@userhandle</p>
                 <span id="profile-bio" class="text-lg text-gray-600 font-medium">BIO</span>
 
-                <div class="mt-4 inline-flex items-center px-6 py-3 rounded-xl bg-amber-100 text-xl font-semibold text-amber-800 shadow-md border border-amber-300">
-                    <i class="fas fa-camera-retro mr-2"></i>
-                    Posts: <span id="post-count" class="ml-1">0</span>
-                </div>
+       <div class="mt-4 inline-flex items-center px-6 py-3 rounded-xl bg-amber-100 text-xl font-semibold text-amber-800 shadow-md border border-amber-300">
+    <i class="fas fa-camera-retro mr-2"></i>
+    Posts: <span id="post-count" class="ml-1">0</span>
+</div>
             </div>
-
             <div class="flex space-x-6 mb-6">
-                <button onclick="window.location.href='/messages/alexjohnson_photography'" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-xl font-medium">
-                    <i class="fas fa-envelope mr-2"></i>Message
-                </button>
+               <a href="/messages/user_example.html" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-xl font-medium inline-block transition-all duration-300 shadow-md hover:scale-105">
+    <i class="fas fa-envelope mr-2"></i>Message
+</a>
                 <button id="follow-button" class="relative bg-gray-200 hover:bg-green-500 text-black px-6 py-3 rounded-md text-xl font-medium flex items-center space-x-2">
                     <i class="fas fa-user-plus"></i>
                     <span>Follow</span>
@@ -132,11 +136,11 @@ menu: nav/mainHeader.html
         <div class="space-y-4">
             <div>
                 <label for="name-input" class="block text-gray-700 font-semibold mb-1">Name</label>
-                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" value="Alex Johnson">
+                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" value="User's Name">
             </div>
             <div>
-                <label for="bio-input" class="block text-gray-700 font-semibold mb-1">Bio</label>
-                <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">Bio</textarea>
+                <label for="bio-input" class="block text-gray-700 font-semibold mb-1">BIO</label>
+                <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">BIO</textarea>
             </div>
         </div>
         <div class="mt-6 flex justify-end space-x-3">
