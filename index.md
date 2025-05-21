@@ -636,3 +636,16 @@ menu: nav/mainHeader.html
     </script>
 </body>
 </html>
+
+    // Check authentication status and show the appropriate content
+    document.addEventListener('DOMContentLoaded', function() {
+        const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+        if (isAuthenticated) {
+            document.getElementById('classes-container').style.display = "block"; // Show the classes container
+            document.getElementById('prompt-login').style.display = "none"; // Hide the login prompt
+        } else {
+            document.getElementById('classes-container').style.display = "none"; // Hide the classes container
+            document.getElementById('prompt-login').style.display = "block"; // Show the login prompt
+        }
+    });
+</script>
