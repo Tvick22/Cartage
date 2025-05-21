@@ -81,7 +81,7 @@ menu: nav/mainHeader.html
     <div class="relative w-full max-w-md z-10">
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div class="brand-orange p-6 text-center">
-                <h1 class="text-3xl font-bold text-white">Shots</h1>
+                <h1 class="text-3xl font-bold text-white">ShotSpot</h1>
                 <p class="text-white opacity-90 mt-1">Capture and share your best moments</p>
             </div>
             
@@ -170,7 +170,7 @@ menu: nav/mainHeader.html
         </div>
         
         <div class="mt-6 text-center text-xs text-gray-500">
-            &copy; 2023 Shots. All rights reserved.
+            &copy; 2023 ShotSpot. All rights reserved.
         </div>
     </div>
     
