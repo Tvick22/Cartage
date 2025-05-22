@@ -238,7 +238,7 @@ menu: nav/mainHeader.html
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="nav-link font-medium">Home</a>
-                    <a href="#" class="nav-link font-medium">Explore</a>
+                    <a href="explore-cars" class="nav-link font-medium">Explore</a>
                     <a href="#" class="nav-link font-medium">Profile</a>
                     <a href="#" class="nav-link font-medium">Documentation</a>
                     <a href="#" class="nav-link font-medium">Contact</a>
@@ -636,3 +636,16 @@ menu: nav/mainHeader.html
     </script>
 </body>
 </html>
+
+    // Check authentication status and show the appropriate content
+    document.addEventListener('DOMContentLoaded', function() {
+        const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+        if (isAuthenticated) {
+            document.getElementById('classes-container').style.display = "block"; // Show the features container
+            document.getElementById('prompt-login').style.display = "none"; // Hide the login prompt
+        } else {
+            document.getElementById('classes-container').style.display = "none"; // Hide the features container
+            document.getElementById('prompt-login').style.display = "block"; // Show the login prompt
+        }
+    });
+</script>
