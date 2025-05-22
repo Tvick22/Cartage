@@ -145,23 +145,6 @@ menu: nav/mainHeader.html
                             <span class="px-2 bg-white text-gray-500">Or continue with</span>
                         </div>
                     </div>
-                    
-                    <div class="mt-6 grid grid-cols-2 gap-3">
-                        <div>
-                            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 ease-in-out">
-                                <i class="fab fa-google brand-orange-text"></i>
-                                <span class="ml-2">Google</span>
-                            </a>
-                        </div>
-                        
-                        <div>
-                            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 ease-in-out">
-                                <i class="fab fa-apple"></i>
-                                <span class="ml-2">Apple</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 
                 <div class="mt-8 text-center text-sm text-gray-500">
                      <a href="#" class="font-medium brand-orange-text hover:text-orange-600"> </a>
