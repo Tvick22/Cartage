@@ -288,5 +288,30 @@ bioWordCount.textContent = `${charCount}/${MAX_CHARS} characters`;
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     });
+
+document.addEventListener('keydown', (e) => {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const isEditShortcut = (isMac && e.metaKey && e.key.toLowerCase() === 'e');
+
+    if (isEditShortcut) {
+        e.preventDefault(); // prevent default browser behavior
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        const charCount = bioInput.value.length;
+        bioWordCount.textContent = `${charCount}/${MAX_CHARS} characters`;
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        e.preventDefault(); // Stop system/minimize behavior
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+});
+
+
+
 </script>
 
