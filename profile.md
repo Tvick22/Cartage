@@ -140,7 +140,11 @@ menu: nav/mainHeader.html
             </div>
             <div>
                 <label for="bio-input" class="block text-gray-700 font-semibold mb-1">BIO</label>
-                <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">BIO</textarea>
+               <div class="relative">
+    <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">Bio</textarea>
+    <p id="bio-word-count" class="absolute bottom-1 right-2 text-xs text-gray-500">0 words</p>
+</div>
+
             </div>
         </div>
         <div class="mt-6 flex justify-end space-x-3">
@@ -237,11 +241,40 @@ menu: nav/mainHeader.html
     const bioInput = document.getElementById('bio-input');
     const profileName = document.getElementById('profile-name');
     const profileBio = document.getElementById('profile-bio');
+    
+const MAX_CHARS = 300;
+const bioWordCount = document.getElementById('bio-word-count');
 
-    editBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    });
+bioInput.addEventListener('input', () => {
+    // Trim excess characters if over limit
+    if (bioInput.value.length > MAX_CHARS) {
+        bioInput.value = bioInput.value.slice(0, MAX_CHARS);
+    }
+
+    const charCount = bioInput.value.length;
+    bioWordCount.textContent = `${charCount}/${MAX_CHARS} characters`;
+
+    // Toggle color
+    if (charCount >= MAX_CHARS) {
+        bioWordCount.classList.add('text-red-500');
+        bioWordCount.classList.remove('text-gray-500');
+    } else {
+        bioWordCount.classList.remove('text-red-500');
+        bioWordCount.classList.add('text-gray-500');
+    }
+});
+
+
+  editBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    // Update the word count when opening the modal
+    const charCount = bioInput.value.length;
+bioWordCount.textContent = `${charCount}/${MAX_CHARS} characters`;
+
+});
+
 
     cancelEdit.addEventListener('click', () => {
         modal.classList.add('hidden');
