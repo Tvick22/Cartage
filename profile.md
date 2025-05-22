@@ -103,7 +103,8 @@ menu: nav/mainHeader.html
                <a href="/messages/user_example.html" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-xl font-medium inline-block transition-all duration-300 shadow-md hover:scale-105">
     <i class="fas fa-envelope mr-2"></i>Message
 </a>
-                <button id="follow-button" class="relative bg-gray-200 hover:bg-green-500 text-black px-6 py-3 rounded-md text-xl font-medium flex items-center space-x-2">
+                <button id="follow-button" class="relative bg-gray-200 text-black px-6 py-3 rounded-md text-xl font-medium flex items-center space-x-2 transition-transform duration-300 hover:scale-105">
+
                     <i class="fas fa-user-plus"></i>
                     <span>Follow</span>
                 </button>
