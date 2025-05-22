@@ -92,7 +92,7 @@ menu: nav/mainHeader.html
             <div class="flex flex-col space-y-4 mb-8">
                 <h2 id="profile-name" class="text-5xl font-bold text-gray-900">User's Name</h2>
                 <p class="text-2xl text-gray-500">@userhandle</p>
-                <span id="profile-bio" class="text-lg text-gray-600 font-medium">BIO</span>
+                <pre id="profile-bio" class="whitespace-pre-wrap break-words text-lg text-gray-600 font-medium">BIO</pre>
 
        <div class="mt-4 inline-flex items-center px-6 py-3 rounded-xl bg-amber-100 text-xl font-semibold text-amber-800 shadow-md border border-amber-300">
     <i class="fas fa-camera-retro mr-2"></i>
@@ -241,7 +241,7 @@ menu: nav/mainHeader.html
     const bioInput = document.getElementById('bio-input');
     const profileName = document.getElementById('profile-name');
     const profileBio = document.getElementById('profile-bio');
-    
+
 const MAX_CHARS = 300;
 const bioWordCount = document.getElementById('bio-word-count');
 
