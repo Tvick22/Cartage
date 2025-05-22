@@ -29,10 +29,14 @@
           </a>
         </div>
   
-        <!-- Right side: only Sign In button -->
-        <div class="flex items-center">
-          <button class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
-            Sign In
+        <div id="loginArea" class="flex items-center">
+            <!-- Initial fallback: show Sign In button -->
+            <a href="{{site.baseurl}}/login" 
+               class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300"
+               style="white-space: nowrap;">
+              Sign In
+            </a>
+          </div>          
           </button>
         </div>
       </div>
