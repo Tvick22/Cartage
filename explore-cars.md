@@ -355,8 +355,8 @@ permalink: /explore-cars/
                             <span class="like-count ml-1">0</span>
                         </button>
                         <button class="text-gray-400 hover:text-amber-500 transition">
-                            <i class="far fa-comment"></i>
-                            <span class="ml-1">Comment</span>
+                            <i class="far fa-connect"></i>
+                            <span class="ml-1">Connect</span>
                         </button>
                         <button class="text-gray-400 hover:text-amber-500 transition">
                             <i class="fas fa-share"></i>
