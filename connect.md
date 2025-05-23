@@ -61,7 +61,7 @@ menu: nav/mainHeader.html
 <div id="editGroupModal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-center justify-center z-50">
   <div class="bg-white text-gray-800 rounded-lg shadow-lg w-full max-w-3xl overflow-y-auto max-h-[90vh] p-6 fade-in">
     <div class="flex justify-between items-center border-b pb-4 mb-6">
-      <h3 class="text-2xl font-semibold">Edit Communityies</h3>
+      <h3 class="text-2xl font-semibold">Edit Communities</h3>
       <button onclick="toggleModal('editGroupModal')" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
     </div>
     <div class="space-y-6">
