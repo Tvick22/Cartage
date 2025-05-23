@@ -49,13 +49,6 @@ menu: nav/mainHeader.html
         <input type="text" id="groupNameInput" placeholder="Enter group name"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
-      <div class="bg-gray-100 border border-gray-300 rounded-md p-4 max-h-[400px] overflow-y-auto">
-        <input type="text" id="userSearch" placeholder="Search users..."
-               class="w-full p-2 mb-4 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
-        <div id="createUserList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Users checkboxes -->
-        </div>
-      </div>
     </div>
     <div class="flex justify-end gap-4 mt-6 border-t pt-4">
       <button onclick="toggleModal('createGroupModal')" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 rounded-md font-medium text-gray-700">Cancel</button>
@@ -101,11 +94,10 @@ function toggleModal(id) {
   if (modal.classList.contains("hidden")) {
     modal.classList.remove("hidden");
     modal.classList.add("flex");
-    fetchUsers(); // fetch users each time modal opens
   } else {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
-  } 
+  }
 }
 
 // Environment setup
@@ -115,7 +107,6 @@ const postOptions = {...fetchOptions, method: "POST"}
 const putOptions = {...fetchOptions, method: "PUT"}
 
 const javaURL = javaURI + "/api/groups";
-const personURL = javaURI + "/api/people";
 
 // Get table body
 const tableBody = document.getElementById("groupTableBody");
@@ -155,12 +146,12 @@ function getTable() {
         memberRow.className = "hidden";
         memberRow.innerHTML = `
           <td colspan="4">
-            <table class="w-full border mt-2" style="background-color: transparent;">
-              <thead class="bg-gray-100" style="background-color: transparent;">
+            <table class="w-full border mt-2">
+              <thead class="bg-gray-100">
                 <tr>
-                  <th class="p-2 border" style="background-color: transparent;">UID</th>
-                  <th class="p-2 border" style="background-color: transparent;">Name</th>
-                  <th class="p-2 border" style="background-color: transparent;">Email</th>
+                  <th class="p-2 border">UID</th>
+                  <th class="p-2 border">Name</th>
+                  <th class="p-2 border">Email</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,11 +159,9 @@ function getTable() {
                   .map(
                     (m) => `
                       <tr>
-                        <td class="p-2 border" style="background-color: transparent;">${m.uid}</td>
-                        <td class="p-2 border" style="background-color: transparent;">${m.name}</td>
-                        <td class="p-2 border" style="background-color: transparent;">
-                          <a href="mailto:${m.email}">${m.email}</a>
-                        </td>
+                        <td class="p-2 border">${m.uid}</td>
+                        <td class="p-2 border">${m.name}</td>
+                        <td class="p-2 border"><a href="mailto:${m.email}">${m.email}</a></td>
                       </tr>
                     `
                   )
@@ -181,7 +170,6 @@ function getTable() {
             </table>
           </td>
         `;
-
 
         tableBody.appendChild(row);
         tableBody.appendChild(memberRow);
@@ -197,8 +185,7 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
   document.querySelectorAll("tr.group-row").forEach((row) => {
     const groupId = row.dataset.groupid;
     const members = row.dataset.members;
-    const match =
-      groupId.includes(search) || members.includes(search);
+    const match = groupId.includes(search) || members.includes(search);
 
     row.style.display = match ? "" : "none";
     const details = document.getElementById(`members-${groupId}`);
@@ -206,42 +193,20 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
   });
 });
 
-function fetchUsers() {
-  fetch(personURL, fetchOptions)
-    .then((response) => response.json())
-    .then((users) => {
-      const userList = document.getElementById("createUserList");
-      userList.innerHTML = "";
-
-      users.forEach((user) => {
-        const div = document.createElement("div");
-        div.className = "form-check";
-        div.innerHTML = `
-          <label class="inline-flex items-center">
-            <input type="checkbox" class="user-checkbox mr-2" value="${user.id}">
-            ${user.name} (${user.email})
-          </label>
-        `;
-        userList.appendChild(div);
-      });
-    })
-    .catch((err) => console.error("Error loading users:", err));
-}
-
+// Create group without assigning users
 document.getElementById("createGroupBtn").addEventListener("click", () => {
-  const selectedUserIds = Array.from(
-    document.querySelectorAll(".user-checkbox:checked")
-  ).map((cb) => parseInt(cb.value));
+  const groupName = document.getElementById("groupNameInput").value.trim();
+  const groupPeriod = document.getElementById("groupPeriodInput").value.trim();
 
-  if (selectedUserIds.length === 0) {
-    alert("Please select at least one user.");
+  if (!groupName || !groupPeriod) {
+    alert("Please enter both group name and period.");
     return;
   }
 
   const groupPayload = {
-    name: document.getElementById("groupNameInput").value,
-    period: document.getElementById("groupPeriodInput").value,
-    personUids: [],
+    name: groupName,
+    period: groupPeriod,
+    personUids: [] // No users assigned
   };
 
   fetch(javaURL, {
@@ -250,17 +215,6 @@ document.getElementById("createGroupBtn").addEventListener("click", () => {
   })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to create group");
-      return res.json();
-    })
-    .then((newGroup) => {
-      const groupId = newGroup.id;
-      return fetch(`${javaURL}/${groupId}/addPeople`, {
-        ...putOptions,
-        body: JSON.stringify(selectedUserIds),
-      });
-    })
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to add people");
       alert("Group created successfully!");
       toggleModal("createGroupModal");
       location.reload();
@@ -285,13 +239,14 @@ document.addEventListener("click", function (e) {
 // Load groups on page load
 getTable();
 
+// Open Create Group modal
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("openCreateModal").addEventListener("click", () => {
     toggleModal("createGroupModal");
   });
 });
 
-// Open Edit modal and load data
+// Edit group (without user edit)
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit-group")) {
     const groupId = e.target.dataset.groupid;
@@ -302,85 +257,18 @@ document.addEventListener("click", (e) => {
     document.getElementById("editGroupNameInput").value = groupName;
     document.getElementById("editGroupPeriodInput").value = groupPeriod;
 
-    loadUsersForEdit(groupId)
-      .then(() => {
-        toggleModal("editGroupModal");
-      })
-      .catch((err) => {
-        console.error("Error loading users for edit modal:", err);
-      });
+    toggleModal("editGroupModal");
   }
 });
 
-
-// Fetch users for Edit modal and pre-check group members
-function loadUsersForEdit(groupId) {
-  return fetch(personURL, fetchOptions)
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to load users");
-      return res.json();
-    })
-    .then((users) => {
-      return fetch(`${javaURL}/${groupId}`, fetchOptions)
-        .then((groupRes) => {
-          if (!groupRes.ok) throw new Error("Failed to load group");
-          return groupRes.json();
-        })
-        .then((group) => {
-          const memberIds = group.members.map(m => m.id);
-          const userList = document.getElementById("editUserList");
-          userList.innerHTML = "";
-
-          users.forEach((user) => {
-            const checked = memberIds.includes(user.id) ? "checked" : "";
-            const div = document.createElement("div");
-            div.className = "form-check";
-            div.innerHTML = `
-              <label class="inline-flex items-center">
-                <input type="checkbox" class="edit-user-checkbox mr-2" value="${user.id}" ${checked}>
-                ${user.name} (${user.email})
-              </label>
-            `;
-            userList.appendChild(div);
-          });
-        });
-    })
-    .catch((err) => {
-      console.error("Error loading users for edit modal:", err);
-      // rethrow to let caller handle if needed
-      throw err;
-    });
-}
-
-
-// Filter users in Edit modal
-document.getElementById("userSearchEdit").addEventListener("keyup", function () {
-  const search = this.value.toLowerCase();
-  document.querySelectorAll("#editUserList label").forEach(label => {
-    const text = label.textContent.toLowerCase();
-    label.style.display = text.includes(search) ? "" : "none";
-  });
-});
-
+// Save edited group (only name and period)
 document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
   const groupId = document.getElementById("editGroupId").value;
   const name = document.getElementById("editGroupNameInput").value.trim();
   const period = document.getElementById("editGroupPeriodInput").value.trim();
 
-  const newUserIds = Array.from(
-    document.querySelectorAll(".edit-user-checkbox:checked")
-  ).map(cb => parseInt(cb.value));
-
-  if (!name) {
-    alert("Group name is required.");
-    return;
-  }
-  if (!period) {
-    alert("Group period is required.");
-    return;
-  }
-  if (newUserIds.length === 0) {
-    alert("Please select at least one user.");
+  if (!name || !period) {
+    alert("Name and period are required.");
     return;
   }
 
@@ -388,48 +276,8 @@ document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
     ...putOptions,
     body: JSON.stringify({ name, period }),
   })
-    .then((updateRes) => {
-      if (!updateRes.ok) throw new Error("Failed to update group info");
-      return fetch(`${javaURL}/${groupId}`, fetchOptions);
-    })
-    .then((groupResp) => {
-      if (!groupResp.ok) throw new Error("Failed to fetch group members");
-      return groupResp.json();
-    })
-    .then((group) => {
-      const currentIds = group.members.map(m => m.id);
-
-      const toAdd = newUserIds.filter(id => !currentIds.includes(id));
-      const toRemove = currentIds.filter(id => !newUserIds.includes(id));
-
-      // Chain removing and adding users sequentially
-      let promiseChain = Promise.resolve();
-
-      if (toRemove.length > 0) {
-        promiseChain = promiseChain.then(() =>
-          fetch(`${javaURL}/${groupId}/removePeople`, {
-            ...putOptions,
-            body: JSON.stringify(toRemove),
-          }).then((res) => {
-            if (!res.ok) throw new Error("Failed to remove users");
-          })
-        );
-      }
-
-      if (toAdd.length > 0) {
-        promiseChain = promiseChain.then(() =>
-          fetch(`${javaURL}/${groupId}/addPeople`, {
-            ...putOptions,
-            body: JSON.stringify(toAdd),
-          }).then((res) => {
-            if (!res.ok) throw new Error("Failed to add users");
-          })
-        );
-      }
-
-      return promiseChain;
-    })
-    .then(() => {
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to update group");
       alert("Group updated successfully!");
       toggleModal("editGroupModal");
       location.reload();
