@@ -5,3 +5,438 @@ search_exclude: true
 menu: nav/mainHeader.html
 ---
 
+<div class="max-w-6xl mx-auto px-4 py-10 fade-in">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Communities</h2>
+
+  <!-- Search bar -->
+  <input type="text" id="searchInput" placeholder="Search by Community ID or name"
+         class="w-full p-3 border border-gray-300 rounded-md mb-6 shadow-sm focus:ring-amber-500 focus:border-amber-500">
+
+  <!-- Table -->
+  <div class="overflow-x-auto rounded-lg shadow card-hover bg-white">
+    <table class="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+      <thead class="bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+        <tr>
+          <th class="p-4 text-left font-medium">Community ID</th>
+          <th class="p-4 text-left font-medium">Community Name</th>
+          <th class="p-4 text-left font-medium">Join</th>
+        </tr>
+      </thead>
+      <tbody id="groupTableBody" class="divide-y divide-gray-100 bg-white">
+        <!-- Populated via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Create Group Button -->
+  <div class="flex justify-center mt-8">
+    <button id="openCreateModal" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md font-medium shadow-md transition">
+      Create Community
+    </button>
+  </div>
+</div>
+
+<!-- Create Group Modal -->
+<div id="createGroupModal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-center justify-center z-50">
+  <div class="bg-white text-gray-800 rounded-lg shadow-lg w-full max-w-3xl overflow-y-auto max-h-[90vh] p-6 fade-in">
+    <div class="flex justify-between items-center border-b pb-4 mb-6">
+      <h3 class="text-2xl font-semibold">Create New Community</h3>
+      <button onclick="toggleModal('createGroupModal')" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+    </div>
+    <div class="space-y-6">
+      <div>
+        <label for="groupNameInput" class="block font-medium mb-1">Community Name</label>
+        <input type="text" id="groupNameInput" placeholder="Enter group name"
+               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+      </div>
+      <div class="bg-gray-100 border border-gray-300 rounded-md p-4 max-h-[400px] overflow-y-auto">
+        <input type="text" id="userSearch" placeholder="Search users..."
+               class="w-full p-2 mb-4 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <div id="createUserList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Users checkboxes -->
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 mt-6 border-t pt-4">
+      <button onclick="toggleModal('createGroupModal')" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 rounded-md font-medium text-gray-700">Cancel</button>
+      <button id="createGroupBtn" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-md font-medium shadow">Create Community</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Group Modal -->
+<div id="editGroupModal" class="fixed inset-0 hidden bg-black bg-opacity-60 flex items-center justify-center z-50">
+  <div class="bg-white text-gray-800 rounded-lg shadow-lg w-full max-w-3xl overflow-y-auto max-h-[90vh] p-6 fade-in">
+    <div class="flex justify-between items-center border-b pb-4 mb-6">
+      <h3 class="text-2xl font-semibold">Edit Communityies</h3>
+      <button onclick="toggleModal('editGroupModal')" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+    </div>
+    <div class="space-y-6">
+      <input type="hidden" id="editGroupId" />
+      <div>
+        <label for="editGroupNameInput" class="block font-medium mb-1">Community Name</label>
+        <input type="text" id="editGroupNameInput" placeholder="Enter group name"
+               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+      </div>
+      <div class="bg-gray-100 border border-gray-300 rounded-md p-4 max-h-[400px] overflow-y-auto">
+        <input type="text" id="userSearchEdit" placeholder="Search users..."
+               class="w-full p-2 mb-4 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <div id="editUserList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Users checkboxes -->
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 mt-6 border-t pt-4">
+      <button onclick="toggleModal('editGroupModal')" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 rounded-md font-medium text-gray-700">Cancel</button>
+      <button id="saveEditGroupBtn" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-md font-medium shadow">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+
+<script type="module">
+// Modal toggle utility
+function toggleModal(id) {
+  const modal = document.getElementById(id);
+  if (modal.classList.contains("hidden")) {
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+    fetchUsers(); // fetch users each time modal opens
+  } else {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  } 
+}
+
+// Environment setup
+import {javaURI, fetchOptions} from '{{site.baseurl}}/assets/js/api/config.js';
+
+const postOptions = {...fetchOptions, method: "POST"}
+const putOptions = {...fetchOptions, method: "PUT"}
+
+const javaURL = javaURI + "/api/groups";
+const personURL = javaURI + "/api/people";
+
+// Get table body
+const tableBody = document.getElementById("groupTableBody");
+
+function getTable() {
+  fetch(javaURL, fetchOptions)
+    .then((response) => response.json())
+    .then((groups) => {
+      groups.forEach((group) => {
+        const groupId = group.id;
+        const name = group.name;
+        const period = group.period;
+
+        const row = document.createElement("tr");
+        row.className = "group-row";
+        row.dataset.groupid = groupId;
+        row.dataset.members = group.members
+          .map((m) => (m.name + m.email).toLowerCase())
+          .join(" ");
+
+        row.innerHTML = `
+          <td>${groupId}</td>
+          <td>${name}</td>
+          <td>${period}</td>
+          <td class="space-x-2">
+            <button class="bg-blue-500 text-white px-2 py-1 rounded toggle-members" data-target="members-${groupId}">
+              View Members
+            </button>
+            <button class="bg-yellow-400 text-black px-2 py-1 rounded edit-group" data-groupid="${groupId}" data-name="${name}" data-period="${period}">
+              Edit
+            </button>
+          </td>
+        `;
+
+        const memberRow = document.createElement("tr");
+        memberRow.id = `members-${groupId}`;
+        memberRow.className = "hidden";
+        memberRow.innerHTML = `
+          <td colspan="4">
+            <table class="w-full border mt-2" style="background-color: transparent;">
+              <thead class="bg-gray-100" style="background-color: transparent;">
+                <tr>
+                  <th class="p-2 border" style="background-color: transparent;">UID</th>
+                  <th class="p-2 border" style="background-color: transparent;">Name</th>
+                  <th class="p-2 border" style="background-color: transparent;">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${group.members
+                  .map(
+                    (m) => `
+                      <tr>
+                        <td class="p-2 border" style="background-color: transparent;">${m.uid}</td>
+                        <td class="p-2 border" style="background-color: transparent;">${m.name}</td>
+                        <td class="p-2 border" style="background-color: transparent;">
+                          <a href="mailto:${m.email}">${m.email}</a>
+                        </td>
+                      </tr>
+                    `
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </td>
+        `;
+
+
+        tableBody.appendChild(row);
+        tableBody.appendChild(memberRow);
+      });
+    })
+    .catch((error) => console.error("Failed to load groups:", error));
+}
+
+// Search filtering
+document.getElementById("searchInput").addEventListener("keyup", function () {
+  const search = this.value.toLowerCase();
+
+  document.querySelectorAll("tr.group-row").forEach((row) => {
+    const groupId = row.dataset.groupid;
+    const members = row.dataset.members;
+    const match =
+      groupId.includes(search) || members.includes(search);
+
+    row.style.display = match ? "" : "none";
+    const details = document.getElementById(`members-${groupId}`);
+    if (details) details.style.display = match ? "" : "none";
+  });
+});
+
+function fetchUsers() {
+  fetch(personURL, fetchOptions)
+    .then((response) => response.json())
+    .then((users) => {
+      const userList = document.getElementById("createUserList");
+      userList.innerHTML = "";
+
+      users.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "form-check";
+        div.innerHTML = `
+          <label class="inline-flex items-center">
+            <input type="checkbox" class="user-checkbox mr-2" value="${user.id}">
+            ${user.name} (${user.email})
+          </label>
+        `;
+        userList.appendChild(div);
+      });
+    })
+    .catch((err) => console.error("Error loading users:", err));
+}
+
+document.getElementById("createGroupBtn").addEventListener("click", () => {
+  const selectedUserIds = Array.from(
+    document.querySelectorAll(".user-checkbox:checked")
+  ).map((cb) => parseInt(cb.value));
+
+  if (selectedUserIds.length === 0) {
+    alert("Please select at least one user.");
+    return;
+  }
+
+  const groupPayload = {
+    name: document.getElementById("groupNameInput").value,
+    period: document.getElementById("groupPeriodInput").value,
+    personUids: [],
+  };
+
+  fetch(javaURL, {
+    ...postOptions,
+    body: JSON.stringify(groupPayload),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to create group");
+      return res.json();
+    })
+    .then((newGroup) => {
+      const groupId = newGroup.id;
+      return fetch(`${javaURL}/${groupId}/addPeople`, {
+        ...putOptions,
+        body: JSON.stringify(selectedUserIds),
+      });
+    })
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to add people");
+      alert("Group created successfully!");
+      toggleModal("createGroupModal");
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Error creating group:", error);
+      alert("Error occurred. See console.");
+    });
+});
+
+// Toggle member visibility
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("toggle-members")) {
+    const targetId = e.target.dataset.target;
+    const memberRow = document.getElementById(targetId);
+    if (memberRow) {
+      memberRow.classList.toggle("hidden");
+    }
+  }
+});
+
+// Load groups on page load
+getTable();
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("openCreateModal").addEventListener("click", () => {
+    toggleModal("createGroupModal");
+  });
+});
+
+// Open Edit modal and load data
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("edit-group")) {
+    const groupId = e.target.dataset.groupid;
+    const groupName = e.target.dataset.name;
+    const groupPeriod = e.target.dataset.period;
+
+    document.getElementById("editGroupId").value = groupId;
+    document.getElementById("editGroupNameInput").value = groupName;
+    document.getElementById("editGroupPeriodInput").value = groupPeriod;
+
+    loadUsersForEdit(groupId)
+      .then(() => {
+        toggleModal("editGroupModal");
+      })
+      .catch((err) => {
+        console.error("Error loading users for edit modal:", err);
+      });
+  }
+});
+
+
+// Fetch users for Edit modal and pre-check group members
+function loadUsersForEdit(groupId) {
+  return fetch(personURL, fetchOptions)
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to load users");
+      return res.json();
+    })
+    .then((users) => {
+      return fetch(`${javaURL}/${groupId}`, fetchOptions)
+        .then((groupRes) => {
+          if (!groupRes.ok) throw new Error("Failed to load group");
+          return groupRes.json();
+        })
+        .then((group) => {
+          const memberIds = group.members.map(m => m.id);
+          const userList = document.getElementById("editUserList");
+          userList.innerHTML = "";
+
+          users.forEach((user) => {
+            const checked = memberIds.includes(user.id) ? "checked" : "";
+            const div = document.createElement("div");
+            div.className = "form-check";
+            div.innerHTML = `
+              <label class="inline-flex items-center">
+                <input type="checkbox" class="edit-user-checkbox mr-2" value="${user.id}" ${checked}>
+                ${user.name} (${user.email})
+              </label>
+            `;
+            userList.appendChild(div);
+          });
+        });
+    })
+    .catch((err) => {
+      console.error("Error loading users for edit modal:", err);
+      // rethrow to let caller handle if needed
+      throw err;
+    });
+}
+
+
+// Filter users in Edit modal
+document.getElementById("userSearchEdit").addEventListener("keyup", function () {
+  const search = this.value.toLowerCase();
+  document.querySelectorAll("#editUserList label").forEach(label => {
+    const text = label.textContent.toLowerCase();
+    label.style.display = text.includes(search) ? "" : "none";
+  });
+});
+
+document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
+  const groupId = document.getElementById("editGroupId").value;
+  const name = document.getElementById("editGroupNameInput").value.trim();
+  const period = document.getElementById("editGroupPeriodInput").value.trim();
+
+  const newUserIds = Array.from(
+    document.querySelectorAll(".edit-user-checkbox:checked")
+  ).map(cb => parseInt(cb.value));
+
+  if (!name) {
+    alert("Group name is required.");
+    return;
+  }
+  if (!period) {
+    alert("Group period is required.");
+    return;
+  }
+  if (newUserIds.length === 0) {
+    alert("Please select at least one user.");
+    return;
+  }
+
+  fetch(`${javaURL}/${groupId}`, {
+    ...putOptions,
+    body: JSON.stringify({ name, period }),
+  })
+    .then((updateRes) => {
+      if (!updateRes.ok) throw new Error("Failed to update group info");
+      return fetch(`${javaURL}/${groupId}`, fetchOptions);
+    })
+    .then((groupResp) => {
+      if (!groupResp.ok) throw new Error("Failed to fetch group members");
+      return groupResp.json();
+    })
+    .then((group) => {
+      const currentIds = group.members.map(m => m.id);
+
+      const toAdd = newUserIds.filter(id => !currentIds.includes(id));
+      const toRemove = currentIds.filter(id => !newUserIds.includes(id));
+
+      // Chain removing and adding users sequentially
+      let promiseChain = Promise.resolve();
+
+      if (toRemove.length > 0) {
+        promiseChain = promiseChain.then(() =>
+          fetch(`${javaURL}/${groupId}/removePeople`, {
+            ...putOptions,
+            body: JSON.stringify(toRemove),
+          }).then((res) => {
+            if (!res.ok) throw new Error("Failed to remove users");
+          })
+        );
+      }
+
+      if (toAdd.length > 0) {
+        promiseChain = promiseChain.then(() =>
+          fetch(`${javaURL}/${groupId}/addPeople`, {
+            ...putOptions,
+            body: JSON.stringify(toAdd),
+          }).then((res) => {
+            if (!res.ok) throw new Error("Failed to add users");
+          })
+        );
+      }
+
+      return promiseChain;
+    })
+    .then(() => {
+      alert("Group updated successfully!");
+      toggleModal("editGroupModal");
+      location.reload();
+    })
+    .catch((error) => {
+      console.error("Error updating group:", error);
+      alert("Error occurred. See console.");
+    });
+});
+</script>
