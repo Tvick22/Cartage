@@ -240,6 +240,7 @@ menu: nav/mainHeader.html
       }
       ctx.putImageData(imageData, 0, 0);
     }
+    
     cropUploadBtn.addEventListener('click', () => {
       const canvas = cropper.getCroppedCanvas();
       applyFiltersToCanvas(canvas);
