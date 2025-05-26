@@ -92,7 +92,7 @@ menu: nav/mainHeader.html
             <div class="flex flex-col space-y-4 mb-8">
                 <h2 id="profile-name" class="text-5xl font-bold text-gray-900">User's Name</h2>
                 <p class="text-2xl text-gray-500">@userhandle</p>
-                <pre id="profile-bio" class="whitespace-pre-wrap break-words text-lg text-gray-600 font-medium">BIO</pre>
+                <pre id="profile-bio" class="whitespace-pre-wrap break-words break-all text-lg text-gray-600 font-medium">BIO</pre>
 
        <div class="mt-4 inline-flex items-center px-4 py-2 rounded-xl bg-amber-100 text-base font-semibold text-amber-800 shadow-md border border-amber-300 w-fit">
 

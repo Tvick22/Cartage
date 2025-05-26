@@ -239,12 +239,12 @@ menu: nav/mainHeader.html
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="nav-link font-medium">Home</a>
                     <a href="explore-cars" class="nav-link font-medium">Explore</a>
-                    <a href="#" class="nav-link font-medium">Profile</a>
+                    <a href="{{site.baseurl}}/profile" class="nav-link font-medium">Profile</a> 
                     <a href="#" class="nav-link font-medium">Documentation</a>
                     <a href="#" class="nav-link font-medium">Contact</a>
                     <div class="flex items-center space-x-4">
                         <a href="#" class="px-4 py-2 rounded-md font-medium text-white hover:bg-amber-500 hover:bg-opacity-20 transition">Sign In</a>
-                        <a href="#" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-white transition">Sign Up</a>
+                        <a href="{{site.baseurl}}/signup" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-white transition">Sign Up</a>
                     </div>
                 </div>
                 
@@ -649,3 +649,5 @@ menu: nav/mainHeader.html
         }
     });
 </script>
+
+//hi

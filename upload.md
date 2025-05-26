@@ -225,21 +225,26 @@ menu: nav/mainHeader.html
       const ctx = canvas.getContext('2d');
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
+
       for (let i = 0; i < data.length; i += 4) {
         let r = data[i], g = data[i+1], b = data[i+2];
         r = ((r - 128) * contrast + 128) * brightness;
         g = ((g - 128) * contrast + 128) * brightness;
         b = ((b - 128) * contrast + 128) * brightness;
+
         const avg = (r + g + b) / 3;
         r = avg + (r - avg) * saturate;
         g = avg + (g - avg) * saturate;
         b = avg + (b - avg) * saturate;
+
         data[i] = Math.min(255, Math.max(0, r));
         data[i+1] = Math.min(255, Math.max(0, g));
         data[i+2] = Math.min(255, Math.max(0, b));
+        
       }
       ctx.putImageData(imageData, 0, 0);
     }
+
     cropUploadBtn.addEventListener('click', () => {
       const canvas = cropper.getCroppedCanvas();
       applyFiltersToCanvas(canvas);
@@ -254,3 +259,5 @@ menu: nav/mainHeader.html
   </script>
 </body>
 </html>
+
+
