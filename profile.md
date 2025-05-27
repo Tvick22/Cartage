@@ -169,7 +169,7 @@ menu: nav/mainHeader.html
 </style>
 
 <!-- Scripts -->
-<script>
+<script type="module">
     let cropper;
     const profilePic = document.getElementById('profile-pic');
     const uploadInput = document.getElementById('profile-pic-upload');
@@ -179,6 +179,26 @@ menu: nav/mainHeader.html
     const confirmCropBtn = document.getElementById('confirm-crop');
     const followButton = document.getElementById('follow-button');
     let following = false;
+
+    async function getUserData() {
+        const endpoint = `${pythonURI}/api/user`
+        try {
+            const response = await fetch(endpoint, fetchOptions);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch user: ${response.status}`);
+            }
+            const user = await response.json();
+            return user;
+        } catch (error) {
+            console.error("Error fetching user:", error.message);
+            return null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+         const userData = await getUserData()
+
+    })
 
     uploadInput.addEventListener('change', function () {
         const file = this.files[0];
