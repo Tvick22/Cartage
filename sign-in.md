@@ -99,7 +99,7 @@ menu: nav/mainHeader.html
                                    class="pl-10 input-focus block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-offset-1 focus:ring-opacity-50 py-3 px-4 border transition duration-150 ease-in-out"
                                    placeholder="you@example.com">
                         </div>
-                        <p id="email-error" class="mt-1 text-sm text-red-600 hidden">Please enter a valid email address</p>
+                        <p id="email-error" class="mt-1 text-sm text-red-600 hidden">Please enter a valid email addresss</p>
                     </div>
                     
                     <div>
