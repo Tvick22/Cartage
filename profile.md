@@ -170,6 +170,7 @@ menu: nav/mainHeader.html
 
 <!-- Scripts -->
 <script type="module">
+    import { pythonURI, fetchOptions } from "{{site.baseurl}}/assets/js/api/config.js"
     let cropper;
     const profilePic = document.getElementById('profile-pic');
     const uploadInput = document.getElementById('profile-pic-upload');
@@ -195,9 +196,9 @@ menu: nav/mainHeader.html
         }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-         const userData = await getUserData()
-
+    document.addEventListener("DOMContentLoaded", async () => {
+        const userData = await getUserData()
+        console.log(userData)
     })
 
     uploadInput.addEventListener('change', function () {
