@@ -8,37 +8,37 @@ search_exclude: true
 menu: nav/mainHeader.html
 ---
 
-<div class="flex min-h-screen items-center justify-center bg-[{{site.colors.background}}] px-4 py-12">
-  <div class="w-full max-w-md p-8 bg-white rounded-2xl shadow-2xl z-10">
-    <h2 class="text-center text-3xl font-extrabold text-[{{site.colors.primary}}] mb-6">
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-white to-amber-50 px-4 py-12">
+  <div class="w-full max-w-md p-8 bg-white rounded-3xl shadow-xl z-10">
+    <h2 class="text-center text-4xl font-extrabold text-amber-500 mb-8">
       Sign in to your account
     </h2>
 
     <form class="space-y-6" id="pythonForm" onsubmit="pythonLogin(); return false;">
       <!-- Username -->
       <div>
-        <label for="username" class="block text-lg font-medium text-gray-700 mb-1">Username</label>
+        <label for="username" class="block text-base font-semibold text-gray-700 mb-2">Username</label>
         <input type="text" name="username" id="username" autocomplete="username" required
-          class="w-full p-3 rounded-lg border-2 border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[{{site.colors.primary}}] text-base">
+          class="w-full p-3 rounded-xl border border-amber-400 placeholder-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 text-base bg-white text-gray-900">
       </div>
 
       <!-- Password -->
       <div>
-        <label for="password" class="block text-lg font-medium text-gray-700 mb-1">Password</label>
+        <label for="password" class="block text-base font-semibold text-gray-700 mb-2">Password</label>
         <input type="password" name="password" id="password" autocomplete="current-password" required
-          class="w-full p-3 rounded-lg border-2 border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[{{site.colors.primary}}] text-base">
+          class="w-full p-3 rounded-xl border border-amber-400 placeholder-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 text-base bg-white text-gray-900">
       </div>
 
       <!-- Submit Button -->
       <div>
         <button type="submit"
-          class="w-full px-4 py-3 rounded-full bg-[{{site.colors.primary}}] text-white font-semibold shadow-lg hover:bg-[{{site.colors.primary-hover}}] transition-transform duration-300 hover:scale-105">
+          class="w-full px-5 py-3 rounded-full bg-amber-500 text-white font-semibold shadow-md hover:bg-amber-600 transition transform duration-300 hover:scale-105">
           Sign In
         </button>
       </div>
 
       <!-- Message -->
-      <p id="message" class="text-[{{site.colors.accent.red}}] text-center"></p>
+      <p id="message" class="text-red-600 text-center"></p>
     </form>
   </div>
 </div>
