@@ -8,7 +8,7 @@ search_exclude: true
 menu: nav/mainHeader.html
 ---
 
-<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-white to-amber-50 px-4 py-12">
+<div class="flex min-h-screen items-center justify-center px-4 py-12">
   <div class="w-full max-w-md p-8 bg-white rounded-3xl shadow-xl z-10">
     <h2 class="text-center text-4xl font-extrabold text-amber-500 mb-8">
       Sign in to your account
