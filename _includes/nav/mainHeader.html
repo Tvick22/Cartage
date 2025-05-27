@@ -1,45 +1,106 @@
-<nav class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <div class="flex-shrink-0 flex items-center">
-            <i class="fas fa-car-side text-3xl text-amber-500 mr-2"></i>
-            <span class="text-xl font-bold text-gray-900">CARTAGE</span>
-          </div>
-        </div>
-  
-        <!-- Left nav links + Build Your Garage button added here -->
-        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-          <a href="{{site.baseurl}}/" class="text-gray-900 hover:text-amber-500 px-3 py-2 text-sm font-medium">Home</a>
-  
-          {% assign headers = site.header_pages %}
-          {% for page in site.pages %}
-            {% if headers contains page.path %}
-              {% if page.permalink %}
-                <a href="{{site.baseurl}}{{ page.permalink }}" class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium">{{ page.title }}</a>
-              {% else %}
-                <a href="{{site.baseurl}}/{{ page.path | remove: '.md' }}" class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium">{{ page.title }}</a>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-  
-          <!-- Build Your Garage button right after Upload page -->
-          <a href="{{site.baseurl}}/build-your-garage"  class="text-gray-500 hover:text-amber-500 px-3 py-2 text-sm font-medium" style="white-space: nowrap;">
-            Build Your Garage
-          </a>
-        </div>
-  
-        <div id="loginArea" class="flex items-center">
-            <!-- Initial fallback: show Sign In button -->
-            <a href="{{site.baseurl}}/login" 
-               class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300"
-               style="white-space: nowrap;">
-              Sign In
+<nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a class="flex items-center space-x-2" href="{{site.baseurl}}/">
+                <i class="fas fa-camera-retro text-2xl text-amber-400"></i>
+                <span class="text-xl font-bold">ShotSpot</span>
             </a>
-          </div>          
-          </button>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                {% assign headers = site.header_pages %} {% for page in
+                site.pages %} {% if headers contains page.path %} {% if
+                page.permalink %}
+                <a
+                    href="{{site.baseurl}}{{ page.permalink }}"
+                    class="nav-link font-medium"
+                    >{{ page.title }}</a
+                >
+                {% else %}
+                <a
+                    href="{{site.baseurl}}/{{ page.path | remove: '.md' }}"
+                    class="nav-link font-medium"
+                    >{{ page.title }}</a
+                >
+                {% endif %} {% endif %} {% endfor %}
+                <div class="flex items-center space-x-4">
+                    <a
+                        href="{{site.baseurl}}/login"
+                        class="px-4 py-2 rounded-md font-medium text-white hover:bg-amber-500 hover:bg-opacity-20 transition"
+                        >Sign In</a
+                    >
+                    <a
+                        href="{{site.baseurl}}/signup"
+                        class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-white transition"
+                        >Sign Up</a
+                    >
+                </div>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
-      </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+            {% assign headers = site.header_pages %} {% for page in site.pages
+            %} {% if headers contains page.path %} {% if page.permalink %}
+            <a
+                href="{{site.baseurl}}{{ page.permalink }}"
+                class="block py-2 font-medium"
+                >{{ page.title }}</a
+            >
+            {% else %}
+            <a
+                href="{{site.baseurl}}/{{ page.path | remove: '.md' }}"
+                class="block py-2 font-medium"
+                >{{ page.title }}</a
+            >
+            {% endif %} {% endif %} {% endfor %}
+            <div class="mt-4 pt-4 border-t border-gray-700">
+                <a href="#" class="block py-2 text-center font-medium"
+                    >Sign In</a
+                >
+                <a
+                    href="#"
+                    class="block py-2 bg-amber-500 text-center rounded-md font-medium"
+                    >Sign Up</a
+                >
+            </div>
+        </div>
     </div>
-  </nav>
-  
+</nav>
+
+<style>
+    .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .nav-link {
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #f59e0b;
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+</style>

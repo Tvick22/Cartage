@@ -1,6 +1,6 @@
 ---
 layout: base
-title: Explore Cars
+title: Explore
 search_exclude: true
 menu: nav/mainHeader.html
 permalink: /explore-cars/
@@ -109,7 +109,7 @@ permalink: /explore-cars/
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-white">
-   
+
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
@@ -378,7 +378,7 @@ permalink: /explore-cars/
         </button>
     </main>
 
-    
+
 
     <script>
         // Sample car data (only 3 demo posts)
@@ -475,10 +475,10 @@ permalink: /explore-cars/
         // Render all posts
         function renderPosts() {
             postsContainer.innerHTML = '';
-            
+
             // Filter cars based on selected tags and brands
             let filteredCars = cars;
-            
+
             if (selectedTags.length > 0 || selectedBrands.length > 0) {
                 filteredCars = cars.filter(car => {
                     const carTags = car.tags.map(tag => tag.toLowerCase().replace('#', ''));
@@ -487,7 +487,7 @@ permalink: /explore-cars/
                     return hasTag && hasBrand;
                 });
             }
-            
+
             filteredCars.forEach((car, index) => {
                 const delayClass = `delay-${(index % 3) * 100}`;
                 const postElement = createPostElement(car, delayClass);
@@ -500,10 +500,10 @@ permalink: /explore-cars/
             const post = document.createElement('div');
             post.className = `card bg-gray-800 rounded-xl overflow-hidden animate-fade-in ${delayClass}`;
             post.dataset.id = car.id;
-            
+
             const likeIconClass = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
             const bookmarkIconClass = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
-            
+
             post.innerHTML = `
                 <img src="${car.images[0]}" alt="${car.model}" class="w-full h-64 object-cover">
                 <div class="p-4">
@@ -531,7 +531,7 @@ permalink: /explore-cars/
                     </div>
                 </div>
             `;
-            
+
             return post;
         }
 
@@ -542,14 +542,14 @@ permalink: /explore-cars/
             closeFilterModal.addEventListener('click', () => toggleModal(filterModal));
             resetFilters.addEventListener('click', resetAllFilters);
             applyFilters.addEventListener('click', applyAllFilters);
-            
+
             // Tag selection in filter modal
             document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.classList.toggle('selected');
                 });
             });
-            
+
             // Upload modal
             addPostBtn.addEventListener('click', () => toggleModal(uploadModal));
             closeUploadModal.addEventListener('click', () => {
@@ -560,27 +560,27 @@ permalink: /explore-cars/
                 resetUploadForm();
                 toggleModal(uploadModal);
             });
-            
+
             // Image upload preview
             carImages.addEventListener('change', handleImageUpload);
-            
+
             // Tag selection in upload modal
             document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.classList.toggle('selected');
                 });
             });
-            
+
             // Form submission
             uploadForm.addEventListener('submit', handleFormSubmit);
-            
+
             // Car detail modal
             closeCarDetailModal.addEventListener('click', () => toggleModal(carDetailModal));
-            
+
             // Carousel navigation
             carouselPrev.addEventListener('click', () => navigateCarousel(-1));
             carouselNext.addEventListener('click', () => navigateCarousel(1));
-            
+
             // Edit tools
             document.querySelectorAll('.edit-tool').forEach(tool => {
                 tool.addEventListener('click', function() {
@@ -588,7 +588,7 @@ permalink: /explore-cars/
                     this.classList.add('active');
                 });
             });
-            
+
             // Edit sliders
             document.querySelectorAll('.edit-slider').forEach(slider => {
                 slider.addEventListener('input', function() {
@@ -597,15 +597,15 @@ permalink: /explore-cars/
                     applyImageFilter(property, value);
                 });
             });
-            
+
             // Delegate events for dynamically created elements
             postsContainer.addEventListener('click', (e) => {
                 const card = e.target.closest('.card');
                 if (!card) return;
-                
+
                 const carId = parseInt(card.dataset.id);
                 const car = cars.find(c => c.id === carId);
-                
+
                 if (e.target.closest('.like-btn')) {
                     toggleLike(car);
                 } else if (e.target.closest('.bookmark-btn')) {
@@ -615,7 +615,7 @@ permalink: /explore-cars/
                     showCarDetail(car);
                 }
             });
-            
+
             // Close image edit modal
             closeImageEdit.addEventListener('click', () => toggleModal(imageEditModal));
         }
@@ -624,7 +624,7 @@ permalink: /explore-cars/
         function toggleModal(modal) {
             modal.classList.toggle('modal-hidden');
             modal.classList.toggle('modal-visible');
-            
+
             // Reset carousel when closing detail modal
             if (modal === carDetailModal && modal.classList.contains('modal-hidden')) {
                 currentCarouselIndex = 0;
@@ -646,7 +646,7 @@ permalink: /explore-cars/
         function applyAllFilters() {
             selectedTags = [];
             selectedBrands = [];
-            
+
             // Get selected tags and brands
             document.querySelectorAll('#filterModal .tag-option.selected').forEach(btn => {
                 const tag = btn.dataset.tag;
@@ -656,7 +656,7 @@ permalink: /explore-cars/
                     selectedBrands.push(tag);
                 }
             });
-            
+
             renderPosts();
             toggleModal(filterModal);
         }
@@ -666,7 +666,7 @@ permalink: /explore-cars/
             const files = e.target.files;
             if (files.length > 0) {
                 const file = files[0];
-                
+
                 // Check if we've reached the maximum number of images
                 if (currentEditingImages.length >= 5) {
                     alert('Maximum 5 images allowed');
@@ -674,7 +674,7 @@ permalink: /explore-cars/
                 }
 
                 const reader = new FileReader();
-                
+
                 reader.onload = function(event) {
                     // Add the new image to the array
                     const newImageIndex = currentEditingImages.length;
@@ -693,11 +693,11 @@ permalink: /explore-cars/
                     const imgContainer = document.createElement('div');
                     imgContainer.className = 'relative group';
                     imgContainer.innerHTML = updateImagePreview(currentEditingImages[newImageIndex], newImageIndex);
-                    
+
                     imagePreviews.appendChild(imgContainer);
                     updateUploadControls();
                 };
-                
+
                 reader.readAsDataURL(file);
             }
 
@@ -708,7 +708,7 @@ permalink: /explore-cars/
         // Add new function to update upload controls
         function updateUploadControls() {
             const uploadControls = document.getElementById('uploadControls');
-            
+
             if (currentEditingImages.length < 5) {
                 uploadControls.innerHTML = `
                     <input type="file" id="carImages" accept="image/*" class="hidden">
@@ -718,7 +718,7 @@ permalink: /explore-cars/
                         <p class="text-sm text-gray-500">${5 - currentEditingImages.length} spots remaining</p>
                     </label>
                 `;
-                
+
                 // Reattach event listener to new input
                 document.getElementById('carImages').addEventListener('change', handleImageUpload);
             } else {
@@ -729,7 +729,7 @@ permalink: /explore-cars/
         // Update removeImage function
         function removeImage(index) {
             currentEditingImages.splice(index, 1);
-            
+
             // Rebuild previews to update indices
             imagePreviews.innerHTML = '';
             currentEditingImages.forEach((img, idx) => {
@@ -738,7 +738,7 @@ permalink: /explore-cars/
                 imgContainer.innerHTML = updateImagePreview(currentEditingImages[idx], idx);
                 imagePreviews.appendChild(imgContainer);
             });
-            
+
             updateUploadControls();
         }
 
@@ -748,7 +748,7 @@ permalink: /explore-cars/
             imagePreviews.innerHTML = '';
             currentEditingImages = [];
             updateUploadControls();
-            
+
             // Reset selected tags
             document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
                 btn.classList.remove('selected');
@@ -760,12 +760,12 @@ permalink: /explore-cars/
             car.isLiked = !car.isLiked;
             car.likes += car.isLiked ? 1 : -1;
             renderPosts();
-            
+
             // Update detail modal if open
             if (!carDetailModal.classList.contains('modal-hidden')) {
                 const likeBtn = carDetailModal.querySelector('.like-btn i');
                 const likeCount = carDetailModal.querySelector('.like-count');
-                
+
                 likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
                 likeCount.textContent = car.likes;
             }
@@ -775,7 +775,7 @@ permalink: /explore-cars/
         function toggleBookmark(car) {
             car.isBookmarked = !car.isBookmarked;
             renderPosts();
-            
+
             // Update detail modal if open
             if (!carDetailModal.classList.contains('modal-hidden')) {
                 const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
@@ -788,11 +788,11 @@ permalink: /explore-cars/
             detailCarModel.textContent = car.model;
             detailUsername.textContent = car.username;
             detailDescription.textContent = car.description;
-            
+
             // Clear previous tags
             const tagsContainer = carDetailModal.querySelector('.flex.flex-wrap.gap-2.mb-4');
             tagsContainer.innerHTML = '';
-            
+
             // Add tags
             car.tags.forEach(tag => {
                 const tagElement = document.createElement('span');
@@ -800,28 +800,28 @@ permalink: /explore-cars/
                 tagElement.textContent = tag;
                 tagsContainer.appendChild(tagElement);
             });
-            
+
             // Set up carousel
             detailCarousel.innerHTML = '';
             currentCarouselImages = car.images;
             currentCarouselIndex = 0;
-            
+
             car.images.forEach((img, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'min-w-full';
                 slide.innerHTML = `<img src="${img}" alt="${car.model}" class="w-full h-96 object-contain">`;
                 detailCarousel.appendChild(slide);
             });
-            
+
             // Update like and bookmark buttons
             const likeBtn = carDetailModal.querySelector('.like-btn i');
             const likeCount = carDetailModal.querySelector('.like-count');
             const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
-            
+
             likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
             likeCount.textContent = car.likes;
             bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
-            
+
             // Show modal
             toggleModal(carDetailModal);
         }
@@ -829,13 +829,13 @@ permalink: /explore-cars/
         // Navigate carousel
         function navigateCarousel(direction) {
             currentCarouselIndex += direction;
-            
+
             if (currentCarouselIndex < 0) {
                 currentCarouselIndex = currentCarouselImages.length - 1;
             } else if (currentCarouselIndex >= currentCarouselImages.length) {
                 currentCarouselIndex = 0;
             }
-            
+
             detailCarousel.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
         }
 
@@ -843,7 +843,7 @@ permalink: /explore-cars/
         function editImage(index) {
             const imageData = currentEditingImages[index];
             const editModal = document.getElementById('imageEditModal');
-            
+
             // Set up the edit modal without closing upload modal
             editModal.innerHTML = `
                 <div class="bg-gray-800 rounded-xl p-6 w-full max-w-4xl">
@@ -854,8 +854,8 @@ permalink: /explore-cars/
                         </button>
                     </div>
                     <div class="mb-6">
-                        <img id="editingImage" src="${imageData.current}" 
-                             class="w-full h-[60vh] object-contain rounded-lg" 
+                        <img id="editingImage" src="${imageData.current}"
+                             class="w-full h-[60vh] object-contain rounded-lg"
                              alt="Editing image">
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-4">
@@ -864,7 +864,7 @@ permalink: /explore-cars/
                                 <i class="fas fa-sun mr-2"></i>
                                 <span>Brightness</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}"
                                    class="w-full" data-filter="brightness">
                         </div>
                         <div class="edit-tool bg-gray-700 p-3 rounded-lg">
@@ -872,7 +872,7 @@ permalink: /explore-cars/
                                 <i class="fas fa-adjust mr-2"></i>
                                 <span>Contrast</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}"
                                    class="w-full" data-filter="contrast">
                         </div>
                         <div class="edit-tool bg-gray-700 p-3 rounded-lg">
@@ -880,7 +880,7 @@ permalink: /explore-cars/
                                 <i class="fas fa-palette mr-2"></i>
                                 <span>Saturation</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}"
                                    class="w-full" data-filter="saturation">
                         </div>
                         <div class="edit-tool bg-gray-700 p-3 rounded-lg">
@@ -888,16 +888,16 @@ permalink: /explore-cars/
                                 <i class="fas fa-temperature-high mr-2"></i>
                                 <span>Temperature</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}"
                                    class="w-full" data-filter="temperature">
                         </div>
                     </div>
                     <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})" 
+                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})"
                                 class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
                             Reset
                         </button>
-                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})" 
+                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})"
                                 class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
                             Save Changes
                         </button>
@@ -922,7 +922,7 @@ permalink: /explore-cars/
         function applyImageFilters(index) {
             const editingImage = document.getElementById('editingImage');
             const filters = {};
-            
+
             document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
                 const filter = input.dataset.filter;
                 const value = input.value;
@@ -931,12 +931,12 @@ permalink: /explore-cars/
 
             // Apply CSS filters
             const filterString = `
-                brightness(${100 + parseInt(filters.brightness)}%) 
-                contrast(${100 + parseInt(filters.contrast)}%) 
+                brightness(${100 + parseInt(filters.brightness)}%)
+                contrast(${100 + parseInt(filters.contrast)}%)
                 saturate(${100 + parseInt(filters.saturation)}%)
                 hue-rotate(${filters.temperature}deg)
             `;
-            
+
             editingImage.style.filter = filterString;
             currentEditingImages[index].filters = filters;
         }
@@ -944,26 +944,26 @@ permalink: /explore-cars/
         // Function to save the edited image
         function saveImageEdit(index) {
             const editingImage = document.getElementById('editingImage');
-            
+
             // Create a canvas to save the filtered image
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = editingImage.naturalWidth;
             canvas.height = editingImage.naturalHeight;
-            
+
             // Draw the filtered image to canvas
             ctx.filter = editingImage.style.filter;
             ctx.drawImage(editingImage, 0, 0);
-            
+
             // Save the filtered image
             currentEditingImages[index].current = canvas.toDataURL('image/jpeg');
-            
+
             // Update the preview
             const previewImage = document.querySelector(`#imagePreviews img[data-index="${index}"]`);
             if (previewImage) {
                 previewImage.src = currentEditingImages[index].current;
             }
-            
+
             closeImageEditModal();
         }
 
@@ -971,12 +971,12 @@ permalink: /explore-cars/
         function resetImageFilters(index) {
             const editingImage = document.getElementById('editingImage');
             editingImage.style.filter = 'none';
-            
+
             // Reset all range inputs
             document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
                 input.value = 0;
             });
-            
+
             currentEditingImages[index].filters = {
                 brightness: 0,
                 contrast: 0,
@@ -995,20 +995,20 @@ permalink: /explore-cars/
         // Update the handleFormSubmit function to properly handle multiple images
         function handleFormSubmit(e) {
             e.preventDefault();
-            
+
             const model = document.getElementById('carModel').value;
             const description = document.getElementById('carDescription').value;
-            
+
             // Validate form
             if (!model || !description || currentEditingImages.length === 0) {
                 alert('Please fill in all fields and upload at least one image');
                 return;
             }
-            
+
             // Get all selected tags and brands
             const selectedTagElements = document.querySelectorAll('#uploadForm .tag-option.selected');
             const tags = Array.from(selectedTagElements).map(el => `#${el.dataset.tag}`);
-            
+
             // Create new car object with all edited images
             const newCar = {
                 id: nextId++,
@@ -1021,11 +1021,11 @@ permalink: /explore-cars/
                 isLiked: false,
                 isBookmarked: false
             };
-            
+
             // Add to cars array and render
             cars.unshift(newCar);
             renderPosts();
-            
+
             // Reset form and close modal
             resetUploadForm();
             toggleModal(uploadModal);
@@ -1038,10 +1038,10 @@ permalink: /explore-cars/
                 <div class="mt-4">
                     <label class="block text-gray-300 mb-2">Custom Tags</label>
                     <div class="flex items-center space-x-2">
-                        <input type="text" id="customTag" 
-                               class="flex-1 bg-gray-700 rounded px-3 py-2" 
+                        <input type="text" id="customTag"
+                               class="flex-1 bg-gray-700 rounded px-3 py-2"
                                placeholder="Enter custom tag">
-                        <button type="button" onclick="addCustomTag()" 
+                        <button type="button" onclick="addCustomTag()"
                                 class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
                             Add
                         </button>
@@ -1051,7 +1051,7 @@ permalink: /explore-cars/
                     </div>
                 </div>
             `;
-            
+
             tagSection.insertAdjacentHTML('beforeend', customTagsHTML);
         }
 
@@ -1059,7 +1059,7 @@ permalink: /explore-cars/
         function addCustomTag() {
             const customTagInput = document.getElementById('customTag');
             const tag = customTagInput.value.trim().toLowerCase().replace(/\s+/g, '-');
-            
+
             if (tag) {
                 const customTagsContainer = document.getElementById('customTagsContainer');
                 const tagElement = document.createElement('div');
@@ -1067,14 +1067,14 @@ permalink: /explore-cars/
                 tagElement.dataset.tag = tag;
                 tagElement.innerHTML = `
                     <span>#${tag}</span>
-                    <button type="button" class="text-gray-400 hover:text-red-400" 
+                    <button type="button" class="text-gray-400 hover:text-red-400"
                             onclick="removeCustomTag(this.parentElement)">
                         <i class="fas fa-times"></i>
                     </button>
                 `;
                 customTagsContainer.appendChild(tagElement);
                 customTagInput.value = '';
-                
+
                 // Add to available tags in filter modal
                 addTagToFilters(tag);
             }
@@ -1089,7 +1089,7 @@ permalink: /explore-cars/
         function addTagToFilters(tag) {
             const filterTagsContainer = document.querySelector('#filterModal .flex.flex-wrap.gap-2');
             const existingTag = filterTagsContainer.querySelector(`[data-tag="${tag}"]`);
-            
+
             if (!existingTag) {
                 const tagButton = document.createElement('button');
                 tagButton.className = 'tag-option px-3 py-1 bg-gray-700 rounded-full';
@@ -1107,19 +1107,19 @@ permalink: /explore-cars/
             const filterModal = document.querySelector('#filterModal .space-y-4');
             const searchHTML = `
                 <div class="mb-4">
-                    <input type="text" id="tagSearch" 
-                           class="w-full bg-gray-700 rounded px-3 py-2" 
+                    <input type="text" id="tagSearch"
+                           class="w-full bg-gray-700 rounded px-3 py-2"
                            placeholder="Search tags...">
                 </div>
             `;
-            
+
             filterModal.insertAdjacentHTML('afterbegin', searchHTML);
-            
+
             // Add search functionality
             document.getElementById('tagSearch').addEventListener('input', function(e) {
                 const searchTerm = e.target.value.toLowerCase();
                 const tagButtons = document.querySelectorAll('#filterModal .tag-option');
-                
+
                 tagButtons.forEach(button => {
                     const tag = button.dataset.tag.toLowerCase();
                     button.style.display = tag.includes(searchTerm) ? '' : 'none';
@@ -1134,14 +1134,14 @@ permalink: /explore-cars/
             closeFilterModal.addEventListener('click', () => toggleModal(filterModal));
             resetFilters.addEventListener('click', resetAllFilters);
             applyFilters.addEventListener('click', applyAllFilters);
-            
+
             // Tag selection in filter modal
             document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.classList.toggle('selected');
                 });
             });
-            
+
             // Upload modal
             addPostBtn.addEventListener('click', () => toggleModal(uploadModal));
             closeUploadModal.addEventListener('click', () => {
@@ -1152,27 +1152,27 @@ permalink: /explore-cars/
                 resetUploadForm();
                 toggleModal(uploadModal);
             });
-            
+
             // Image upload preview
             carImages.addEventListener('change', handleImageUpload);
-            
+
             // Tag selection in upload modal
             document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.classList.toggle('selected');
                 });
             });
-            
+
             // Form submission
             uploadForm.addEventListener('submit', handleFormSubmit);
-            
+
             // Car detail modal
             closeCarDetailModal.addEventListener('click', () => toggleModal(carDetailModal));
-            
+
             // Carousel navigation
             carouselPrev.addEventListener('click', () => navigateCarousel(-1));
             carouselNext.addEventListener('click', () => navigateCarousel(1));
-            
+
             // Edit tools
             document.querySelectorAll('.edit-tool').forEach(tool => {
                 tool.addEventListener('click', function() {
@@ -1180,7 +1180,7 @@ permalink: /explore-cars/
                     this.classList.add('active');
                 });
             });
-            
+
             // Edit sliders
             document.querySelectorAll('.edit-slider').forEach(slider => {
                 slider.addEventListener('input', function() {
@@ -1189,15 +1189,15 @@ permalink: /explore-cars/
                     applyImageFilter(property, value);
                 });
             });
-            
+
             // Delegate events for dynamically created elements
             postsContainer.addEventListener('click', (e) => {
                 const card = e.target.closest('.card');
                 if (!card) return;
-                
+
                 const carId = parseInt(card.dataset.id);
                 const car = cars.find(c => c.id === carId);
-                
+
                 if (e.target.closest('.like-btn')) {
                     toggleLike(car);
                 } else if (e.target.closest('.bookmark-btn')) {
@@ -1207,13 +1207,13 @@ permalink: /explore-cars/
                     showCarDetail(car);
                 }
             });
-            
+
             // Close image edit modal
             closeImageEdit.addEventListener('click', () => toggleModal(imageEditModal));
-            
+
             // Add custom tags section
             addCustomTagsSection();
-            
+
             // Add tag search
             addTagSearch();
         }
@@ -1222,7 +1222,7 @@ permalink: /explore-cars/
         function toggleModal(modal) {
             modal.classList.toggle('modal-hidden');
             modal.classList.toggle('modal-visible');
-            
+
             // Reset carousel when closing detail modal
             if (modal === carDetailModal && modal.classList.contains('modal-hidden')) {
                 currentCarouselIndex = 0;
@@ -1244,7 +1244,7 @@ permalink: /explore-cars/
         function applyAllFilters() {
             selectedTags = [];
             selectedBrands = [];
-            
+
             // Get selected tags and brands
             document.querySelectorAll('#filterModal .tag-option.selected').forEach(btn => {
                 const tag = btn.dataset.tag;
@@ -1254,7 +1254,7 @@ permalink: /explore-cars/
                     selectedBrands.push(tag);
                 }
             });
-            
+
             renderPosts();
             toggleModal(filterModal);
         }
@@ -1264,7 +1264,7 @@ permalink: /explore-cars/
             const files = e.target.files;
             if (files.length > 0) {
                 const file = files[0];
-                
+
                 // Check if we've reached the maximum number of images
                 if (currentEditingImages.length >= 5) {
                     alert('Maximum 5 images allowed');
@@ -1272,7 +1272,7 @@ permalink: /explore-cars/
                 }
 
                 const reader = new FileReader();
-                
+
                 reader.onload = function(event) {
                     // Add the new image to the array
                     const newImageIndex = currentEditingImages.length;
@@ -1291,11 +1291,11 @@ permalink: /explore-cars/
                     const imgContainer = document.createElement('div');
                     imgContainer.className = 'relative group';
                     imgContainer.innerHTML = updateImagePreview(currentEditingImages[newImageIndex], newImageIndex);
-                    
+
                     imagePreviews.appendChild(imgContainer);
                     updateUploadControls();
                 };
-                
+
                 reader.readAsDataURL(file);
             }
 
@@ -1306,7 +1306,7 @@ permalink: /explore-cars/
         // Add new function to update upload controls
         function updateUploadControls() {
             const uploadControls = document.getElementById('uploadControls');
-            
+
             if (currentEditingImages.length < 5) {
                 uploadControls.innerHTML = `
                     <input type="file" id="carImages" accept="image/*" class="hidden">
@@ -1316,7 +1316,7 @@ permalink: /explore-cars/
                         <p class="text-sm text-gray-500">${5 - currentEditingImages.length} spots remaining</p>
                     </label>
                 `;
-                
+
                 // Reattach event listener to new input
                 document.getElementById('carImages').addEventListener('change', handleImageUpload);
             } else {
@@ -1327,7 +1327,7 @@ permalink: /explore-cars/
         // Update removeImage function
         function removeImage(index) {
             currentEditingImages.splice(index, 1);
-            
+
             // Rebuild previews to update indices
             imagePreviews.innerHTML = '';
             currentEditingImages.forEach((img, idx) => {
@@ -1336,7 +1336,7 @@ permalink: /explore-cars/
                 imgContainer.innerHTML = updateImagePreview(currentEditingImages[idx], idx);
                 imagePreviews.appendChild(imgContainer);
             });
-            
+
             updateUploadControls();
         }
 
@@ -1346,7 +1346,7 @@ permalink: /explore-cars/
             imagePreviews.innerHTML = '';
             currentEditingImages = [];
             updateUploadControls();
-            
+
             // Reset selected tags
             document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
                 btn.classList.remove('selected');
@@ -1358,12 +1358,12 @@ permalink: /explore-cars/
             car.isLiked = !car.isLiked;
             car.likes += car.isLiked ? 1 : -1;
             renderPosts();
-            
+
             // Update detail modal if open
             if (!carDetailModal.classList.contains('modal-hidden')) {
                 const likeBtn = carDetailModal.querySelector('.like-btn i');
                 const likeCount = carDetailModal.querySelector('.like-count');
-                
+
                 likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
                 likeCount.textContent = car.likes;
             }
@@ -1373,7 +1373,7 @@ permalink: /explore-cars/
         function toggleBookmark(car) {
             car.isBookmarked = !car.isBookmarked;
             renderPosts();
-            
+
             // Update detail modal if open
             if (!carDetailModal.classList.contains('modal-hidden')) {
                 const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
@@ -1386,11 +1386,11 @@ permalink: /explore-cars/
             detailCarModel.textContent = car.model;
             detailUsername.textContent = car.username;
             detailDescription.textContent = car.description;
-            
+
             // Clear previous tags
             const tagsContainer = carDetailModal.querySelector('.flex.flex-wrap.gap-2.mb-4');
             tagsContainer.innerHTML = '';
-            
+
             // Add tags
             car.tags.forEach(tag => {
                 const tagElement = document.createElement('span');
@@ -1398,28 +1398,28 @@ permalink: /explore-cars/
                 tagElement.textContent = tag;
                 tagsContainer.appendChild(tagElement);
             });
-            
+
             // Set up carousel
             detailCarousel.innerHTML = '';
             currentCarouselImages = car.images;
             currentCarouselIndex = 0;
-            
+
             car.images.forEach((img, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'min-w-full';
                 slide.innerHTML = `<img src="${img}" alt="${car.model}" class="w-full h-96 object-contain">`;
                 detailCarousel.appendChild(slide);
             });
-            
+
             // Update like and bookmark buttons
             const likeBtn = carDetailModal.querySelector('.like-btn i');
             const likeCount = carDetailModal.querySelector('.like-count');
             const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
-            
+
             likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
             likeCount.textContent = car.likes;
             bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
-            
+
             // Show modal
             toggleModal(carDetailModal);
         }
@@ -1427,13 +1427,13 @@ permalink: /explore-cars/
         // Navigate carousel
         function navigateCarousel(direction) {
             currentCarouselIndex += direction;
-            
+
             if (currentCarouselIndex < 0) {
                 currentCarouselIndex = currentCarouselImages.length - 1;
             } else if (currentCarouselIndex >= currentCarouselImages.length) {
                 currentCarouselIndex = 0;
             }
-            
+
             detailCarousel.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
         }
 
@@ -1441,7 +1441,7 @@ permalink: /explore-cars/
         function editImage(index) {
             const imageData = currentEditingImages[index];
             const editModal = document.getElementById('imageEditModal');
-            
+
             // Set up the edit modal without closing upload modal
             editModal.innerHTML = `
                 <div class="bg-gray-800 rounded-xl p-6 w-full max-w-4xl">
@@ -1452,8 +1452,8 @@ permalink: /explore-cars/
                         </button>
                     </div>
                     <div class="mb-6">
-                        <img id="editingImage" src="${imageData.current}" 
-                             class="w-full h-[60vh] object-contain rounded-lg" 
+                        <img id="editingImage" src="${imageData.current}"
+                             class="w-full h-[60vh] object-contain rounded-lg"
                              alt="Editing image">
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-4">
@@ -1462,7 +1462,7 @@ permalink: /explore-cars/
                                 <i class="fas fa-sun mr-2"></i>
                                 <span>Brightness</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}"
                                    class="w-full" data-filter="brightness">
                         </div>
                         <div class="edit-tool bg-gray-700 p-3 rounded-lg">
@@ -1470,7 +1470,7 @@ permalink: /explore-cars/
                                 <i class="fas fa-adjust mr-2"></i>
                                 <span>Contrast</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}"
                                    class="w-full" data-filter="contrast">
                         </div>
                         <div class="edit-tool bg-gray-700 p-3 rounded-lg">
@@ -1478,7 +1478,7 @@ permalink: /explore-cars/
                                 <i class="fas fa-palette mr-2"></i>
                                 <span>Saturation</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}"
                                    class="w-full" data-filter="saturation">
                         </div>
                         <div class="edit-tool bg-gray-700 p-3 rounded-lg">
@@ -1486,16 +1486,16 @@ permalink: /explore-cars/
                                 <i class="fas fa-temperature-high mr-2"></i>
                                 <span>Temperature</span>
                             </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}" 
+                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}"
                                    class="w-full" data-filter="temperature">
                         </div>
                     </div>
                     <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})" 
+                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})"
                                 class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
                             Reset
                         </button>
-                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})" 
+                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})"
                                 class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
                             Save Changes
                         </button>
@@ -1520,7 +1520,7 @@ permalink: /explore-cars/
         function applyImageFilters(index) {
             const editingImage = document.getElementById('editingImage');
             const filters = {};
-            
+
             document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
                 const filter = input.dataset.filter;
                 const value = input.value;
@@ -1529,12 +1529,12 @@ permalink: /explore-cars/
 
             // Apply CSS filters
             const filterString = `
-                brightness(${100 + parseInt(filters.brightness)}%) 
-                contrast(${100 + parseInt(filters.contrast)}%) 
+                brightness(${100 + parseInt(filters.brightness)}%)
+                contrast(${100 + parseInt(filters.contrast)}%)
                 saturate(${100 + parseInt(filters.saturation)}%)
                 hue-rotate(${filters.temperature}deg)
             `;
-            
+
             editingImage.style.filter = filterString;
             currentEditingImages[index].filters = filters;
         }
@@ -1542,26 +1542,26 @@ permalink: /explore-cars/
         // Function to save the edited image
         function saveImageEdit(index) {
             const editingImage = document.getElementById('editingImage');
-            
+
             // Create a canvas to save the filtered image
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = editingImage.naturalWidth;
             canvas.height = editingImage.naturalHeight;
-            
+
             // Draw the filtered image to canvas
             ctx.filter = editingImage.style.filter;
             ctx.drawImage(editingImage, 0, 0);
-            
+
             // Save the filtered image
             currentEditingImages[index].current = canvas.toDataURL('image/jpeg');
-            
+
             // Update the preview
             const previewImage = document.querySelector(`#imagePreviews img[data-index="${index}"]`);
             if (previewImage) {
                 previewImage.src = currentEditingImages[index].current;
             }
-            
+
             closeImageEditModal();
         }
 
@@ -1569,12 +1569,12 @@ permalink: /explore-cars/
         function resetImageFilters(index) {
             const editingImage = document.getElementById('editingImage');
             editingImage.style.filter = 'none';
-            
+
             // Reset all range inputs
             document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
                 input.value = 0;
             });
-            
+
             currentEditingImages[index].filters = {
                 brightness: 0,
                 contrast: 0,
@@ -1594,8 +1594,8 @@ permalink: /explore-cars/
         function updateImagePreview(imageData, index) {
             return `
                 <div class="relative group">
-                    <img src="${imageData.current}" 
-                         class="w-full h-24 object-cover rounded" 
+                    <img src="${imageData.current}"
+                         class="w-full h-24 object-cover rounded"
                          data-index="${index}">
                     <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
                         <button type="button" class="text-white hover:text-amber-400" onclick="event.preventDefault(); event.stopPropagation(); editImage(${index})">
