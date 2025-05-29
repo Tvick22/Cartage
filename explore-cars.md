@@ -212,12 +212,9 @@ permalink: /explore-cars/
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-gray-300 mb-2">Car Model</label>
-                                <input type="text" id="carModel" class="w-full bg-gray-700 rounded px-3 py-2" placeholder="e.g. Ford Mustang GT">
-                            </div>
-                            <div>
                                 <label class="block text-gray-300 mb-2">Description</label>
-                                <textarea id="carDescription" class="w-full bg-gray-700 rounded px-3 py-2" rows="3" placeholder="Tell us about your car..."></textarea>
+                                <textarea id="photoDescription" class="w-full bg-gray-700 rounded px-3 py-2" rows="3" 
+                                          placeholder="Tell us about your photo..."></textarea>
                             </div>
                         </div>
                         <div class="space-y-4">
