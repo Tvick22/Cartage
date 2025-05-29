@@ -196,6 +196,31 @@ menu: nav/mainHeader.html
         }
     }
 
+
+async function updateUser(data) {
+    const endpoint = `${pythonURI}/api/user`;
+    try {
+        const response = await fetch(endpoint, {
+            ...fetchOptions,
+            method: "PUT",
+            headers: {
+                ...fetchOptions.headers,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update user: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error updating user:", error.message);
+    }
+}
+
+
     document.addEventListener("DOMContentLoaded", async () => {
         const userData = await getUserData()
         console.log(userData)
@@ -304,12 +329,25 @@ bioWordCount.textContent = `${charCount}/${MAX_CHARS} characters`;
         modal.classList.remove('flex');
     });
 
-    saveEdit.addEventListener('click', () => {
-        profileName.textContent = nameInput.value;
-        profileBio.textContent = bioInput.value;
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    saveEdit.addEventListener('click', async () => {
+    const updatedName = nameInput.value;
+    const updatedBio = bioInput.value;
+
+    // Update UI immediately
+    profileName.textContent = updatedName;
+    profileBio.textContent = updatedBio;
+
+    // Close modal
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+
+    // Send to backend
+    await updateUser({
+        name: updatedName,
+        bio: updatedBio
     });
+});
+
 
 document.addEventListener('keydown', (e) => {
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
