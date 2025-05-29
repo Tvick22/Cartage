@@ -6,213 +6,132 @@ search_exclude: true
 menu: nav/mainHeader.html
 ---
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up | ShotSpot</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8fafc;
-        }
-        
-        .brand-orange {
-            background-color: rgb(245, 158, 11);
-        }
-        
-        .brand-orange-text {
-            color: rgb(245, 158, 11);
-        }
-        
-        .brand-orange-border {
-            border-color: rgb(245, 158, 11);
-        }
-        
-        .brand-orange-hover:hover {
-            background-color: rgba(245, 158, 11, 0.9);
-        }
-        
-        .input-focus:focus {
-            border-color: rgb(245, 158, 11);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-        }
-        
-        .wave-bg {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-            transform: rotate(180deg);
-        }
-        
-        .wave-bg svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 1.3px);
-            height: 150px;
-        }
-        
-        .wave-bg .shape-fill {
-            fill: rgba(245, 158, 11, 0.1);
-        }
-        
-        .password-toggle {
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body class="min-h-screen bg-gray-50">
-    <div class="flex items-center justify-center min-h-screen relative p-4">
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-white to-gray-100 opacity-90"></div>
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center opacity-10"></div>
-    </div>
-    
-    <div class="relative w-full max-w-md z-10">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div class="brand-orange p-6 text-center">
-                <h1 class="text-3xl font-bold text-white">ShotSpot</h1>
-                <p class="text-white opacity-90 mt-1">Capture and share your best moments</p>
-            </div>
-            
-            <div class="px-8 py-10">
-                <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Sign up for ShotSpot</h2>
-                
-                <form id="signinForm" class="space-y-6">
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-envelope text-gray-400"></i>
-                            </div>
-                            <input type="email" id="email" name="email" required
-                                   class="pl-10 input-focus block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-offset-1 focus:ring-opacity-50 py-3 px-4 border transition duration-150 ease-in-out"
-                                   placeholder="you@example.com">
-                        </div>
-                        <p id="email-error" class="mt-1 text-sm text-red-600 hidden">Please enter a valid email address</p>
-                    </div>
-                    
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
-                            </div>
-                            <input type="password" id="password" name="password" required
-                                   class="pl-10 input-focus block w-full rounded-lg border-gray-300 shadow-sm focus:ring-2 focus:ring-offset-1 focus:ring-opacity-50 py-3 px-4 border transition duration-150 ease-in-out"
-                                   placeholder="••••••••">
-                            <div class="password-toggle absolute" onclick="togglePassword()">
-                                <i id="eye-icon" class="fas fa-eye-slash text-gray-400"></i>
-                            </div>
-                        </div>
-                        <p id="password-error" class="mt-1 text-sm text-red-600 hidden">Password must be at least 8 characters</p>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 brand-orange rounded focus:ring-brand-orange border-gray-300">
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                        </div>
-                        
-                        <div class="text-sm">
-                            <a href="#" class="font-medium brand-orange-text hover:text-orange-600">Forgot password?</a>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <button type="submit" class="brand-orange brand-orange-hover w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 ease-in-out">
-                            Sign-up
-                        </button>
-                    </div>
-                </form>
-                
-                <div class="mt-6">
-                    <div class="relative">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-gray-300"></div>
-                        </div>
-                
-                <div class="mt-8 text-center text-sm text-gray-500">
-                     <a href="#" class="font-medium brand-orange-text hover:text-orange-600"> </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="mt-6 text-center text-xs text-gray-500">
-            &copy; 2023 ShotSpot. All rights reserved.
-        </div>
-    </div>
-    
-    <div class="wave-bg">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-        </svg>
-    </div>
-    
-    <script>
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = document.getElementById('eye-icon');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
+<div class="flex min-h-screen items-center justify-center px-4 py-12">
+  <div class="w-full max-w-md p-8 bg-white rounded-3xl shadow-xl z-10">
+    <h2 class="text-center text-4xl font-extrabold text-amber-500 mb-8">
+      Sign up to your account
+    </h2>
+
+    <form class="space-y-6" id="pythonForm" onsubmit="pythonLogin(); return false;">
+      <!-- Username -->
+      <div>
+        <label for="username" class="block text-base font-semibold text-gray-700 mb-2">Username</label>
+        <input type="text" name="username" id="username" autocomplete="username" required
+          class="w-full p-3 rounded-xl border border-amber-400 placeholder-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 text-base bg-white text-gray-900">
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-base font-semibold text-gray-700 mb-2">Password</label>
+        <input type="password" name="password" id="password" autocomplete="current-password" required
+          class="w-full p-3 rounded-xl border border-amber-400 placeholder-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 text-base bg-white text-gray-900">
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+          class="w-full px-5 py-3 rounded-full bg-amber-500 text-white font-semibold shadow-md hover:bg-amber-600 transition transform duration-300 hover:scale-105">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Message -->
+      <p id="message" class="text-red-600 text-center"></p>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+    import { login, pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+    // Function to handle Python login
+    window.pythonLogin = function() {
+        const options = {
+            URL: `${pythonURI}/api/authenticate`,
+            callback: pythonDatabase,
+            message: "message",
+            method: "POST",
+            cache: "no-cache",
+            body: {
+                uid: document.getElementById("username").value,
+                password: document.getElementById("password").value,
             }
-        }
-        
-        // Form validation
-        document.getElementById('signinForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const emailError = document.getElementById('email-error');
-            const passwordError = document.getElementById('password-error');
-            
-            // Reset errors
-            emailError.classList.add('hidden');
-            passwordError.classList.add('hidden');
-            
-            let isValid = true;
-            
-            // Validate email
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                emailError.classList.remove('hidden');
-                isValid = false;
+        };
+        login(options);
+    }
+
+    // Function to handle signup
+    window.signup = function() {
+        const signupButton = document.querySelector(".signup-card button");
+
+        // Disable the button and change its color
+        signupButton.disabled = true;
+        signupButton.style.backgroundColor = '#d3d3d3'; // Light gray to indicate disabled state
+
+        const signupOptions = {
+            URL: `${pythonURI}/api/user`,
+            method: "POST",
+            cache: "no-cache",
+            body: {
+                name: document.getElementById("name").value,
+                username: document.getElementById("signupUsername").value,
+                password: document.getElementById("signupPassword").value,
             }
-            
-            // Validate password
-            if (password.length < 8) {
-                passwordError.classList.remove('hidden');
-                isValid = false;
+        };
+
+        fetch(signupOptions.URL, {
+            method: signupOptions.method,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(signupOptions.body)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Signup failed: ${response.status}`);
             }
-            
-            if (isValid) {
-                // Simulate successful login
-                document.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Signing in...';
-                
-                setTimeout(() => {
-                    alert('Login successful! Redirecting...');
-                    // In a real app, you would redirect here
-                    // window.location.href = '/dashboard';
-                }, 1500);
-            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("signupMessage").textContent = "Signup successful!";
+            // Optionally redirect to login page or handle as needed
+            window.location.href = '{{site.baseurl}}/';
+        })
+        .catch(error => {
+            console.error("Signup Error:", error);
+            document.getElementById("signupMessage").textContent = `Signup Error: ${error.message}`;
+            // Re-enable the button if there is an error
+            signupButton.disabled = false;
+            signupButton.style.backgroundColor = ''; // Reset to default color
         });
-    </script>
-    </div>
+    }
+
+    // Function to fetch and display Python data
+    function pythonDatabase() {
+        const URL = `${pythonURI}/api/user`;
+
+        fetch(URL, fetchOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Flask server response: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.location.href = '{{site.baseurl}}/';
+            })
+            .catch(error => {
+                console.error("Python Database Error:", error);
+                const errorMsg = `Python Database Error: ${error.message}`;
+            });
+    }
+
+    // Check for cookies and call relevant database functions on page load
+    window.onload = function() {
+        // Check if user is authenticated by checking cookies or local storage
+        const isAuthenticated = document.cookie.includes('auth_token'); // Example check
+        if (isAuthenticated) {
+            pythonDatabase();
+        }
+    };
+</script>
