@@ -86,8 +86,7 @@ menu: nav/mainHeader.html
   </div>
 </div>
 
-
-<script type="module">
+<script>
 // Modal toggle utility
 function toggleModal(id) {
   const modal = document.getElementById(id);
@@ -100,21 +99,25 @@ function toggleModal(id) {
   }
 }
 
-// Environment setup
-import {javaURI, fetchOptions} from '{{site.baseurl}}/assets/js/api/config.js';
+// API setup
+const flaskAPI = "/api/groups";  // this now points to Flask
+const fetchOptions = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+const postOptions = { ...fetchOptions, method: "POST" };
+const putOptions = { ...fetchOptions, method: "PUT" };
 
-const postOptions = {...fetchOptions, method: "POST"}
-const putOptions = {...fetchOptions, method: "PUT"}
-
-const javaURL = javaURI + "/api/groups";
-
-// Get table body
+// DOM elements
 const tableBody = document.getElementById("groupTableBody");
 
 function getTable() {
-  fetch(javaURL, fetchOptions)
+  fetch(flaskAPI, fetchOptions)
     .then((response) => response.json())
     .then((groups) => {
+      tableBody.innerHTML = ""; // clear table before populating
       groups.forEach((group) => {
         const groupId = group.id;
         const name = group.name;
@@ -123,15 +126,15 @@ function getTable() {
         const row = document.createElement("tr");
         row.className = "group-row";
         row.dataset.groupid = groupId;
-        row.dataset.members = group.members
+        row.dataset.members = (group.members || [])
           .map((m) => (m.name + m.email).toLowerCase())
           .join(" ");
 
         row.innerHTML = `
-          <td>${groupId}</td>
-          <td>${name}</td>
-          <td>${period}</td>
-          <td class="space-x-2">
+          <td class="p-4">${groupId}</td>
+          <td class="p-4">${name}</td>
+          <td class="p-4">${period}</td>
+          <td class="p-4 space-x-2">
             <button class="bg-blue-500 text-white px-2 py-1 rounded toggle-members" data-target="members-${groupId}">
               View Members
             </button>
@@ -155,7 +158,7 @@ function getTable() {
                 </tr>
               </thead>
               <tbody>
-                ${group.members
+                ${(group.members || [])
                   .map(
                     (m) => `
                       <tr>
@@ -178,22 +181,20 @@ function getTable() {
     .catch((error) => console.error("Failed to load groups:", error));
 }
 
-// Search filtering
+// Search
 document.getElementById("searchInput").addEventListener("keyup", function () {
   const search = this.value.toLowerCase();
-
   document.querySelectorAll("tr.group-row").forEach((row) => {
     const groupId = row.dataset.groupid;
     const members = row.dataset.members;
     const match = groupId.includes(search) || members.includes(search);
-
     row.style.display = match ? "" : "none";
     const details = document.getElementById(`members-${groupId}`);
     if (details) details.style.display = match ? "" : "none";
   });
 });
 
-// Create group without assigning users
+// Create Group
 document.getElementById("createGroupBtn").addEventListener("click", () => {
   const groupName = document.getElementById("groupNameInput").value.trim();
   const groupPeriod = document.getElementById("groupPeriodInput").value.trim();
@@ -206,10 +207,10 @@ document.getElementById("createGroupBtn").addEventListener("click", () => {
   const groupPayload = {
     name: groupName,
     period: groupPeriod,
-    personUids: [] // No users assigned
+    personUids: []  // Initially no members
   };
 
-  fetch(javaURL, {
+  fetch(flaskAPI, {
     ...postOptions,
     body: JSON.stringify(groupPayload),
   })
@@ -225,28 +226,7 @@ document.getElementById("createGroupBtn").addEventListener("click", () => {
     });
 });
 
-// Toggle member visibility
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("toggle-members")) {
-    const targetId = e.target.dataset.target;
-    const memberRow = document.getElementById(targetId);
-    if (memberRow) {
-      memberRow.classList.toggle("hidden");
-    }
-  }
-});
-
-// Load groups on page load
-getTable();
-
-// Open Create Group modal
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("openCreateModal").addEventListener("click", () => {
-    toggleModal("createGroupModal");
-  });
-});
-
-// Edit group (without user edit)
+// Edit button
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit-group")) {
     const groupId = e.target.dataset.groupid;
@@ -261,7 +241,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Save edited group (only name and period)
+// Save Edit
 document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
   const groupId = document.getElementById("editGroupId").value;
   const name = document.getElementById("editGroupNameInput").value.trim();
@@ -272,7 +252,7 @@ document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
     return;
   }
 
-  fetch(`${javaURL}/${groupId}`, {
+  fetch(`${flaskAPI}/${groupId}`, {
     ...putOptions,
     body: JSON.stringify({ name, period }),
   })
@@ -286,5 +266,24 @@ document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
       console.error("Error updating group:", error);
       alert("Error occurred. See console.");
     });
+});
+
+// View members toggle
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("toggle-members")) {
+    const targetId = e.target.dataset.target;
+    const memberRow = document.getElementById(targetId);
+    if (memberRow) {
+      memberRow.classList.toggle("hidden");
+    }
+  }
+});
+
+// Load groups on page load
+document.addEventListener("DOMContentLoaded", () => {
+  getTable();
+  document.getElementById("openCreateModal").addEventListener("click", () => {
+    toggleModal("createGroupModal");
+  });
 });
 </script>
