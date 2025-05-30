@@ -91,7 +91,7 @@ menu: nav/mainHeader.html
         <div class="flex-1">
             <div class="flex flex-col space-y-4 mb-8">
                 <h2 id="profile-name" class="text-5xl font-bold text-gray-900">User's Name</h2>
-                <p class="text-2xl text-gray-500">@userhandle</p>
+                <p id="profile-uid" class="text-2xl text-gray-500">@userhandle</p>
                 <pre id="profile-bio" class="whitespace-pre-wrap break-words break-all text-lg text-gray-600 font-medium">BIO</pre>
 
        <div class="mt-4 inline-flex items-center px-4 py-2 rounded-xl bg-amber-100 text-base font-semibold text-amber-800 shadow-md border border-amber-300 w-fit">
@@ -138,12 +138,12 @@ menu: nav/mainHeader.html
         <div class="space-y-4">
             <div>
                 <label for="name-input" class="block text-gray-700 font-semibold mb-1">Name</label>
-                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" value="User's Name">
+                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
             <div>
                 <label for="bio-input" class="block text-gray-700 font-semibold mb-1">BIO</label>
                <div class="relative">
-    <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">Bio</textarea>
+    <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
     <p id="bio-word-count" class="absolute bottom-1 right-2 text-xs text-gray-500">0 words</p>
 </div>
 
@@ -223,7 +223,17 @@ async function updateUser(data) {
 
     document.addEventListener("DOMContentLoaded", async () => {
         const userData = await getUserData()
-        console.log(userData)
+        
+        if (!userData) {
+            console.error("no user data")
+        }
+
+        document.getElementById("profile-name").textContent = userData.name;
+        document.getElementById("profile-uid").textContent = `@${userData.uid}`;
+        document.getElementById("profile-bio").textContent = userData.bio;
+        document.getElementById("name-input").value = userData.name;
+        document.getElementById("bio-input").textContent = userData.bio;
+
     })
 
     uploadInput.addEventListener('change', function () {

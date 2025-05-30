@@ -47,7 +47,7 @@ menu: nav/mainHeader.html
     import { login, pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
     // Function to handle Python login
-    window.pythonLogin = function() {
+    window.pythonLogin = async function() {
         const options = {
             URL: `${pythonURI}/api/authenticate`,
             callback: pythonDatabase,
@@ -59,7 +59,7 @@ menu: nav/mainHeader.html
                 password: document.getElementById("password").value,
             }
         };
-        login(options);
+        login(options)
     }
 
     // Function to handle signup
