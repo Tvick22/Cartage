@@ -1002,6 +1002,47 @@ permalink: /explore-cars/
         }
         // Initialize the app
         init();
+
+        // Add handleFormSubmit function
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('photoTitle').value;
+            const description = document.getElementById('photoDescription').value;
+            
+            // Validate form
+            if (!title || !description || currentEditingImages.length === 0) {
+                alert('Please fill in all fields and upload at least one image');
+                return;
+            }
+            
+            // Get all selected tags
+            const selectedTags = Array.from(document.querySelectorAll('#uploadForm .tag-option.selected'))
+                .map(btn => `#${btn.dataset.tag}`);
+            
+            // Create new photo object
+            const newPhoto = {
+                id: photos.length + 1,
+                images: currentEditingImages.map(img => img.current),
+                title: title,
+                username: "@user",
+                description: description,
+                tags: selectedTags,
+                likes: 0,
+                isLiked: false,
+                isBookmarked: false
+            };
+            
+            // Add to beginning of photos array
+            photos.unshift(newPhoto);
+            
+            // Reset form and close modal
+            resetUploadForm();
+            toggleModal(uploadModal);
+            
+            // Re-render posts to show new photo
+            renderPosts();
+        }
     </script>
 </body>
 </html>
