@@ -94,11 +94,7 @@ menu: nav/mainHeader.html
                 <p id="profile-uid" class="text-2xl text-gray-500">@userhandle</p>
                 <pre id="profile-bio" class="whitespace-pre-wrap break-words break-all text-lg text-gray-600 font-medium">BIO</pre>
 
-       <div class="mt-4 inline-flex items-center px-4 py-2 rounded-xl bg-amber-100 text-base font-semibold text-amber-800 shadow-md border border-amber-300 w-fit">
-
-    <i class="fas fa-camera-retro mr-2"></i>
-    Posts: <span id="post-count" class="ml-1">0</span>
-</div>
+      
             </div>
             <div class="flex space-x-6 mb-6">
                <a class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-xl font-medium inline-block transition-all duration-300 shadow-md hover:scale-105">
