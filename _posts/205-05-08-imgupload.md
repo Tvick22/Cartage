@@ -4,8 +4,21 @@ title: Uploading Images Procedure
 menu: nav/mainHeader.html
 ---
 
-```markdown
-![Uploading Images Procedure]({{site.baseurl}}/assets/img/imgupload.png)
-```
+![Uploading Images Procedure]({{site.baseurl}}/images/imgupload.png)
 
-Our model, the one in the upper part of the image, is more effective because it gives updates as the images are being uploaded to the S3 server. The other, more standard model is less efficient because the upload could fail and you wouldn't be able to tell, while ours would display failed. Our server uses an asynchronous function to more efficiently handle the data.
+<ul class="list-disc list-inside space-y-2 text-gray-800 m-4 mb-12">
+  <li>
+    <span class="font-medium">User sends HTTP request to the API containing the image file (Multipart)</span>
+  </li>
+  <li>
+    <span class="font-medium">API starts a Transaction with the Database to ensure all below actions are completed</span>
+    <ul class="list-disc list-inside ml-6 mt-2 space-y-1 text-gray-700">
+      <li>
+        <span>API will take the image and make a temporary local copy</span>
+      </li>
+      <li>
+        <span>API will create a table</span>
+      </li>
+    </ul>
+  </li>
+</ul>
