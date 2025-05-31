@@ -192,7 +192,7 @@ permalink: /explore-cars/
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-gray-300 mb-2">Photo Title</label>
-                                <input type="text" id="photoTitle" class="w-full bg-gray-700 rounded px-3 py-2" 
+                                <input type="text" id="photoTitle" class="w-full bg-gray-700 rounded px-3 py-2"
                                        placeholder="e.g. Sunset at the Beach">
                             </div>
                             <div>
@@ -213,7 +213,7 @@ permalink: /explore-cars/
                             </div>
                             <div>
                                 <label class="block text-gray-300 mb-2">Description</label>
-                                <textarea id="photoDescription" class="w-full bg-gray-700 rounded px-3 py-2" rows="3" 
+                                <textarea id="photoDescription" class="w-full bg-gray-700 rounded px-3 py-2" rows="3"
                                           placeholder="Tell us about your photo..."></textarea>
                             </div>
                         </div>
@@ -247,9 +247,9 @@ permalink: /explore-cars/
                             <div>
                                 <label class="block text-gray-300 mb-2">Custom Tags</label>
                                 <div class="flex items-center space-x-2">
-                                    <input type="text" id="customTag" class="flex-1 bg-gray-700 rounded px-3 py-2" 
+                                    <input type="text" id="customTag" class="flex-1 bg-gray-700 rounded px-3 py-2"
                                            placeholder="Add your own tag">
-                                    <button type="button" onclick="addCustomTag()" 
+                                    <button type="button" onclick="addCustomTag()"
                                             class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
                                         Add
                                     </button>
@@ -375,49 +375,14 @@ permalink: /explore-cars/
 
 
 
-    <script>
+    <script type="module">
+    import { getPosts } from "{{site.baseurl}}/assets/js/api/imagePosts.js"
+
+    const posts = await getPosts()
+
+    console.log(posts)
         // Sample car data (only 3 demo posts)
-        const samplePhotos = [
-            {
-                id: 1,
-                images: [
-                    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e",
-                ],
-                title: "Mountain Sunrise",
-                username: "@nature_photographer",
-                description: "Captured this beautiful sunrise in the mountains. The early morning light created amazing colors and shadows across the landscape.",
-                tags: ["#landscape", "#nature", "#sunrise", "#mountains"],
-                likes: 248,
-                isLiked: false,
-                isBookmarked: false
-            },
-            {
-                id: 2,
-                images: [
-                    "https://images.unsplash.com/photo-1511407397940-d57f68093f1d",
-                ],
-                title: "Street Life",
-                username: "@urban_shots",
-                description: "A moment of stillness in the bustling city. The rain created beautiful reflections on the street.",
-                tags: ["#street", "#urban", "#moody", "#rain"],
-                likes: 512,
-                isLiked: false,
-                isBookmarked: false
-            },
-            {
-                id: 3,
-                images: [
-                    "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
-                ],
-                title: "Portrait in Natural Light",
-                username: "@portrait_pro",
-                description: "Natural light portrait session in the golden hour. The soft lighting really brought out the subject's features.",
-                tags: ["#portrait", "#naturallight", "#golden", "#minimal"],
-                likes: 189,
-                isLiked: false,
-                isBookmarked: false
-            }
-        ];
+        const samplePhotos = posts
 
         // DOM Elements
         const postsContainer = document.getElementById('postsContainer');
@@ -1006,20 +971,20 @@ permalink: /explore-cars/
         // Add handleFormSubmit function
         function handleFormSubmit(e) {
             e.preventDefault();
-            
+
             const title = document.getElementById('photoTitle').value;
             const description = document.getElementById('photoDescription').value;
-            
+
             // Validate form
             if (!title || !description || currentEditingImages.length === 0) {
                 alert('Please fill in all fields and upload at least one image');
                 return;
             }
-            
+
             // Get all selected tags
             const selectedTags = Array.from(document.querySelectorAll('#uploadForm .tag-option.selected'))
                 .map(btn => `#${btn.dataset.tag}`);
-            
+
             // Create new photo object
             const newPhoto = {
                 id: photos.length + 1,
@@ -1032,14 +997,14 @@ permalink: /explore-cars/
                 isLiked: false,
                 isBookmarked: false
             };
-            
+
             // Add to beginning of photos array
             photos.unshift(newPhoto);
-            
+
             // Reset form and close modal
             resetUploadForm();
             toggleModal(uploadModal);
-            
+
             // Re-render posts to show new photo
             renderPosts();
         }
