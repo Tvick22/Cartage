@@ -206,7 +206,7 @@ permalink: /explore-cars/
                                         <label for="carImages" class="cursor-pointer inline-block">
                                             <i class="fas fa-cloud-upload-alt text-3xl text-amber-400 mb-2"></i>
                                             <p class="text-gray-400">Click to upload first image</p>
-                                            <p class="text-sm text-gray-500">PNG, JPG, JPEG (max. 5MB)</p>
+                                            <p class="text-sm text-gray-500">PNG, JPG, JPEG (max. 50MB)</p>
                                         </label>
                                     </div>
                                 </div>
@@ -264,7 +264,7 @@ permalink: /explore-cars/
                         <button type="button" id="cancelUpload" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
                             Cancel
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                        <button id="upload-photo" type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
                             Post Photo
                         </button>
                     </div>
@@ -377,11 +377,12 @@ permalink: /explore-cars/
 
     <script type="module">
     import { getPosts } from "{{site.baseurl}}/assets/js/api/imagePosts.js"
+    import { upload } from "{{site.baseurl}}/assets/js/api/uploadImage.js"
+
+    let images = []
 
     const posts = await getPosts()
 
-    console.log(posts)
-        // Sample car data (only 3 demo posts)
         const samplePhotos = posts
 
         // DOM Elements
@@ -630,6 +631,8 @@ permalink: /explore-cars/
 
                 const reader = new FileReader();
 
+                images.push(e.target.files[0])
+
                 reader.onload = function(event) {
                     // Add the new image to the array
                     const newImageIndex = currentEditingImages.length;
@@ -702,6 +705,7 @@ permalink: /explore-cars/
             uploadForm.reset();
             imagePreviews.innerHTML = '';
             currentEditingImages = [];
+            images = []
             updateUploadControls();
 
             // Reset selected tags
@@ -984,6 +988,8 @@ permalink: /explore-cars/
             // Get all selected tags
             const selectedTags = Array.from(document.querySelectorAll('#uploadForm .tag-option.selected'))
                 .map(btn => `#${btn.dataset.tag}`);
+
+            upload(images, title, description)
 
             // Create new photo object
             const newPhoto = {
