@@ -182,7 +182,7 @@ permalink: /explore-cars/
         <div id="uploadModal" class="modal modal-hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
             <div class="bg-gray-800 rounded-xl p-6 w-full max-w-2xl">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold">Upload Your Car</h3>
+                    <h3 class="text-xl font-bold text-white">Upload Your Photo(s)</h3>
                     <button id="closeUploadModal" class="text-gray-400 hover:text-white">
                         <i class="fas fa-times"></i>
                     </button>
@@ -465,7 +465,7 @@ permalink: /explore-cars/
                 <div class="p-4">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-bold text-lg">${photo.title}</h3>
+                            <h3 class="text-white font-bold text-lg">${photo.title}</h3>
                             <p class="text-gray-400 text-sm">${photo.username}</p>
                         </div>
                         <button class="bookmark-btn ${photo.isBookmarked ? 'text-amber-400' : 'text-gray-400'} hover:text-amber-500 transition">
