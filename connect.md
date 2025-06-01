@@ -19,7 +19,8 @@ menu: nav/mainHeader.html
         <tr>
           <th class="p-4 text-left font-medium">Community ID</th>
           <th class="p-4 text-left font-medium">Community Name</th>
-          <th class="p-4 text-left font-medium">Join</th>
+          <th class="p-4 text-left font-medium">Period</th>
+          <th class="p-4 text-left font-medium"></th>
         </tr>
       </thead>
       <tbody id="groupTableBody" class="divide-y divide-gray-100 bg-white">
@@ -48,6 +49,9 @@ menu: nav/mainHeader.html
         <label for="groupNameInput" class="block font-medium mb-1">Community Name</label>
         <input type="text" id="groupNameInput" placeholder="Enter group name"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <label for="groupPeriodInput" class="block font-medium mb-1">Period</label>
+        <input type="number" id="groupPeriodInput" placeholder="Enter period"
+               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
     </div>
     <div class="flex justify-end gap-4 mt-6 border-t pt-4">
@@ -70,6 +74,9 @@ menu: nav/mainHeader.html
         <label for="editGroupNameInput" class="block font-medium mb-1">Community Name</label>
         <input type="text" id="editGroupNameInput" placeholder="Enter group name"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <label for="editGroupPeriodInput" class="block font-medium mb-1">Period</label>
+        <input type="text" id="editGroupPeriodInput" placeholder="Enter group period"
+               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
       <div class="bg-gray-100 border border-gray-300 rounded-md p-4 max-h-[400px] overflow-y-auto">
         <input type="text" id="userSearchEdit" placeholder="Search users..."
@@ -86,7 +93,8 @@ menu: nav/mainHeader.html
   </div>
 </div>
 
-<script>
+<script type="module">
+import { pythonURI } from "{{site.baseurl}}/assets/js/api/config.js"
 // Modal toggle utility
 function toggleModal(id) {
   const modal = document.getElementById(id);
@@ -99,8 +107,10 @@ function toggleModal(id) {
   }
 }
 
+document.toggleModal = toggleModal
+
 // API setup
-const flaskAPI = "/api/groups";  // this now points to Flask
+const flaskAPI = pythonURI+"/api/groups";  // this now points to Flask
 const fetchOptions = {
   method: "GET",
   headers: {
@@ -131,10 +141,10 @@ function getTable() {
           .join(" ");
 
         row.innerHTML = `
-          <td class="p-4">${groupId}</td>
-          <td class="p-4">${name}</td>
-          <td class="p-4">${period}</td>
-          <td class="p-4 space-x-2">
+          <td class="p-4 bg-gray-300">${groupId}</td>
+          <td class="p-4 bg-gray-200">${name}</td>
+          <td class="p-4 bg-gray-100">${period}</td>
+          <td class="p-4 space-x-2 flex justify-end">
             <button class="bg-blue-500 text-white px-2 py-1 rounded toggle-members" data-target="members-${groupId}">
               View Members
             </button>
