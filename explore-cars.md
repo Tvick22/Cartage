@@ -11,7 +11,7 @@ permalink: /explore-cars/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartage | Explore Cars</title>
+    <title>ShotSpot | Explore Photos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -114,7 +114,7 @@ permalink: /explore-cars/
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold">Explore Cars</h1>
+            <h1 class="text-3xl font-bold">Explore Photos</h1>
             <div class="flex space-x-4">
                 <button id="filterBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-full transition">
                     <i class="fas fa-sliders-h mr-2"></i> Filters
@@ -133,29 +133,29 @@ permalink: /explore-cars/
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-gray-300 mb-2">Car Type</label>
+                        <label class="block text-gray-300 mb-2">Category</label>
                         <div class="flex flex-wrap gap-2">
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="sports">Sports</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="luxury">Luxury</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="suv">SUV</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="classic">Classic</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="electric">Electric</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="jdm">JDM</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="muscle">Muscle</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="tuner">Tuner</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="landscape">Landscape</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="portrait">Portrait</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="street">Street</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="nature">Nature</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="urban">Urban</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="wildlife">Wildlife</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="macro">Macro</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="aerial">Aerial</button>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-gray-300 mb-2">Brand</label>
+                        <label class="block text-gray-300 mb-2">Style</label>
                         <div class="flex flex-wrap gap-2">
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="ford">Ford</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="porsche">Porsche</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="bmw">BMW</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="mercedes">Mercedes</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="tesla">Tesla</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="nissan">Nissan</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="ferrari">Ferrari</button>
-                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="lamborghini">Lamborghini</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="minimal">Minimal</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="bw">Black & White</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="vintage">Vintage</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="moody">Moody</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="colorful">Colorful</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="abstract">Abstract</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="film">Film</button>
+                            <button class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="longexposure">Long Exposure</button>
                         </div>
                     </div>
                     <div>
@@ -182,7 +182,7 @@ permalink: /explore-cars/
         <div id="uploadModal" class="modal modal-hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
             <div class="bg-gray-800 rounded-xl p-6 w-full max-w-2xl">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold">Upload Your Car</h3>
+                    <h3 class="text-xl font-bold text-white">Upload Your Photo(s)</h3>
                     <button id="closeUploadModal" class="text-gray-400 hover:text-white">
                         <i class="fas fa-times"></i>
                     </button>
@@ -191,7 +191,12 @@ permalink: /explore-cars/
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-gray-300 mb-2">Car Images (Max 5)</label>
+                                <label class="block text-gray-300 mb-2">Photo Title</label>
+                                <input type="text" id="photoTitle" class="w-full bg-gray-700 rounded px-3 py-2"
+                                       placeholder="e.g. Sunset at the Beach">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Photos (Max 5)</label>
                                 <div class="border-2 border-dashed border-gray-600 rounded-lg p-4">
                                     <div id="imagePreviews" class="grid grid-cols-3 gap-2 mb-3">
                                         <!-- Image previews will be added here -->
@@ -201,66 +206,56 @@ permalink: /explore-cars/
                                         <label for="carImages" class="cursor-pointer inline-block">
                                             <i class="fas fa-cloud-upload-alt text-3xl text-amber-400 mb-2"></i>
                                             <p class="text-gray-400">Click to upload first image</p>
-                                            <p class="text-sm text-gray-500">PNG, JPG, JPEG (max. 5MB)</p>
+                                            <p class="text-sm text-gray-500">PNG, JPG, JPEG (max. 50MB)</p>
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-gray-300 mb-2">Car Model</label>
-                                <input type="text" id="carModel" class="w-full bg-gray-700 rounded px-3 py-2" placeholder="e.g. Ford Mustang GT">
-                            </div>
-                            <div>
                                 <label class="block text-gray-300 mb-2">Description</label>
-                                <textarea id="carDescription" class="w-full bg-gray-700 rounded px-3 py-2" rows="3" placeholder="Tell us about your car..."></textarea>
+                                <textarea id="photoDescription" class="w-full bg-gray-700 rounded px-3 py-2" rows="3"
+                                          placeholder="Tell us about your photo..."></textarea>
                             </div>
                         </div>
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-gray-300 mb-2">Tags</label>
+                                <label class="block text-gray-300 mb-2">Category</label>
                                 <div class="flex flex-wrap gap-2">
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="sports">Sports</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="luxury">Luxury</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="suv">SUV</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="classic">Classic</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="electric">Electric</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="jdm">JDM</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="muscle">Muscle</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="tuner">Tuner</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="landscape">Landscape</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="portrait">Portrait</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="street">Street</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="nature">Nature</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="urban">Urban</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="wildlife">Wildlife</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="macro">Macro</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="aerial">Aerial</button>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-gray-300 mb-2">Brand</label>
+                                <label class="block text-gray-300 mb-2">Style</label>
                                 <div class="flex flex-wrap gap-2">
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="ford">Ford</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="porsche">Porsche</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="bmw">BMW</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="mercedes">Mercedes</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="tesla">Tesla</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="nissan">Nissan</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="ferrari">Ferrari</button>
-                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="lamborghini">Lamborghini</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="minimal">Minimal</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="blackandwhite">Black & White</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="vintage">Vintage</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="moody">Moody</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="colorful">Colorful</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="abstract">Abstract</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="film">Film</button>
+                                    <button type="button" class="tag-option px-3 py-1 bg-gray-700 rounded-full" data-tag="longexposure">Long Exposure</button>
                                 </div>
                             </div>
-                            <div class="hidden" id="editToolsSection">
-                                <label class="block text-gray-300 mb-2">Edit Tools</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div class="edit-tool" data-tool="brightness">
-                                        <i class="fas fa-sun mr-2"></i> Brightness
-                                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="brightness">
-                                    </div>
-                                    <div class="edit-tool" data-tool="contrast">
-                                        <i class="fas fa-adjust mr-2"></i> Contrast
-                                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="contrast">
-                                    </div>
-                                    <div class="edit-tool" data-tool="saturation">
-                                        <i class="fas fa-palette mr-2"></i> Saturation
-                                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="saturation">
-                                    </div>
-                                    <div class="edit-tool" data-tool="temperature">
-                                        <i class="fas fa-temperature-high mr-2"></i> Temperature
-                                        <input type="range" min="-100" max="100" value="0" class="edit-slider" data-property="temperature">
-                                    </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Custom Tags</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="customTag" class="flex-1 bg-gray-700 rounded px-3 py-2"
+                                           placeholder="Add your own tag">
+                                    <button type="button" onclick="addCustomTag()"
+                                            class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                                        Add
+                                    </button>
+                                </div>
+                                <div id="customTagsContainer" class="flex flex-wrap gap-2 mt-2">
+                                    <!-- Custom tags will appear here -->
                                 </div>
                             </div>
                         </div>
@@ -269,8 +264,8 @@ permalink: /explore-cars/
                         <button type="button" id="cancelUpload" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
                             Cancel
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
-                            Post Car
+                        <button id="upload-photo" type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
+                            Post Photo
                         </button>
                     </div>
                 </form>
@@ -380,54 +375,15 @@ permalink: /explore-cars/
 
 
 
-    <script>
-        // Sample car data (only 3 demo posts)
-        const sampleCars = [
-            {
-                id: 1,
-                images: [
-                    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                    "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                ],
-                model: "Ford Mustang GT",
-                username: "@musclecar_lover",
-                description: "Classic American muscle with a modern twist. 5.0L V8 roaring with 450HP. This beauty has been my pride and joy for 3 years now, with custom exhaust and suspension upgrades.",
-                tags: ["#muscle", "#ford", "#v8", "#custom"],
-                likes: 248,
-                isLiked: false,
-                isBookmarked: false
-            },
-            {
-                id: 2,
-                images: [
-                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                    "https://images.unsplash.com/photo-1593941707882-aee345f0fbc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                ],
-                model: "Porsche 911 Turbo S",
-                username: "@speeddemon",
-                description: "German engineering at its finest. 640HP twin-turbo flat-six engine. Just took delivery last month and already put 2,000 miles on it. The acceleration is mind-blowing!",
-                tags: ["#supercar", "#porsche", "#turbo", "#performance"],
-                likes: 512,
-                isLiked: false,
-                isBookmarked: false
-            },
-            {
-                id: 3,
-                images: [
-                    "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                    "https://images.unsplash.com/photo-1618843479313-40f4afd4ec38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                    "https://images.unsplash.com/photo-1616788494707-ec28f08fd05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                ],
-                model: "Land Rover Defender",
-                username: "@offroad_king",
-                description: "The ultimate off-road machine with luxury interior. Ready for any adventure. Just completed a 2,000 mile road trip through the mountains without a single issue. Comfortable and capable!",
-                tags: ["#suv", "#offroad", "#adventure", "#luxury"],
-                likes: 189,
-                isLiked: false,
-                isBookmarked: false
-            }
-        ];
+    <script type="module">
+    import { getPosts } from "{{site.baseurl}}/assets/js/api/imagePosts.js"
+    import { upload } from "{{site.baseurl}}/assets/js/api/uploadImage.js"
+
+    let images = []
+
+    const posts = await getPosts()
+
+        const samplePhotos = posts
 
         // DOM Elements
         const postsContainer = document.getElementById('postsContainer');
@@ -457,10 +413,10 @@ permalink: /explore-cars/
         const editingImage = document.getElementById('editingImage');
 
         // State
-        let cars = [...sampleCars];
+        let photos = [...samplePhotos];
         let nextId = 4;
-        let selectedTags = [];
-        let selectedBrands = [];
+        let selectedCategories = [];
+        let selectedStyles = [];
         let currentCarouselIndex = 0;
         let currentCarouselImages = [];
         let currentEditingImages = [];
@@ -477,56 +433,56 @@ permalink: /explore-cars/
             postsContainer.innerHTML = '';
 
             // Filter cars based on selected tags and brands
-            let filteredCars = cars;
+            let filteredPhotos = photos;
 
-            if (selectedTags.length > 0 || selectedBrands.length > 0) {
-                filteredCars = cars.filter(car => {
-                    const carTags = car.tags.map(tag => tag.toLowerCase().replace('#', ''));
-                    const hasTag = selectedTags.length === 0 || selectedTags.some(tag => carTags.includes(tag));
-                    const hasBrand = selectedBrands.length === 0 || selectedBrands.some(brand => carTags.includes(brand));
-                    return hasTag && hasBrand;
+            if (selectedCategories.length > 0 || selectedStyles.length > 0) {
+                filteredPhotos = photos.filter(photo => {
+                    const photoTags = photo.tags.map(tag => tag.toLowerCase().replace('#', ''));
+                    const hasCategory = selectedCategories.length === 0 || selectedCategories.some(tag => photoTags.includes(tag));
+                    const hasStyle = selectedStyles.length === 0 || selectedStyles.some(brand => photoTags.includes(brand));
+                    return hasCategory && hasStyle;
                 });
             }
 
-            filteredCars.forEach((car, index) => {
+            filteredPhotos.forEach((photo, index) => {
                 const delayClass = `delay-${(index % 3) * 100}`;
-                const postElement = createPostElement(car, delayClass);
+                const postElement = createPostElement(photo, delayClass);
                 postsContainer.appendChild(postElement);
             });
         }
 
         // Create a post element
-        function createPostElement(car, delayClass) {
+        function createPostElement(photo, delayClass) {
             const post = document.createElement('div');
             post.className = `card bg-gray-800 rounded-xl overflow-hidden animate-fade-in ${delayClass}`;
-            post.dataset.id = car.id;
+            post.dataset.id = photo.id;
 
-            const likeIconClass = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
-            const bookmarkIconClass = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
+            const likeIconClass = photo.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
+            const bookmarkIconClass = photo.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
 
             post.innerHTML = `
-                <img src="${car.images[0]}" alt="${car.model}" class="w-full h-64 object-cover">
+                <img src="${photo.images[0]}" alt="${photo.title}" class="w-full h-64 object-cover">
                 <div class="p-4">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-bold text-lg">${car.model}</h3>
-                            <p class="text-gray-400 text-sm">${car.username}</p>
+                            <h3 class="text-white font-bold text-lg">${photo.title}</h3>
+                            <p class="text-gray-400 text-sm">${photo.username}</p>
                         </div>
-                        <button class="bookmark-btn ${car.isBookmarked ? 'text-amber-400' : 'text-gray-400'} hover:text-amber-500 transition">
+                        <button class="bookmark-btn ${photo.isBookmarked ? 'text-amber-400' : 'text-gray-400'} hover:text-amber-500 transition">
                             <i class="${bookmarkIconClass} text-xl"></i>
                         </button>
                     </div>
-                    <p class="mt-2 text-gray-300 line-clamp-2">${car.description}</p>
+                    <p class="mt-2 text-gray-300 line-clamp-2">${photo.description}</p>
                     <div class="mt-4 flex justify-between items-center">
                         <div class="flex space-x-2">
-                            ${car.tags.slice(0, 2).map(tag => `<span class="px-2 py-1 bg-gray-700 rounded-full text-xs">${tag}</span>`).join('')}
-                            ${car.tags.length > 2 ? `<span class="px-2 py-1 bg-gray-700 rounded-full text-xs">+${car.tags.length - 2}</span>` : ''}
+                            ${photo.tags.slice(0, 2).map(tag => `<span class="px-2 py-1 bg-gray-700 rounded-full text-xs">${tag}</span>`).join('')}
+                            ${photo.tags.length > 2 ? `<span class="px-2 py-1 bg-gray-700 rounded-full text-xs">+${photo.tags.length - 2}</span>` : ''}
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="like-btn ${car.isLiked ? 'text-amber-400' : 'text-gray-400'} hover:text-amber-500 transition">
+                            <button class="like-btn ${photo.isLiked ? 'text-amber-400' : 'text-gray-400'} hover:text-amber-500 transition">
                                 <i class="${likeIconClass}"></i>
                             </button>
-                            <span class="like-count">${car.likes}</span>
+                            <span class="like-count">${photo.likes}</span>
                         </div>
                     </div>
                 </div>
@@ -603,16 +559,16 @@ permalink: /explore-cars/
                 const card = e.target.closest('.card');
                 if (!card) return;
 
-                const carId = parseInt(card.dataset.id);
-                const car = cars.find(c => c.id === carId);
+                const photoId = parseInt(card.dataset.id);
+                const photo = photos.find(c => c.id === photoId);
 
                 if (e.target.closest('.like-btn')) {
-                    toggleLike(car);
+                    toggleLike(photo);
                 } else if (e.target.closest('.bookmark-btn')) {
-                    toggleBookmark(car);
+                    toggleBookmark(photo);
                 } else {
                     // Clicked on the card itself - show detail view
-                    showCarDetail(car);
+                    showCarDetail(photo);
                 }
             });
 
@@ -636,24 +592,24 @@ permalink: /explore-cars/
             document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
                 btn.classList.remove('selected');
             });
-            selectedTags = [];
-            selectedBrands = [];
+            selectedCategories = [];
+            selectedStyles = [];
             renderPosts();
             toggleModal(filterModal);
         }
 
         // Apply all filters
         function applyAllFilters() {
-            selectedTags = [];
-            selectedBrands = [];
+            selectedCategories = [];
+            selectedStyles = [];
 
-            // Get selected tags and brands
+            // Get selected tags
             document.querySelectorAll('#filterModal .tag-option.selected').forEach(btn => {
                 const tag = btn.dataset.tag;
-                if (['sports', 'luxury', 'suv', 'classic', 'electric', 'jdm', 'muscle', 'tuner'].includes(tag)) {
-                    selectedTags.push(tag);
+                if (['landscape', 'portrait', 'street', 'nature', 'urban', 'wildlife', 'macro', 'aerial'].includes(tag)) {
+                    selectedCategories.push(tag);
                 } else {
-                    selectedBrands.push(tag);
+                    selectedStyles.push(tag);
                 }
             });
 
@@ -674,6 +630,8 @@ permalink: /explore-cars/
                 }
 
                 const reader = new FileReader();
+
+                images.push(e.target.files[0])
 
                 reader.onload = function(event) {
                     // Add the new image to the array
@@ -747,6 +705,7 @@ permalink: /explore-cars/
             uploadForm.reset();
             imagePreviews.innerHTML = '';
             currentEditingImages = [];
+            images = []
             updateUploadControls();
 
             // Reset selected tags
@@ -756,9 +715,9 @@ permalink: /explore-cars/
         }
 
         // Toggle like status
-        function toggleLike(car) {
-            car.isLiked = !car.isLiked;
-            car.likes += car.isLiked ? 1 : -1;
+        function toggleLike(photo) {
+            photo.isLiked = !photo.isLiked;
+            photo.likes += photo.isLiked ? 1 : -1;
             renderPosts();
 
             // Update detail modal if open
@@ -766,35 +725,35 @@ permalink: /explore-cars/
                 const likeBtn = carDetailModal.querySelector('.like-btn i');
                 const likeCount = carDetailModal.querySelector('.like-count');
 
-                likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
-                likeCount.textContent = car.likes;
+                likeBtn.className = photo.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
+                likeCount.textContent = photo.likes;
             }
         }
 
         // Toggle bookmark status
-        function toggleBookmark(car) {
-            car.isBookmarked = !car.isBookmarked;
+        function toggleBookmark(photo) {
+            photo.isBookmarked = !photo.isBookmarked;
             renderPosts();
 
             // Update detail modal if open
             if (!carDetailModal.classList.contains('modal-hidden')) {
                 const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
-                bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
+                bookmarkBtn.className = photo.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
             }
         }
 
         // Show car detail view
-        function showCarDetail(car) {
-            detailCarModel.textContent = car.model;
-            detailUsername.textContent = car.username;
-            detailDescription.textContent = car.description;
+        function showCarDetail(photo) {
+            detailCarModel.textContent = photo.title;
+            detailUsername.textContent = photo.username;
+            detailDescription.textContent = photo.description;
 
             // Clear previous tags
             const tagsContainer = carDetailModal.querySelector('.flex.flex-wrap.gap-2.mb-4');
             tagsContainer.innerHTML = '';
 
             // Add tags
-            car.tags.forEach(tag => {
+            photo.tags.forEach(tag => {
                 const tagElement = document.createElement('span');
                 tagElement.className = 'px-2 py-1 bg-gray-700 rounded-full text-xs';
                 tagElement.textContent = tag;
@@ -803,13 +762,13 @@ permalink: /explore-cars/
 
             // Set up carousel
             detailCarousel.innerHTML = '';
-            currentCarouselImages = car.images;
+            currentCarouselImages = photo.images;
             currentCarouselIndex = 0;
 
-            car.images.forEach((img, index) => {
+            photo.images.forEach((img, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'min-w-full';
-                slide.innerHTML = `<img src="${img}" alt="${car.model}" class="w-full h-96 object-contain">`;
+                slide.innerHTML = `<img src="${img}" alt="${photo.title}" class="w-full h-96 object-contain">`;
                 detailCarousel.appendChild(slide);
             });
 
@@ -818,607 +777,9 @@ permalink: /explore-cars/
             const likeCount = carDetailModal.querySelector('.like-count');
             const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
 
-            likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
-            likeCount.textContent = car.likes;
-            bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
-
-            // Show modal
-            toggleModal(carDetailModal);
-        }
-
-        // Navigate carousel
-        function navigateCarousel(direction) {
-            currentCarouselIndex += direction;
-
-            if (currentCarouselIndex < 0) {
-                currentCarouselIndex = currentCarouselImages.length - 1;
-            } else if (currentCarouselIndex >= currentCarouselImages.length) {
-                currentCarouselIndex = 0;
-            }
-
-            detailCarousel.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
-        }
-
-        // Update the editImage function
-        function editImage(index) {
-            const imageData = currentEditingImages[index];
-            const editModal = document.getElementById('imageEditModal');
-
-            // Set up the edit modal without closing upload modal
-            editModal.innerHTML = `
-                <div class="bg-gray-800 rounded-xl p-6 w-full max-w-4xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">Edit Image</h3>
-                        <button type="button" onclick="event.preventDefault(); closeImageEditModal()" class="text-gray-400 hover:text-white">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="mb-6">
-                        <img id="editingImage" src="${imageData.current}"
-                             class="w-full h-[60vh] object-contain rounded-lg"
-                             alt="Editing image">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-sun mr-2"></i>
-                                <span>Brightness</span>
-                            </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.brightness || 0}"
-                                   class="w-full" data-filter="brightness">
-                        </div>
-                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-adjust mr-2"></i>
-                                <span>Contrast</span>
-                            </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.contrast || 0}"
-                                   class="w-full" data-filter="contrast">
-                        </div>
-                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-palette mr-2"></i>
-                                <span>Saturation</span>
-                            </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.saturation || 0}"
-                                   class="w-full" data-filter="saturation">
-                        </div>
-                        <div class="edit-tool bg-gray-700 p-3 rounded-lg">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-temperature-high mr-2"></i>
-                                <span>Temperature</span>
-                            </div>
-                            <input type="range" min="-100" max="100" value="${imageData.filters?.temperature || 0}"
-                                   class="w-full" data-filter="temperature">
-                        </div>
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="event.preventDefault(); resetImageFilters(${index})"
-                                class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
-                            Reset
-                        </button>
-                        <button type="button" onclick="event.preventDefault(); saveImageEdit(${index})"
-                                class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
-                            Save Changes
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            // Show the edit modal without hiding upload modal
-            editModal.classList.remove('modal-hidden');
-            editModal.classList.add('modal-visible');
-
-            // Add event listeners to range inputs
-            editModal.querySelectorAll('input[type="range"]').forEach(input => {
-                input.addEventListener('input', (event) => {
-                    event.preventDefault();
-                    applyImageFilters(index);
-                });
-            });
-        }
-
-        // Function to apply filters to the image
-        function applyImageFilters(index) {
-            const editingImage = document.getElementById('editingImage');
-            const filters = {};
-
-            document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
-                const filter = input.dataset.filter;
-                const value = input.value;
-                filters[filter] = value;
-            });
-
-            // Apply CSS filters
-            const filterString = `
-                brightness(${100 + parseInt(filters.brightness)}%)
-                contrast(${100 + parseInt(filters.contrast)}%)
-                saturate(${100 + parseInt(filters.saturation)}%)
-                hue-rotate(${filters.temperature}deg)
-            `;
-
-            editingImage.style.filter = filterString;
-            currentEditingImages[index].filters = filters;
-        }
-
-        // Function to save the edited image
-        function saveImageEdit(index) {
-            const editingImage = document.getElementById('editingImage');
-
-            // Create a canvas to save the filtered image
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = editingImage.naturalWidth;
-            canvas.height = editingImage.naturalHeight;
-
-            // Draw the filtered image to canvas
-            ctx.filter = editingImage.style.filter;
-            ctx.drawImage(editingImage, 0, 0);
-
-            // Save the filtered image
-            currentEditingImages[index].current = canvas.toDataURL('image/jpeg');
-
-            // Update the preview
-            const previewImage = document.querySelector(`#imagePreviews img[data-index="${index}"]`);
-            if (previewImage) {
-                previewImage.src = currentEditingImages[index].current;
-            }
-
-            closeImageEditModal();
-        }
-
-        // Function to reset image filters
-        function resetImageFilters(index) {
-            const editingImage = document.getElementById('editingImage');
-            editingImage.style.filter = 'none';
-
-            // Reset all range inputs
-            document.querySelectorAll('#imageEditModal input[type="range"]').forEach(input => {
-                input.value = 0;
-            });
-
-            currentEditingImages[index].filters = {
-                brightness: 0,
-                contrast: 0,
-                saturation: 0,
-                temperature: 0
-            };
-        }
-
-        // Function to close the image edit modal
-        function closeImageEditModal() {
-            const editModal = document.getElementById('imageEditModal');
-            editModal.classList.remove('modal-visible');
-            editModal.classList.add('modal-hidden');
-        }
-
-        // Update the handleFormSubmit function to properly handle multiple images
-        function handleFormSubmit(e) {
-            e.preventDefault();
-
-            const model = document.getElementById('carModel').value;
-            const description = document.getElementById('carDescription').value;
-
-            // Validate form
-            if (!model || !description || currentEditingImages.length === 0) {
-                alert('Please fill in all fields and upload at least one image');
-                return;
-            }
-
-            // Get all selected tags and brands
-            const selectedTagElements = document.querySelectorAll('#uploadForm .tag-option.selected');
-            const tags = Array.from(selectedTagElements).map(el => `#${el.dataset.tag}`);
-
-            // Create new car object with all edited images
-            const newCar = {
-                id: nextId++,
-                images: currentEditingImages.map(img => img.current), // Use all edited images
-                model: model,
-                username: "@user", // Replace with actual user
-                description: description,
-                tags: tags,
-                likes: 0,
-                isLiked: false,
-                isBookmarked: false
-            };
-
-            // Add to cars array and render
-            cars.unshift(newCar);
-            renderPosts();
-
-            // Reset form and close modal
-            resetUploadForm();
-            toggleModal(uploadModal);
-        }
-
-        // Add custom tag functionality
-        function addCustomTagsSection() {
-            const tagSection = document.querySelector('#uploadForm .space-y-4');
-            const customTagsHTML = `
-                <div class="mt-4">
-                    <label class="block text-gray-300 mb-2">Custom Tags</label>
-                    <div class="flex items-center space-x-2">
-                        <input type="text" id="customTag"
-                               class="flex-1 bg-gray-700 rounded px-3 py-2"
-                               placeholder="Enter custom tag">
-                        <button type="button" onclick="addCustomTag()"
-                                class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded">
-                            Add
-                        </button>
-                    </div>
-                    <div id="customTagsContainer" class="flex flex-wrap gap-2 mt-2">
-                        <!-- Custom tags will appear here -->
-                    </div>
-                </div>
-            `;
-
-            tagSection.insertAdjacentHTML('beforeend', customTagsHTML);
-        }
-
-        // Function to add custom tag
-        function addCustomTag() {
-            const customTagInput = document.getElementById('customTag');
-            const tag = customTagInput.value.trim().toLowerCase().replace(/\s+/g, '-');
-
-            if (tag) {
-                const customTagsContainer = document.getElementById('customTagsContainer');
-                const tagElement = document.createElement('div');
-                tagElement.className = 'tag-option px-3 py-1 bg-gray-700 rounded-full flex items-center space-x-2';
-                tagElement.dataset.tag = tag;
-                tagElement.innerHTML = `
-                    <span>#${tag}</span>
-                    <button type="button" class="text-gray-400 hover:text-red-400"
-                            onclick="removeCustomTag(this.parentElement)">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                customTagsContainer.appendChild(tagElement);
-                customTagInput.value = '';
-
-                // Add to available tags in filter modal
-                addTagToFilters(tag);
-            }
-        }
-
-        // Function to remove custom tag
-        function removeCustomTag(tagElement) {
-            tagElement.remove();
-        }
-
-        // Function to add new tag to filters
-        function addTagToFilters(tag) {
-            const filterTagsContainer = document.querySelector('#filterModal .flex.flex-wrap.gap-2');
-            const existingTag = filterTagsContainer.querySelector(`[data-tag="${tag}"]`);
-
-            if (!existingTag) {
-                const tagButton = document.createElement('button');
-                tagButton.className = 'tag-option px-3 py-1 bg-gray-700 rounded-full';
-                tagButton.dataset.tag = tag;
-                tagButton.textContent = tag;
-                tagButton.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                });
-                filterTagsContainer.appendChild(tagButton);
-            }
-        }
-
-        // Add search functionality to filter modal
-        function addTagSearch() {
-            const filterModal = document.querySelector('#filterModal .space-y-4');
-            const searchHTML = `
-                <div class="mb-4">
-                    <input type="text" id="tagSearch"
-                           class="w-full bg-gray-700 rounded px-3 py-2"
-                           placeholder="Search tags...">
-                </div>
-            `;
-
-            filterModal.insertAdjacentHTML('afterbegin', searchHTML);
-
-            // Add search functionality
-            document.getElementById('tagSearch').addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const tagButtons = document.querySelectorAll('#filterModal .tag-option');
-
-                tagButtons.forEach(button => {
-                    const tag = button.dataset.tag.toLowerCase();
-                    button.style.display = tag.includes(searchTerm) ? '' : 'none';
-                });
-            });
-        }
-
-        // Update setupEventListeners to include new functionality
-        function setupEventListeners() {
-            // Filter modal
-            filterBtn.addEventListener('click', () => toggleModal(filterModal));
-            closeFilterModal.addEventListener('click', () => toggleModal(filterModal));
-            resetFilters.addEventListener('click', resetAllFilters);
-            applyFilters.addEventListener('click', applyAllFilters);
-
-            // Tag selection in filter modal
-            document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                });
-            });
-
-            // Upload modal
-            addPostBtn.addEventListener('click', () => toggleModal(uploadModal));
-            closeUploadModal.addEventListener('click', () => {
-                resetUploadForm();
-                toggleModal(uploadModal);
-            });
-            cancelUpload.addEventListener('click', () => {
-                resetUploadForm();
-                toggleModal(uploadModal);
-            });
-
-            // Image upload preview
-            carImages.addEventListener('change', handleImageUpload);
-
-            // Tag selection in upload modal
-            document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                });
-            });
-
-            // Form submission
-            uploadForm.addEventListener('submit', handleFormSubmit);
-
-            // Car detail modal
-            closeCarDetailModal.addEventListener('click', () => toggleModal(carDetailModal));
-
-            // Carousel navigation
-            carouselPrev.addEventListener('click', () => navigateCarousel(-1));
-            carouselNext.addEventListener('click', () => navigateCarousel(1));
-
-            // Edit tools
-            document.querySelectorAll('.edit-tool').forEach(tool => {
-                tool.addEventListener('click', function() {
-                    document.querySelectorAll('.edit-tool').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-
-            // Edit sliders
-            document.querySelectorAll('.edit-slider').forEach(slider => {
-                slider.addEventListener('input', function() {
-                    const property = this.dataset.property;
-                    const value = this.value;
-                    applyImageFilter(property, value);
-                });
-            });
-
-            // Delegate events for dynamically created elements
-            postsContainer.addEventListener('click', (e) => {
-                const card = e.target.closest('.card');
-                if (!card) return;
-
-                const carId = parseInt(card.dataset.id);
-                const car = cars.find(c => c.id === carId);
-
-                if (e.target.closest('.like-btn')) {
-                    toggleLike(car);
-                } else if (e.target.closest('.bookmark-btn')) {
-                    toggleBookmark(car);
-                } else {
-                    // Clicked on the card itself - show detail view
-                    showCarDetail(car);
-                }
-            });
-
-            // Close image edit modal
-            closeImageEdit.addEventListener('click', () => toggleModal(imageEditModal));
-
-            // Add custom tags section
-            addCustomTagsSection();
-
-            // Add tag search
-            addTagSearch();
-        }
-
-        // Toggle modal visibility
-        function toggleModal(modal) {
-            modal.classList.toggle('modal-hidden');
-            modal.classList.toggle('modal-visible');
-
-            // Reset carousel when closing detail modal
-            if (modal === carDetailModal && modal.classList.contains('modal-hidden')) {
-                currentCarouselIndex = 0;
-            }
-        }
-
-        // Reset all filters
-        function resetAllFilters() {
-            document.querySelectorAll('#filterModal .tag-option').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            selectedTags = [];
-            selectedBrands = [];
-            renderPosts();
-            toggleModal(filterModal);
-        }
-
-        // Apply all filters
-        function applyAllFilters() {
-            selectedTags = [];
-            selectedBrands = [];
-
-            // Get selected tags and brands
-            document.querySelectorAll('#filterModal .tag-option.selected').forEach(btn => {
-                const tag = btn.dataset.tag;
-                if (['sports', 'luxury', 'suv', 'classic', 'electric', 'jdm', 'muscle', 'tuner'].includes(tag)) {
-                    selectedTags.push(tag);
-                } else {
-                    selectedBrands.push(tag);
-                }
-            });
-
-            renderPosts();
-            toggleModal(filterModal);
-        }
-
-        // Handle image upload preview
-        function handleImageUpload(e) {
-            const files = e.target.files;
-            if (files.length > 0) {
-                const file = files[0];
-
-                // Check if we've reached the maximum number of images
-                if (currentEditingImages.length >= 5) {
-                    alert('Maximum 5 images allowed');
-                    return;
-                }
-
-                const reader = new FileReader();
-
-                reader.onload = function(event) {
-                    // Add the new image to the array
-                    const newImageIndex = currentEditingImages.length;
-                    currentEditingImages.push({
-                        original: event.target.result,
-                        current: event.target.result,
-                        filters: {
-                            brightness: 0,
-                            contrast: 0,
-                            saturation: 0,
-                            temperature: 0
-                        }
-                    });
-
-                    // Create preview element
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'relative group';
-                    imgContainer.innerHTML = updateImagePreview(currentEditingImages[newImageIndex], newImageIndex);
-
-                    imagePreviews.appendChild(imgContainer);
-                    updateUploadControls();
-                };
-
-                reader.readAsDataURL(file);
-            }
-
-            // Reset the input so the same file can be selected again
-            e.target.value = '';
-        }
-
-        // Add new function to update upload controls
-        function updateUploadControls() {
-            const uploadControls = document.getElementById('uploadControls');
-
-            if (currentEditingImages.length < 5) {
-                uploadControls.innerHTML = `
-                    <input type="file" id="carImages" accept="image/*" class="hidden">
-                    <label for="carImages" class="cursor-pointer inline-block">
-                        <i class="fas fa-plus-circle text-3xl text-amber-400 mb-2"></i>
-                        <p class="text-gray-400">Add ${currentEditingImages.length === 0 ? 'first' : 'another'} image</p>
-                        <p class="text-sm text-gray-500">${5 - currentEditingImages.length} spots remaining</p>
-                    </label>
-                `;
-
-                // Reattach event listener to new input
-                document.getElementById('carImages').addEventListener('change', handleImageUpload);
-            } else {
-                uploadControls.innerHTML = '<p class="text-gray-400">Maximum images reached</p>';
-            }
-        }
-
-        // Update removeImage function
-        function removeImage(index) {
-            currentEditingImages.splice(index, 1);
-
-            // Rebuild previews to update indices
-            imagePreviews.innerHTML = '';
-            currentEditingImages.forEach((img, idx) => {
-                const imgContainer = document.createElement('div');
-                imgContainer.className = 'relative group';
-                imgContainer.innerHTML = updateImagePreview(currentEditingImages[idx], idx);
-                imagePreviews.appendChild(imgContainer);
-            });
-
-            updateUploadControls();
-        }
-
-        // Update resetUploadForm function
-        function resetUploadForm() {
-            uploadForm.reset();
-            imagePreviews.innerHTML = '';
-            currentEditingImages = [];
-            updateUploadControls();
-
-            // Reset selected tags
-            document.querySelectorAll('#uploadForm .tag-option').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-        }
-
-        // Toggle like status
-        function toggleLike(car) {
-            car.isLiked = !car.isLiked;
-            car.likes += car.isLiked ? 1 : -1;
-            renderPosts();
-
-            // Update detail modal if open
-            if (!carDetailModal.classList.contains('modal-hidden')) {
-                const likeBtn = carDetailModal.querySelector('.like-btn i');
-                const likeCount = carDetailModal.querySelector('.like-count');
-
-                likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
-                likeCount.textContent = car.likes;
-            }
-        }
-
-        // Toggle bookmark status
-        function toggleBookmark(car) {
-            car.isBookmarked = !car.isBookmarked;
-            renderPosts();
-
-            // Update detail modal if open
-            if (!carDetailModal.classList.contains('modal-hidden')) {
-                const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
-                bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
-            }
-        }
-
-        // Show car detail view
-        function showCarDetail(car) {
-            detailCarModel.textContent = car.model;
-            detailUsername.textContent = car.username;
-            detailDescription.textContent = car.description;
-
-            // Clear previous tags
-            const tagsContainer = carDetailModal.querySelector('.flex.flex-wrap.gap-2.mb-4');
-            tagsContainer.innerHTML = '';
-
-            // Add tags
-            car.tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'px-2 py-1 bg-gray-700 rounded-full text-xs';
-                tagElement.textContent = tag;
-                tagsContainer.appendChild(tagElement);
-            });
-
-            // Set up carousel
-            detailCarousel.innerHTML = '';
-            currentCarouselImages = car.images;
-            currentCarouselIndex = 0;
-
-            car.images.forEach((img, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'min-w-full';
-                slide.innerHTML = `<img src="${img}" alt="${car.model}" class="w-full h-96 object-contain">`;
-                detailCarousel.appendChild(slide);
-            });
-
-            // Update like and bookmark buttons
-            const likeBtn = carDetailModal.querySelector('.like-btn i');
-            const likeCount = carDetailModal.querySelector('.like-count');
-            const bookmarkBtn = carDetailModal.querySelector('.bookmark-btn i');
-
-            likeBtn.className = car.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
-            likeCount.textContent = car.likes;
-            bookmarkBtn.className = car.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
+            likeBtn.className = photo.isLiked ? 'fas fa-heart text-amber-400' : 'far fa-heart';
+            likeCount.textContent = photo.likes;
+            bookmarkBtn.className = photo.isBookmarked ? 'fas fa-bookmark text-amber-400' : 'far fa-bookmark';
 
             // Show modal
             toggleModal(carDetailModal);
@@ -1610,6 +971,49 @@ permalink: /explore-cars/
         }
         // Initialize the app
         init();
+
+        // Add handleFormSubmit function
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('photoTitle').value;
+            const description = document.getElementById('photoDescription').value;
+
+            // Validate form
+            if (!title || !description || currentEditingImages.length === 0) {
+                alert('Please fill in all fields and upload at least one image');
+                return;
+            }
+
+            // Get all selected tags
+            const selectedTags = Array.from(document.querySelectorAll('#uploadForm .tag-option.selected'))
+                .map(btn => `#${btn.dataset.tag}`);
+
+            upload(images, title, description)
+
+            // Create new photo object
+            const newPhoto = {
+                id: photos.length + 1,
+                images: currentEditingImages.map(img => img.current),
+                title: title,
+                username: "@user",
+                description: description,
+                tags: selectedTags,
+                likes: 0,
+                isLiked: false,
+                isBookmarked: false
+            };
+
+            // Add to beginning of photos array
+            photos.unshift(newPhoto);
+
+            // Reset form and close modal
+            resetUploadForm();
+            toggleModal(uploadModal);
+
+            // Re-render posts to show new photo
+            renderPosts();
+        }
     </script>
 </body>
 </html>

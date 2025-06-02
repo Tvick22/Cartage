@@ -91,17 +91,13 @@ menu: nav/mainHeader.html
         <div class="flex-1">
             <div class="flex flex-col space-y-4 mb-8">
                 <h2 id="profile-name" class="text-5xl font-bold text-gray-900">User's Name</h2>
-                <p class="text-2xl text-gray-500">@userhandle</p>
+                <p id="profile-uid" class="text-2xl text-gray-500">@userhandle</p>
                 <pre id="profile-bio" class="whitespace-pre-wrap break-words break-all text-lg text-gray-600 font-medium">BIO</pre>
 
-       <div class="mt-4 inline-flex items-center px-4 py-2 rounded-xl bg-amber-100 text-base font-semibold text-amber-800 shadow-md border border-amber-300 w-fit">
 
-    <i class="fas fa-camera-retro mr-2"></i>
-    Posts: <span id="post-count" class="ml-1">0</span>
-</div>
             </div>
             <div class="flex space-x-6 mb-6">
-               <a href="/messages/user_example.html" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-xl font-medium inline-block transition-all duration-300 shadow-md hover:scale-105">
+               <a class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-xl font-medium inline-block transition-all duration-300 shadow-md hover:scale-105">
     <i class="fas fa-envelope mr-2"></i>Message
 </a>
                 <button id="follow-button" class="relative bg-gray-200 text-black px-6 py-3 rounded-md text-xl font-medium flex items-center space-x-2 transition-transform duration-300 hover:scale-105">
@@ -138,12 +134,12 @@ menu: nav/mainHeader.html
         <div class="space-y-4">
             <div>
                 <label for="name-input" class="block text-gray-700 font-semibold mb-1">Name</label>
-                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" value="User's Name">
+                <input id="name-input" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
             <div>
                 <label for="bio-input" class="block text-gray-700 font-semibold mb-1">BIO</label>
                <div class="relative">
-    <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">Bio</textarea>
+    <textarea id="bio-input" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
     <p id="bio-word-count" class="absolute bottom-1 right-2 text-xs text-gray-500">0 words</p>
 </div>
 
@@ -196,9 +192,58 @@ menu: nav/mainHeader.html
         }
     }
 
+    async function getPfp() {
+      return fetch(`${pythonURI}/api/pfp`, fetchOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log()
+        return result.pfp
+        })
+        .catch(err => {
+        console.error("ERROR: ", err)
+        return
+      })
+    }
+
+    async function updateUser(data) {
+        const endpoint = `${pythonURI}/api/user`;
+        try {
+            const response = await fetch(endpoint, {
+                ...fetchOptions,
+                method: "PUT",
+                headers: {
+                    ...fetchOptions.headers,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update user: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error updating user:", error.message);
+        }
+    }
+
+
     document.addEventListener("DOMContentLoaded", async () => {
         const userData = await getUserData()
-        console.log(userData)
+        const pfp = await getPfp()
+
+        if (!userData) {
+            console.error("no user data")
+        }
+
+        document.getElementById("profile-name").textContent = userData.name;
+        document.getElementById("profile-uid").textContent = `@${userData.uid}`;
+        document.getElementById("profile-bio").textContent = userData.bio;
+        document.getElementById("name-input").value = userData.name;
+        document.getElementById("bio-input").textContent = userData.bio;
+        document.getElementById("profile-pic").src = pfp
+        //UPDATE PFP TOO
     })
 
     uploadInput.addEventListener('change', function () {
@@ -236,7 +281,71 @@ menu: nav/mainHeader.html
             height: 300,
             imageSmoothingQuality: 'high'
         });
-        profilePic.src = canvas.toDataURL('image/png');
+        const mimeType = uploadInput.files[0].type
+        profilePic.src = canvas.toDataURL(mimeType);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            console.error('Canvas is empty');
+            return;
+          }
+
+          // Create a FormData object
+          const formData = new FormData();
+          formData.append('file', blob, 'profile.png'); // field name and file name
+
+          // Send the form data via fetch
+          fetch(pythonURI+"/api/upload", {
+            method: 'POST',
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include", // include, same-origin, omit
+            headers: {
+              "X-Origin": "client", // New custom header to identify source
+            },
+            body: formData
+          })
+          .then(response => response.json())
+          .then(result => {
+            fetch(pythonURI+"/api/pfp", {
+              method: 'PUT',
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "include", // include, same-origin, omit
+              headers: {
+                "Content-Type": "application/json",
+                "X-Origin": "client", // New custom header to identify source
+              },
+              body: JSON.stringify({
+                image_uuid: result["UUID"]
+              })
+            })
+            .then(response => response.json())
+            .then(result => {
+              console.log(result)
+              fetch(pythonURI+"/api/pfp", {
+                method: 'GET',
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "include", // include, same-origin, omit
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-Origin": "client", // New custom header to identify source
+                }
+              }).then(response => response.json()).then(result => {
+                console.log(result)
+              })
+
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            })
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        }, mimeType); // MIME type
+
         cropperModal.classList.add('hidden');
         uploadInput.value = '';
         if (cropper) cropper.destroy();
@@ -304,12 +413,25 @@ bioWordCount.textContent = `${charCount}/${MAX_CHARS} characters`;
         modal.classList.remove('flex');
     });
 
-    saveEdit.addEventListener('click', () => {
-        profileName.textContent = nameInput.value;
-        profileBio.textContent = bioInput.value;
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    saveEdit.addEventListener('click', async () => {
+    const updatedName = nameInput.value;
+    const updatedBio = bioInput.value;
+
+    // Update UI immediately
+    profileName.textContent = updatedName;
+    profileBio.textContent = updatedBio;
+
+    // Close modal
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+
+    // Send to backend
+    await updateUser({
+        name: updatedName,
+        bio: updatedBio
     });
+});
+
 
 document.addEventListener('keydown', (e) => {
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -336,4 +458,3 @@ document.addEventListener('keydown', (e) => {
 
 
 </script>
-

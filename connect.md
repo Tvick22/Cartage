@@ -8,9 +8,20 @@ menu: nav/mainHeader.html
 <div class="max-w-6xl mx-auto px-4 py-10 fade-in">
   <h2 class="text-3xl font-bold text-gray-800 mb-6">Communities</h2>
 
-  <!-- Search bar -->
-  <input type="text" id="searchInput" placeholder="Search by Community ID or name"
-         class="w-full p-3 border border-gray-300 rounded-md mb-6 shadow-sm focus:ring-amber-500 focus:border-amber-500">
+  <!-- Search and Filter -->
+  <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+    <!-- Search bar -->
+    <input type="text" id="searchInput" placeholder="Search by Community ID or name"
+          class="w-full md:w-1/2 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+    
+  <!-- Category filter -->
+  <select id="categoryFilter" class="w-full md:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+    <option value="">All Categories</option>
+    <option value="sports">Sports</option>
+    <option value="scenic">Scenic</option>
+    <option value="other">Other Photography</option>
+  </select>
+  </div>
 
   <!-- Table -->
   <div class="overflow-x-auto rounded-lg shadow card-hover bg-white">
@@ -19,7 +30,8 @@ menu: nav/mainHeader.html
         <tr>
           <th class="p-4 text-left font-medium">Community ID</th>
           <th class="p-4 text-left font-medium">Community Name</th>
-          <th class="p-4 text-left font-medium">Join</th>
+          <th class="p-4 text-left font-medium">Category</th>
+          <th class="p-4 text-left font-medium"></th>
         </tr>
       </thead>
       <tbody id="groupTableBody" class="divide-y divide-gray-100 bg-white">
@@ -46,8 +58,18 @@ menu: nav/mainHeader.html
     <div class="space-y-6">
       <div>
         <label for="groupNameInput" class="block font-medium mb-1">Community Name</label>
-        <input type="text" id="groupNameInput" placeholder="Enter group name"
-               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <input type="text" id="groupNameInput" placeholder="Enter community name"
+              class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+      </div>
+      <div>
+        <label for="groupCategorySelect" class="block font-medium mb-1">Community Category</label>
+        <select id="groupCategorySelect"
+                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+          <option value="">Select a category</option>
+          <option value="sports">Sports</option>
+          <option value="scenic">Scenic</option>
+          <option value="other">Other Photography</option>
+        </select>
       </div>
     </div>
     <div class="flex justify-end gap-4 mt-6 border-t pt-4">
@@ -70,6 +92,9 @@ menu: nav/mainHeader.html
         <label for="editGroupNameInput" class="block font-medium mb-1">Community Name</label>
         <input type="text" id="editGroupNameInput" placeholder="Enter group name"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <label for="editGroupCategoryInput" class="block font-medium mb-1">category</label>
+        <input type="text" id="editGroupCategoryInput" placeholder="Enter group category"
+               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
       <div class="bg-gray-100 border border-gray-300 rounded-md p-4 max-h-[400px] overflow-y-auto">
         <input type="text" id="userSearchEdit" placeholder="Search users..."
@@ -86,8 +111,8 @@ menu: nav/mainHeader.html
   </div>
 </div>
 
-
 <script type="module">
+import { pythonURI } from "{{site.baseurl}}/assets/js/api/config.js"
 // Modal toggle utility
 function toggleModal(id) {
   const modal = document.getElementById(id);
@@ -100,42 +125,48 @@ function toggleModal(id) {
   }
 }
 
-// Environment setup
-import {javaURI, fetchOptions} from '{{site.baseurl}}/assets/js/api/config.js';
+document.toggleModal = toggleModal
 
-const postOptions = {...fetchOptions, method: "POST"}
-const putOptions = {...fetchOptions, method: "PUT"}
+// API setup
+const flaskAPI = pythonURI+"/api/groups";  // this now points to Flask
+const fetchOptions = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+const postOptions = { ...fetchOptions, method: "POST" };
+const putOptions = { ...fetchOptions, method: "PUT" };
 
-const javaURL = javaURI + "/api/groups";
-
-// Get table body
+// DOM elements
 const tableBody = document.getElementById("groupTableBody");
 
 function getTable() {
-  fetch(javaURL, fetchOptions)
+  fetch(flaskAPI, fetchOptions)
     .then((response) => response.json())
     .then((groups) => {
+      tableBody.innerHTML = ""; // clear table before populating
       groups.forEach((group) => {
         const groupId = group.id;
         const name = group.name;
-        const period = group.period;
+        const category = group.category;
 
         const row = document.createElement("tr");
         row.className = "group-row";
         row.dataset.groupid = groupId;
-        row.dataset.members = group.members
+        row.dataset.members = (group.members || [])
           .map((m) => (m.name + m.email).toLowerCase())
           .join(" ");
 
         row.innerHTML = `
-          <td>${groupId}</td>
-          <td>${name}</td>
-          <td>${period}</td>
-          <td class="space-x-2">
+          <td class="p-4 bg-gray-300">${groupId}</td>
+          <td class="p-4 bg-gray-200">${name}</td>
+          <td class="p-4 bg-gray-100">${category}</td>
+          <td class="p-4 space-x-2 flex justify-end">
             <button class="bg-blue-500 text-white px-2 py-1 rounded toggle-members" data-target="members-${groupId}">
               View Members
             </button>
-            <button class="bg-yellow-400 text-black px-2 py-1 rounded edit-group" data-groupid="${groupId}" data-name="${name}" data-period="${period}">
+            <button class="bg-yellow-400 text-black px-2 py-1 rounded edit-group" data-groupid="${groupId}" data-name="${name}" data-category="${category}">
               Edit
             </button>
           </td>
@@ -155,7 +186,7 @@ function getTable() {
                 </tr>
               </thead>
               <tbody>
-                ${group.members
+                ${(group.members || [])
                   .map(
                     (m) => `
                       <tr>
@@ -178,103 +209,98 @@ function getTable() {
     .catch((error) => console.error("Failed to load groups:", error));
 }
 
-// Search filtering
+// Search
 document.getElementById("searchInput").addEventListener("keyup", function () {
   const search = this.value.toLowerCase();
-
   document.querySelectorAll("tr.group-row").forEach((row) => {
     const groupId = row.dataset.groupid;
     const members = row.dataset.members;
     const match = groupId.includes(search) || members.includes(search);
-
     row.style.display = match ? "" : "none";
     const details = document.getElementById(`members-${groupId}`);
     if (details) details.style.display = match ? "" : "none";
   });
 });
+document.getElementById("categoryFilter").addEventListener("change", function () {
+  const selectedCategory = this.value.toLowerCase();
+  const search = document.getElementById("searchInput").value.toLowerCase();
 
-// Create group without assigning users
+  document.querySelectorAll("tr.group-row").forEach((row) => {
+    const groupId = row.dataset.groupid;
+    const members = row.dataset.members;
+    const category = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+    const matchesSearch = groupId.includes(search) || members.includes(search);
+    const matchesCategory = !selectedCategory || category === selectedCategory;
+
+    const shouldShow = matchesSearch && matchesCategory;
+    row.style.display = shouldShow ? "" : "none";
+
+    const details = document.getElementById(`members-${groupId}`);
+    if (details) details.style.display = shouldShow ? "" : "none";
+  });
+});
+
 document.getElementById("createGroupBtn").addEventListener("click", () => {
   const groupName = document.getElementById("groupNameInput").value.trim();
-  const groupPeriod = document.getElementById("groupPeriodInput").value.trim();
+  const groupCategory = document.getElementById("groupCategorySelect").value;
 
-  if (!groupName || !groupPeriod) {
-    alert("Please enter both group name and period.");
+  if (!groupName || !groupCategory) {
+    alert("Please enter both community name and category.");
     return;
   }
 
   const groupPayload = {
     name: groupName,
-    period: groupPeriod,
-    personUids: [] // No users assigned
+    category: groupCategory,
+    personUids: []  // Initially no members
   };
 
-  fetch(javaURL, {
+  fetch(flaskAPI, {
     ...postOptions,
     body: JSON.stringify(groupPayload),
   })
     .then((res) => {
-      if (!res.ok) throw new Error("Failed to create group");
-      alert("Group created successfully!");
+      if (!res.ok) throw new Error("Failed to create community");
+      alert("Community created successfully!");
       toggleModal("createGroupModal");
       location.reload();
     })
     .catch((error) => {
-      console.error("Error creating group:", error);
+      console.error("Error creating community:", error);
       alert("Error occurred. See console.");
     });
 });
 
-// Toggle member visibility
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("toggle-members")) {
-    const targetId = e.target.dataset.target;
-    const memberRow = document.getElementById(targetId);
-    if (memberRow) {
-      memberRow.classList.toggle("hidden");
-    }
-  }
-});
-
-// Load groups on page load
-getTable();
-
-// Open Create Group modal
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("openCreateModal").addEventListener("click", () => {
-    toggleModal("createGroupModal");
-  });
-});
-
-// Edit group (without user edit)
+// Edit button
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit-group")) {
     const groupId = e.target.dataset.groupid;
     const groupName = e.target.dataset.name;
-    const groupPeriod = e.target.dataset.period;
+    const groupCategory = e.target.dataset.Category;
 
     document.getElementById("editGroupId").value = groupId;
     document.getElementById("editGroupNameInput").value = groupName;
-    document.getElementById("editGroupPeriodInput").value = groupPeriod;
+    document.getElementById("editGroupCategoryInput").value = groupCategory;
 
     toggleModal("editGroupModal");
   }
 });
 
-// Save edited group (only name and period)
+// Save Edit
 document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
   const groupId = document.getElementById("editGroupId").value;
   const name = document.getElementById("editGroupNameInput").value.trim();
-  const period = document.getElementById("editGroupPeriodInput").value.trim();
+  const Category = document.getElementById("editGroupCategoryInput").value.trim();
 
-  if (!name || !period) {
-    alert("Name and period are required.");
+  if (!name || !Category) {
+    alert("Name and Category are required.");
     return;
   }
 
-  fetch(`${javaURL}/${groupId}`, {
+  fetch(`${flaskAPI}/${groupId}`, {
     ...putOptions,
-    body: JSON.stringify({ name, period }),
+    body: JSON.stringify({ name, Category }),
   })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to update group");
@@ -286,5 +312,24 @@ document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
       console.error("Error updating group:", error);
       alert("Error occurred. See console.");
     });
+});
+
+// View members toggle
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("toggle-members")) {
+    const targetId = e.target.dataset.target;
+    const memberRow = document.getElementById(targetId);
+    if (memberRow) {
+      memberRow.classList.toggle("hidden");
+    }
+  }
+});
+
+// Load groups on page load
+document.addEventListener("DOMContentLoaded", () => {
+  getTable();
+  document.getElementById("openCreateModal").addEventListener("click", () => {
+    toggleModal("createGroupModal");
+  });
 });
 </script>
