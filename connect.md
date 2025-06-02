@@ -8,9 +8,20 @@ menu: nav/mainHeader.html
 <div class="max-w-6xl mx-auto px-4 py-10 fade-in">
   <h2 class="text-3xl font-bold text-gray-800 mb-6">Communities</h2>
 
-  <!-- Search bar -->
-  <input type="text" id="searchInput" placeholder="Search by Community ID or name"
-         class="w-full p-3 border border-gray-300 rounded-md mb-6 shadow-sm focus:ring-amber-500 focus:border-amber-500">
+  <!-- Search and Filter -->
+  <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+    <!-- Search bar -->
+    <input type="text" id="searchInput" placeholder="Search by Community ID or name"
+          class="w-full md:w-1/2 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+    
+  <!-- Category filter -->
+  <select id="categoryFilter" class="w-full md:w-1/3 p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+    <option value="">All Categories</option>
+    <option value="sports">Sports</option>
+    <option value="scenic">Scenic</option>
+    <option value="other">Other Photography</option>
+  </select>
+  </div>
 
   <!-- Table -->
   <div class="overflow-x-auto rounded-lg shadow card-hover bg-white">
@@ -210,6 +221,26 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
     if (details) details.style.display = match ? "" : "none";
   });
 });
+document.getElementById("categoryFilter").addEventListener("change", function () {
+  const selectedCategory = this.value.toLowerCase();
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  document.querySelectorAll("tr.group-row").forEach((row) => {
+    const groupId = row.dataset.groupid;
+    const members = row.dataset.members;
+    const category = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+    const matchesSearch = groupId.includes(search) || members.includes(search);
+    const matchesCategory = !selectedCategory || category === selectedCategory;
+
+    const shouldShow = matchesSearch && matchesCategory;
+    row.style.display = shouldShow ? "" : "none";
+
+    const details = document.getElementById(`members-${groupId}`);
+    if (details) details.style.display = shouldShow ? "" : "none";
+  });
+});
+
 document.getElementById("createGroupBtn").addEventListener("click", () => {
   const groupName = document.getElementById("groupNameInput").value.trim();
   const groupCategory = document.getElementById("groupCategorySelect").value;
