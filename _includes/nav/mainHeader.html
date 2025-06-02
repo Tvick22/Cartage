@@ -30,14 +30,22 @@
                 {% endif %} {% endif %} {% endfor %}
                 <div class="flex items-center space-x-4">
                     <a
+                        id="sign-in"
                         href="{{site.baseurl}}/login"
                         class="px-4 py-2 rounded-md font-medium text-white hover:bg-amber-500 hover:bg-opacity-20 transition"
                         >Sign In</a
                     >
                     <a
+                        id="sign-up"
                         href="{{site.baseurl}}/signup"
                         class="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-white transition"
                         >Sign Up</a
+                    >
+                    <a
+                        id="profile"
+                        href="{{site.baseurl}}/profile"
+                        class="hidden px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-white transition"
+                        >Profile</a
                     >
                 </div>
             </div>
@@ -67,18 +75,33 @@
             >
             {% endif %} {% endif %} {% endfor %}
             <div class="mt-4 pt-4 border-t border-gray-700">
-                <a href="#" class="block py-2 text-center font-medium"
+                <a
+                    id="sign-in-mobile"
+                    href="{{site.baseurl}}/login"
+                    class="block py-2 text-center font-medium"
                     >Sign In</a
                 >
                 <a
-                    href="#"
+                    id="sign-up-mobile"
+                    href="{{site.baseurl}}/signup"
                     class="block py-2 bg-amber-500 text-center rounded-md font-medium"
                     >Sign Up</a
+                >
+                <a
+                    id="profile-mobile"
+                    href="{{site.baseurl}}/profile"
+                    class="hidden px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md font-medium text-white transition"
+                    >Profile</a
                 >
             </div>
         </div>
     </div>
 </nav>
+
+<div
+    id="loading-screen"
+    class="fixed inset-0 w-full h-full bg-white z-50"
+></div>
 
 <style>
     .gradient-bg {
@@ -106,26 +129,39 @@
 </style>
 
 <script>
-    function showNavLinksIfJwtExists() {
-    // Function to get a cookie value by name
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
+    function isLoggedIn() {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split("=");
+            if (name === "logged_in") {
+                return true;
+            }
+        }
+        return false;
     }
 
-    const jwt = getCookie('jwt_python');
-    const navLinks = document.querySelectorAll('.nav-link');
+    document.addEventListener("DOMContentLoaded", () => {
+        const loadingScreen = document.getElementById("loading-screen");
 
-    navLinks.forEach(link => {
-        if (jwt) {
-            link.style.display = '';
-        } else {
-            link.style.display = 'none';
+        loadingScreen.remove(); //Makes header look better when DOM is loading
+
+        if (!isLoggedIn()) {
+            return;
         }
-    });
-}
 
-// Run on page load
-document.addEventListener('DOMContentLoaded', showNavLinksIfJwtExists);
+        const signBar = document.getElementById("sign-in");
+        const signUpBar = document.getElementById("sign-up");
+        const signBarMobile = document.getElementById("sign-in-mobile");
+        const signUpBarMobile = document.getElementById("sign-up-mobile");
+        const profileLink = document.getElementById("profile");
+        const profileLinkMobile = document.getElementById("profile-mobile");
+
+        signBar.classList.add("hidden");
+        signUpBar.classList.add("hidden");
+        signUpBarMobile.classList.add("hidden");
+        signBarMobile.classList.add("hidden");
+
+        profileLink.classList.remove("hidden");
+        profileLinkMobile.classList.remove("hidden");
+    });
 </script>
