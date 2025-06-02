@@ -19,7 +19,7 @@ menu: nav/mainHeader.html
         <tr>
           <th class="p-4 text-left font-medium">Community ID</th>
           <th class="p-4 text-left font-medium">Community Name</th>
-          <th class="p-4 text-left font-medium">Period</th>
+          <th class="p-4 text-left font-medium">Category</th>
           <th class="p-4 text-left font-medium"></th>
         </tr>
       </thead>
@@ -47,16 +47,18 @@ menu: nav/mainHeader.html
     <div class="space-y-6">
       <div>
         <label for="groupNameInput" class="block font-medium mb-1">Community Name</label>
-        <input type="text" id="groupNameInput" placeholder="Enter group name"
-               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
-        <label for="groupPeriodInput" class="block font-medium mb-1">Period</label>
-        <input type="number" id="groupPeriodInput" placeholder="Enter period"
-               class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <input type="text" id="groupNameInput" placeholder="Enter community name"
+              class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
       <div>
-        <label for="groupPeriodInput" class="block font-medium mb-1">Period</label>
-        <input type="text" id="groupPeriodInput" placeholder="Enter period"
-          class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+        <label for="groupCategorySelect" class="block font-medium mb-1">Community Category</label>
+        <select id="groupCategorySelect"
+                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+          <option value="">Select a category</option>
+          <option value="sports">Sports</option>
+          <option value="scenic">Scenic</option>
+          <option value="other">Other Photography</option>
+        </select>
       </div>
     </div>
     <div class="flex justify-end gap-4 mt-6 border-t pt-4">
@@ -79,8 +81,8 @@ menu: nav/mainHeader.html
         <label for="editGroupNameInput" class="block font-medium mb-1">Community Name</label>
         <input type="text" id="editGroupNameInput" placeholder="Enter group name"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
-        <label for="editGroupPeriodInput" class="block font-medium mb-1">Period</label>
-        <input type="text" id="editGroupPeriodInput" placeholder="Enter group period"
+        <label for="editGroupCategoryInput" class="block font-medium mb-1">category</label>
+        <input type="text" id="editGroupCategoryInput" placeholder="Enter group category"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
       <div class="bg-gray-100 border border-gray-300 rounded-md p-4 max-h-[400px] overflow-y-auto">
@@ -136,7 +138,7 @@ function getTable() {
       groups.forEach((group) => {
         const groupId = group.id;
         const name = group.name;
-        const period = group.period;
+        const category = group.category;
 
         const row = document.createElement("tr");
         row.className = "group-row";
@@ -148,12 +150,12 @@ function getTable() {
         row.innerHTML = `
           <td class="p-4 bg-gray-300">${groupId}</td>
           <td class="p-4 bg-gray-200">${name}</td>
-          <td class="p-4 bg-gray-100">${period}</td>
+          <td class="p-4 bg-gray-100">${category}</td>
           <td class="p-4 space-x-2 flex justify-end">
             <button class="bg-blue-500 text-white px-2 py-1 rounded toggle-members" data-target="members-${groupId}">
               View Members
             </button>
-            <button class="bg-yellow-400 text-black px-2 py-1 rounded edit-group" data-groupid="${groupId}" data-name="${name}" data-period="${period}">
+            <button class="bg-yellow-400 text-black px-2 py-1 rounded edit-group" data-groupid="${groupId}" data-name="${name}" data-category="${category}">
               Edit
             </button>
           </td>
@@ -208,20 +210,18 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
     if (details) details.style.display = match ? "" : "none";
   });
 });
-
-// Create Group
 document.getElementById("createGroupBtn").addEventListener("click", () => {
   const groupName = document.getElementById("groupNameInput").value.trim();
-  const groupPeriod = document.getElementById("groupPeriodInput").value.trim();
+  const groupCategory = document.getElementById("groupCategorySelect").value;
 
-  if (!groupName || !groupPeriod) {
-    alert("Please enter both group name and period.");
+  if (!groupName || !groupCategory) {
+    alert("Please enter both community name and category.");
     return;
   }
 
   const groupPayload = {
     name: groupName,
-    period: groupPeriod,
+    category: groupCategory,
     personUids: []  // Initially no members
   };
 
@@ -230,13 +230,13 @@ document.getElementById("createGroupBtn").addEventListener("click", () => {
     body: JSON.stringify(groupPayload),
   })
     .then((res) => {
-      if (!res.ok) throw new Error("Failed to create group");
-      alert("Group created successfully!");
+      if (!res.ok) throw new Error("Failed to create community");
+      alert("Community created successfully!");
       toggleModal("createGroupModal");
       location.reload();
     })
     .catch((error) => {
-      console.error("Error creating group:", error);
+      console.error("Error creating community:", error);
       alert("Error occurred. See console.");
     });
 });
@@ -246,11 +246,11 @@ document.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit-group")) {
     const groupId = e.target.dataset.groupid;
     const groupName = e.target.dataset.name;
-    const groupPeriod = e.target.dataset.period;
+    const groupCategory = e.target.dataset.Category;
 
     document.getElementById("editGroupId").value = groupId;
     document.getElementById("editGroupNameInput").value = groupName;
-    document.getElementById("editGroupPeriodInput").value = groupPeriod;
+    document.getElementById("editGroupCategoryInput").value = groupCategory;
 
     toggleModal("editGroupModal");
   }
@@ -260,16 +260,16 @@ document.addEventListener("click", (e) => {
 document.getElementById("saveEditGroupBtn").addEventListener("click", () => {
   const groupId = document.getElementById("editGroupId").value;
   const name = document.getElementById("editGroupNameInput").value.trim();
-  const period = document.getElementById("editGroupPeriodInput").value.trim();
+  const Category = document.getElementById("editGroupCategoryInput").value.trim();
 
-  if (!name || !period) {
-    alert("Name and period are required.");
+  if (!name || !Category) {
+    alert("Name and Category are required.");
     return;
   }
 
   fetch(`${flaskAPI}/${groupId}`, {
     ...putOptions,
-    body: JSON.stringify({ name, period }),
+    body: JSON.stringify({ name, Category }),
   })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to update group");
