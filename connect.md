@@ -53,6 +53,11 @@ menu: nav/mainHeader.html
         <input type="number" id="groupPeriodInput" placeholder="Enter period"
                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
       </div>
+      <div>
+        <label for="groupPeriodInput" class="block font-medium mb-1">Period</label>
+        <input type="text" id="groupPeriodInput" placeholder="Enter period"
+          class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500">
+      </div>
     </div>
     <div class="flex justify-end gap-4 mt-6 border-t pt-4">
       <button onclick="toggleModal('createGroupModal')" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 rounded-md font-medium text-gray-700">Cancel</button>
