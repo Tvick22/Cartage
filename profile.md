@@ -292,7 +292,7 @@ menu: nav/mainHeader.html
 
           // Create a FormData object
           const formData = new FormData();
-          formData.append('file', blob, 'profile.png'); // field name and file name
+          formData.append('file', blob, 'profile.png'); // **Uploads the image (sends the image to server)**
 
           // Send the form data via fetch
           fetch(pythonURI+"/api/upload", {
@@ -306,7 +306,7 @@ menu: nav/mainHeader.html
             body: formData
           })
           .then(response => response.json())
-          .then(result => {
+          .then(result => { // **Gets back a unique ID for the image**
             fetch(pythonURI+"/api/pfp", {
               method: 'PUT',
               mode: "cors", // no-cors, *cors, same-origin
@@ -323,7 +323,7 @@ menu: nav/mainHeader.html
             .then(response => response.json())
             .then(result => {
               console.log(result)
-              fetch(pythonURI+"/api/pfp", {
+              fetch(pythonURI+"/api/pfp", { // **Tells the server to set that image as the profile picture**
                 method: 'GET',
                 mode: "cors", // no-cors, *cors, same-origin
                 cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
