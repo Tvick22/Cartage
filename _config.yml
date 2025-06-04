@@ -2,8 +2,8 @@ title: Cartage
 description: "CSP Tri 3 Project"
 owner_name: Trevor Vick
 github_username: Tvick22
-github_repo: "Cartage"
-baseurl: "/Cartage"
+github_repo: "ShotSpot"
+baseurl: "/ShotSpot"
 header_pages:
   - browse-documentation.md
   - contact.md
