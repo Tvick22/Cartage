@@ -128,24 +128,27 @@
     }
 </style>
 
-<script>
-    function isLoggedIn() {
-        const cookies = document.cookie.split(";");
-        for (let cookie of cookies) {
-            const [name, value] = cookie.trim().split("=");
-            if (name === "logged_in") {
-                return true;
-            }
+<script type="module">
+    import { getUserProfile } from "{{site.baseurl}}/assets/js/api/users.js";
+
+    async function isLoggedIn() {
+        const userData = await getUserProfile();
+        console.log(userData);
+        if (userData == null) {
+            return false;
+        } else {
+            return true;
         }
-        return false;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
         const loadingScreen = document.getElementById("loading-screen");
 
         loadingScreen.remove(); //Makes header look better when DOM is loading
 
-        if (!isLoggedIn()) {
+        const loggedIn = await isLoggedIn();
+
+        if (!loggedIn) {
             return;
         }
 
