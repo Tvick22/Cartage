@@ -496,6 +496,71 @@ menu: nav/mainHeader.html
             </div>
         </div>
     </footer>
+
+    <script>
+      // Simple animation observer
+      const observer = new IntersectionObserver(
+          (entries) => {
+              entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.add("fade-in");
+                      observer.unobserve(entry.target);
+                  }
+              });
+          },
+          {
+              threshold: 0.1,
+          },
+      );
+
+      document.querySelectorAll(".fade-in").forEach((el) => {
+          observer.observe(el);
+      });
+
+      // Camera to computer animation sequence
+      function startCameraAnimation() {
+          const flash = document.getElementById("flash");
+          const photo = document.getElementById("photo");
+          const uploadLine = document.getElementById("upload-line");
+          const screen = document.getElementById("screen");
+
+          // Flash animation
+          setTimeout(() => {
+              flash.classList.add("animate-flash");
+          }, 500);
+
+          // Photo appears and moves down
+          setTimeout(() => {
+              photo.classList.add("animate-photo-move");
+          }, 800);
+
+          // Upload line grows
+          setTimeout(() => {
+              uploadLine.classList.add("animate-upload-line");
+          }, 800);
+
+          // Screen shows the uploaded photo
+          setTimeout(() => {
+              screen.classList.add("animate-screen-content");
+          }, 2300);
+
+          // Reset animation after it completes
+          setTimeout(() => {
+              flash.classList.remove("animate-flash");
+              photo.classList.remove("animate-photo-move");
+              uploadLine.classList.remove("animate-upload-line");
+              screen.classList.remove("animate-screen-content");
+
+              // Restart animation
+              setTimeout(startCameraAnimation, 2000);
+          }, 4000);
+      }
+
+      // Start the animation when the page loads
+      window.addEventListener("load", () => {
+          startCameraAnimation();
+      });
+    </script>
 </body>
 </html>
 
