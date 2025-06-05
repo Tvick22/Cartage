@@ -1,8 +1,8 @@
 export var pythonURI;
 if (location.hostname === "localhost") {
-  pythonURI = "http://localhost:8104";
+  pythonURI = "http://localhost:4200";
 } else if (location.hostname === "127.0.0.1") {
-  pythonURI = "http://127.0.0.1:8104";
+  pythonURI = "http://127.0.0.1:4200";
 } else {
   pythonURI = "https://shotspot.opencodingsociety.com/";
 }
