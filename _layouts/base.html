@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang='{{ page.lang | default: site.lang | default: "en" }}'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <body class="min-h-screen">
         {%- if page.menu -%} {% include {{page.menu}} html=content %} {%- endif
         -%} {{ content }}
