@@ -210,8 +210,8 @@ menu: nav/mainHeader.html
                     <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">Capture. Share. Inspire.</h1>
                     <p class="text-lg text-gray-600 mb-8">ShotSpot is where photographers and visual storytellers come together to showcase their work, discover inspiration, and connect with a creative community.</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-md text-center transition pulse">Start Exploring</a>
-                        <a href="#" class="px-6 py-3 border border-gray-300 hover:bg-gray-50 font-medium rounded-md text-center transition">Learn More</a>
+                        <a href="{{site.baseurl}}/explore-cars" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-md text-center transition pulse">Start Exploring</a>
+                        <a href="{{site.baseurl}}/browse-documentation" class="px-6 py-3 border border-gray-300 hover:bg-gray-50 font-medium rounded-md text-center transition">Learn More</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 fade-in" style="animation-delay: 0.2s;">
