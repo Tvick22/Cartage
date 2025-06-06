@@ -115,6 +115,7 @@ menu: nav/mainHeader.html
         fetch(URL, fetchOptions)
             .then(response => {
                 if (!response.ok) {
+                    document.getElementById("message").textContent = `Flask server response: ${response.status}`
                     throw new Error(`Flask server response: ${response.status}`);
                 }
                 return response.json();
@@ -125,6 +126,8 @@ menu: nav/mainHeader.html
             .catch(error => {
                 console.error("Python Database Error:", error);
                 const errorMsg = `Python Database Error: ${error.message}`;
+                document.getElementById("message").textContent = `Python Database Error: ${error.message}`;
+
             });
     }
 
